@@ -14,11 +14,16 @@
       <file leaf-file-name="table.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/body/table/table.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1434">
-              <caret line="149" column="28" lean-forward="false" selection-start-line="149" selection-start-column="28" selection-end-line="149" selection-end-column="28" />
+            <state relative-caret-position="383">
+              <caret line="153" column="138" lean-forward="false" selection-start-line="153" selection-start-column="138" selection-end-line="153" selection-end-column="138" />
               <folding>
-                <marker date="1517546685040" expanded="true" signature="454:583" ph="select * fro... ${$podcat_name[1]}_permission" />
-                <marker date="1517546685040" expanded="true" signature="1238:1325" ph="select `id_t... ${$podcat_name[1]}_vision" />
+                <marker date="1517568872033" expanded="true" signature="454:583" ph="select * fro... ${$podcat_name[1]}_permission" />
+                <marker date="1517568872033" expanded="true" signature="1238:1325" ph="select `id_t... ${$podcat_name[1]}_vision" />
+                <marker date="1517568872033" expanded="true" signature="6710:6728" ph="SELECT `id` " />
+                <marker date="1517568872033" expanded="true" signature="6710:6754" ph="SELECT `id` " />
+                <marker date="1517568872033" expanded="true" signature="6710:6771" ph="SELECT `id` ${$podcat_name[1]}_table" />
+                <marker date="1517568872033" expanded="true" signature="6710:6797" ph="SELECT `id` ${$podcat_name[1]}_table" />
+                <marker date="1517568872033" expanded="true" signature="6958:7051" ph="SELECT `id` ${$podcat_name[1]}_table" />
               </folding>
             </state>
           </provider>
@@ -55,8 +60,8 @@
       <file leaf-file-name="body.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/body/body.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="691">
-              <caret line="85" column="24" lean-forward="false" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
+            <state relative-caret-position="215">
+              <caret line="33" column="48" lean-forward="false" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="48" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#0;n#!!top" expanded="true" />
@@ -78,27 +83,6 @@
                 <marker date="1517485106919" expanded="true" signature="1192:1238" ph="select `name... ${$podcat_name[1]}_table" />
                 <marker date="1517485106919" expanded="true" signature="2080:2130" ph="select `sql_... ${$podcat_name[1]}_table" />
                 <marker date="1517485106919" expanded="true" signature="2457:2533" ph="select * fro... group_namespace" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pre_table_query.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/body/pre_table/pre_table_query.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-561">
-              <caret line="6" column="33" lean-forward="false" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
-              <folding>
-                <marker date="1517287089994" expanded="true" signature="315:361" ph="INSERT INTO ${$podcat_name[1]}... " />
-                <marker date="1517287089994" expanded="true" signature="456:509" ph="select * fro... ${$podcat_name[1]}" />
-                <marker date="1517287089994" expanded="true" signature="923:981" ph="INSERT INTO `${$podcat_name[1]}_vision`... " />
-                <marker date="1517287089994" expanded="true" signature="1505:1635" ph="INSERT INTO ${$podcat_name[1]}... " />
-                <marker date="1517287089994" expanded="true" signature="1675:1776" ph="ALTER TABLE ${$podcat_name[1]}... " />
-                <marker date="1517287089994" expanded="true" signature="1815:1927" ph="ALTER TABLE ${$podcat_name[1]}... " />
-                <marker date="1517287089994" expanded="true" signature="3207:3295" ph="select `sql_... ${$podcat_name[1]}_table" />
-                <marker date="1517287089994" expanded="true" signature="3628:3700" ph="DELETE FROM ${$podcat_name[1]}... " />
-                <marker date="1517287089994" expanded="true" signature="3770:3822" ph="ALTER TABLE ${$podcat_name[1]}... " />
-                <marker date="1517287089994" expanded="true" signature="3861:3924" ph="ALTER TABLE ${$podcat_name[1]}... " />
               </folding>
             </state>
           </provider>
@@ -132,8 +116,8 @@
       <file leaf-file-name="user_head.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/body/pre_table/sys/user_head.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="22" column="145" lean-forward="false" selection-start-line="22" selection-start-column="136" selection-end-line="22" selection-end-column="145" />
+            <state relative-caret-position="85">
+              <caret line="5" column="135" lean-forward="false" selection-start-line="5" selection-start-column="129" selection-end-line="5" selection-end-column="135" />
               <folding>
                 <element signature="n#style#0;n#input#0;n#div#1;n#!!top" expanded="true" />
               </folding>
@@ -141,19 +125,29 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="admin_content.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/body/table/sys/content/admin_content.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="238">
+              <caret line="14" column="82" lean-forward="false" selection-start-line="14" selection-start-column="70" selection-end-line="14" selection-end-column="82" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="tables_head.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/body/pre_table/tables_head.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="708">
-              <caret line="51" column="26" lean-forward="false" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="26" />
+            <state relative-caret-position="623">
+              <caret line="78" column="8" lean-forward="false" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-                <marker date="1517564366921" expanded="true" signature="918:941" ph="select `ver`... ver" />
-                <marker date="1517564366921" expanded="true" signature="1136:1227" ph="UPDATE ver... " />
-                <marker date="1517564366921" expanded="true" signature="1417:1498" ph="SELECT `desc... tables_namespace" />
-                <marker date="1517564366921" expanded="true" signature="1707:1800" ph="select `sql_... ${$podcat_name[1]}_table" />
-                <marker date="1517564366921" expanded="true" signature="2201:2236" ph="select * fro... ${$podcat_name[1]}" />
-                <marker date="1517564366921" expanded="true" signature="2253:2288" ph="select * fro... ${$podcat_name[1]}" />
+                <marker date="1517569303255" expanded="true" signature="918:941" ph="select `ver`... ver" />
+                <marker date="1517569303255" expanded="true" signature="1136:1227" ph="UPDATE ver... " />
+                <marker date="1517569303255" expanded="true" signature="1417:1498" ph="SELECT `desc... tables_namespace" />
+                <marker date="1517569303255" expanded="true" signature="1707:1800" ph="select `sql_... ${$podcat_name[1]}_table" />
+                <marker date="1517569303255" expanded="true" signature="2201:2236" ph="select * fro... ${$podcat_name[1]}" />
+                <marker date="1517569303255" expanded="true" signature="2253:2288" ph="select * fro... ${$podcat_name[1]}" />
               </folding>
             </state>
           </provider>
@@ -180,8 +174,8 @@
       <file leaf-file-name="sort.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/body/sort.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1581">
-              <caret line="93" column="75" lean-forward="false" selection-start-line="93" selection-start-column="61" selection-end-line="93" selection-end-column="75" />
+            <state relative-caret-position="1507">
+              <caret line="97" column="60" lean-forward="true" selection-start-line="97" selection-start-column="60" selection-end-line="97" selection-end-column="60" />
               <folding>
                 <marker date="1517564739218" expanded="true" signature="122:163" ph="select * fro... ${$podcat_name[1]}_table" />
                 <marker date="1517564739218" expanded="true" signature="2095:2186" ph="select sql_n... ${$podcat_name[1]}_table" />
@@ -195,11 +189,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>check_pingg</find>
-      <find>check_ipCAM</find>
-      <find>$ststus_cam_1</find>
-      <find>$output_error_1</find>
-      <find>$output_port_status_2</find>
       <find>$output_error_2</find>
       <find>$output_port_status_8</find>
       <find>$output_error_8</find>
@@ -220,11 +209,16 @@
       <find>vibory_monitoring</find>
       <find>$output_snmp</find>
       <find>$output_ststus_cam_2</find>
-      <find>$output_ping_cam_2</find>
       <find>ba</find>
-      <find>$max_count</find>
       <find>$caption</find>
+      <find>$class_count</find>
+      <find>hidden_sort_3</find>
+      <find>$hid_3</find>
       <find>bag</find>
+      <find>$output_ping_cam_2</find>
+      <find>$max_count</find>
+      <find>selected_td$bag_1</find>
+      <find>$class_color</find>
     </findStrings>
     <replaceStrings>
       <replace>default</replace>
@@ -274,14 +268,14 @@
         <option value="$PROJECT_DIR$/body/table/sys/tr_edit.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/body/query.php" />
-        <option value="$PROJECT_DIR$/body/table/table.php" />
         <option value="$PROJECT_DIR$/body/pre_table/sys/admin_head.php" />
         <option value="$PROJECT_DIR$/body/body.php" />
-        <option value="$PROJECT_DIR$/body/pre_table/sys/user_head.php" />
         <option value="$PROJECT_DIR$/body/table/additional_table.php" />
-        <option value="$PROJECT_DIR$/body/pre_table/tables_head.php" />
         <option value="$PROJECT_DIR$/body/sort.php" />
         <option value="$PROJECT_DIR$/body/data.php" />
+        <option value="$PROJECT_DIR$/body/table/table.php" />
+        <option value="$PROJECT_DIR$/body/pre_table/sys/user_head.php" />
+        <option value="$PROJECT_DIR$/body/pre_table/tables_head.php" />
       </list>
     </option>
   </component>
@@ -355,6 +349,21 @@
               <item name="body" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="table" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
+            <path>
+              <item name="www" type="b2602c69:ProjectViewProjectNode" />
+              <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="body" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="table" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sys" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
+            <path>
+              <item name="www" type="b2602c69:ProjectViewProjectNode" />
+              <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="body" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="table" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="sys" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="content" type="2a2b976b:PhpTreeStructureProvider$1" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -424,12 +433,12 @@
       <workItem from="1517228194410" duration="1336000" />
       <workItem from="1517289336065" duration="46560000" />
       <workItem from="1517404448760" duration="1307000" />
-      <workItem from="1517467760848" duration="30872000" />
+      <workItem from="1517467760848" duration="35088000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="317616000" />
+    <option name="totallyTimeSpent" value="321832000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -635,13 +644,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/body/table/sys/content/admin_content.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="19" column="48" lean-forward="false" selection-start-line="19" selection-start-column="48" selection-end-line="19" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/home/home.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
@@ -735,15 +737,53 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/body/body.php">
+    <entry file="file://$PROJECT_DIR$/body/sort.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="691">
-          <caret line="85" column="24" lean-forward="false" selection-start-line="85" selection-start-column="24" selection-end-line="85" selection-end-column="24" />
+        <state relative-caret-position="1507">
+          <caret line="97" column="60" lean-forward="true" selection-start-line="97" selection-start-column="60" selection-end-line="97" selection-end-column="60" />
           <folding>
-            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
-            <marker date="1517551933951" expanded="true" signature="259:331" ph="select `tabl... users" />
+            <marker date="1517564739218" expanded="true" signature="122:163" ph="select * fro... ${$podcat_name[1]}_table" />
+            <marker date="1517564739218" expanded="true" signature="2095:2186" ph="select sql_n... ${$podcat_name[1]}_table" />
+            <marker date="1517564739218" expanded="true" signature="2299:2385" ph="select * fro... ${$podcat_name[1]}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/body/data.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="612">
+          <caret line="36" column="135" lean-forward="false" selection-start-line="36" selection-start-column="135" selection-end-line="36" selection-end-column="135" />
+          <folding>
+            <marker date="1517564854504" expanded="true" signature="234:286" ph="select * fro... ${$podcat_name[1]}" />
+            <marker date="1517564854504" expanded="true" signature="587:680" ph="select `sql_... ${$podcat_name[1]}_table" />
+            <marker date="1517564854504" expanded="true" signature="1516:1644" ph="select * fro... ${$podcat_name[1]}" />
+            <marker date="1517564854504" expanded="true" signature="1770:1840" ph="select * fro... ${$podcat_name[1]}" />
+            <marker date="1517564854504" expanded="true" signature="1770:1878" ph="select * fro... ${$podcat_name[1]}" />
+            <marker date="1517564854504" expanded="true" signature="2017:2119" ph="select * fro... ${$podcat_name[1]}" />
+            <marker date="1517564854504" expanded="true" signature="2147:2244" ph="select * fro... ${$podcat_name[1]}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/body/pre_table/sys/admin_head.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="143" lean-forward="false" selection-start-line="11" selection-start-column="119" selection-end-line="11" selection-end-column="143" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#1;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -774,72 +814,47 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/body/body.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="33" column="48" lean-forward="false" selection-start-line="33" selection-start-column="35" selection-end-line="33" selection-end-column="48" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#form#0;n#!!top" expanded="true" />
+            <marker date="1517551933951" expanded="true" signature="259:331" ph="select `tabl... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/body/table/table.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1434">
-          <caret line="149" column="28" lean-forward="false" selection-start-line="149" selection-start-column="28" selection-end-line="149" selection-end-column="28" />
+        <state relative-caret-position="383">
+          <caret line="153" column="138" lean-forward="false" selection-start-line="153" selection-start-column="138" selection-end-line="153" selection-end-column="138" />
           <folding>
-            <marker date="1517546685040" expanded="true" signature="454:583" ph="select * fro... ${$podcat_name[1]}_permission" />
-            <marker date="1517546685040" expanded="true" signature="1238:1325" ph="select `id_t... ${$podcat_name[1]}_vision" />
+            <marker date="1517568872033" expanded="true" signature="454:583" ph="select * fro... ${$podcat_name[1]}_permission" />
+            <marker date="1517568872033" expanded="true" signature="1238:1325" ph="select `id_t... ${$podcat_name[1]}_vision" />
+            <marker date="1517568872033" expanded="true" signature="6710:6728" ph="SELECT `id` " />
+            <marker date="1517568872033" expanded="true" signature="6710:6754" ph="SELECT `id` " />
+            <marker date="1517568872033" expanded="true" signature="6710:6771" ph="SELECT `id` ${$podcat_name[1]}_table" />
+            <marker date="1517568872033" expanded="true" signature="6710:6797" ph="SELECT `id` ${$podcat_name[1]}_table" />
+            <marker date="1517568872033" expanded="true" signature="6958:7051" ph="SELECT `id` ${$podcat_name[1]}_table" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/body/data.php">
+    <entry file="file://$PROJECT_DIR$/body/table/sys/content/admin_content.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="612">
-          <caret line="36" column="135" lean-forward="false" selection-start-line="36" selection-start-column="135" selection-end-line="36" selection-end-column="135" />
-          <folding>
-            <marker date="1517564854504" expanded="true" signature="234:286" ph="select * fro... ${$podcat_name[1]}" />
-            <marker date="1517564854504" expanded="true" signature="587:680" ph="select `sql_... ${$podcat_name[1]}_table" />
-            <marker date="1517564854504" expanded="true" signature="1516:1644" ph="select * fro... ${$podcat_name[1]}" />
-            <marker date="1517564854504" expanded="true" signature="1770:1840" ph="select * fro... ${$podcat_name[1]}" />
-            <marker date="1517564854504" expanded="true" signature="1770:1878" ph="select * fro... ${$podcat_name[1]}" />
-            <marker date="1517564854504" expanded="true" signature="2017:2119" ph="select * fro... ${$podcat_name[1]}" />
-            <marker date="1517564854504" expanded="true" signature="2147:2244" ph="select * fro... ${$podcat_name[1]}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/body/sort.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1581">
-          <caret line="93" column="75" lean-forward="false" selection-start-line="93" selection-start-column="61" selection-end-line="93" selection-end-column="75" />
-          <folding>
-            <marker date="1517564739218" expanded="true" signature="122:163" ph="select * fro... ${$podcat_name[1]}_table" />
-            <marker date="1517564739218" expanded="true" signature="2095:2186" ph="select sql_n... ${$podcat_name[1]}_table" />
-            <marker date="1517564739218" expanded="true" signature="2299:2385" ph="select * fro... ${$podcat_name[1]}" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/body/pre_table/sys/admin_head.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="143" lean-forward="false" selection-start-line="11" selection-start-column="119" selection-end-line="11" selection-end-column="143" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#2;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#div#1;n#div#0;n#div#2;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="238">
+          <caret line="14" column="82" lean-forward="false" selection-start-line="14" selection-start-column="70" selection-end-line="14" selection-end-column="82" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/body/pre_table/sys/user_head.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="145" lean-forward="false" selection-start-line="22" selection-start-column="136" selection-end-line="22" selection-end-column="145" />
+        <state relative-caret-position="85">
+          <caret line="5" column="135" lean-forward="false" selection-start-line="5" selection-start-column="129" selection-end-line="5" selection-end-column="135" />
           <folding>
             <element signature="n#style#0;n#input#0;n#div#1;n#!!top" expanded="true" />
           </folding>
@@ -848,16 +863,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/body/pre_table/tables_head.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="51" column="26" lean-forward="false" selection-start-line="51" selection-start-column="14" selection-end-line="51" selection-end-column="26" />
+        <state relative-caret-position="623">
+          <caret line="78" column="8" lean-forward="false" selection-start-line="78" selection-start-column="8" selection-end-line="78" selection-end-column="8" />
           <folding>
             <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1517564366921" expanded="true" signature="918:941" ph="select `ver`... ver" />
-            <marker date="1517564366921" expanded="true" signature="1136:1227" ph="UPDATE ver... " />
-            <marker date="1517564366921" expanded="true" signature="1417:1498" ph="SELECT `desc... tables_namespace" />
-            <marker date="1517564366921" expanded="true" signature="1707:1800" ph="select `sql_... ${$podcat_name[1]}_table" />
-            <marker date="1517564366921" expanded="true" signature="2201:2236" ph="select * fro... ${$podcat_name[1]}" />
-            <marker date="1517564366921" expanded="true" signature="2253:2288" ph="select * fro... ${$podcat_name[1]}" />
+            <marker date="1517569303255" expanded="true" signature="918:941" ph="select `ver`... ver" />
+            <marker date="1517569303255" expanded="true" signature="1136:1227" ph="UPDATE ver... " />
+            <marker date="1517569303255" expanded="true" signature="1417:1498" ph="SELECT `desc... tables_namespace" />
+            <marker date="1517569303255" expanded="true" signature="1707:1800" ph="select `sql_... ${$podcat_name[1]}_table" />
+            <marker date="1517569303255" expanded="true" signature="2201:2236" ph="select * fro... ${$podcat_name[1]}" />
+            <marker date="1517569303255" expanded="true" signature="2253:2288" ph="select * fro... ${$podcat_name[1]}" />
           </folding>
         </state>
       </provider>

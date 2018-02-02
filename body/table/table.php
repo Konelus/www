@@ -140,9 +140,25 @@
 
 
         /*  ↑ - - - - - - - - - - ↓ Формирование таблицы ↓ - - - - - - - - - - */
+
                         if ($td <= $max_td + $additional_td)
                         {
-                            if ($new_td[$td_td] == $class_count) { $class_color = 'table_head_bg2'; } else { $class_color = ''; }
+
+                            if ($new_td[$td_td] == $class_count)
+                            { $class_color = 'table_head_bg2'; }
+                            else if ((isset ($_POST['search_btn']) || ($_POST['hidden_sort_5'] != '')))
+                            {
+                                if (isset ($_POST['search_btn']))
+                                { $SQL_QUERY_select_searched_id = $mysqli->query("SELECT `id` FROM `".$podcat_name[1]."_table` where `name` = '".$_POST['selected_td']."' "); }
+                                else if ($_POST['hidden_sort_5'] != '')
+                                { $SQL_QUERY_select_searched_id = $mysqli->query("SELECT `id` FROM `".$podcat_name[1]."_table` where `sql_name` = '".$_POST['hidden_sort_5']."' "); }
+                                while ($row = mysqli_fetch_row($SQL_QUERY_select_searched_id))
+                                { $td_title_count = $row[0]; }
+                                if ($new_td[$td_td] == $td_title_count)
+                                { $class_color = 'table_head_bg2'; }
+                                else { $class_color = ''; }
+                            }
+                            else { $class_color = ''; }
 
                             // ↓ Для админа ↓
                             if ($_COOKIE['user'] == 'admin')

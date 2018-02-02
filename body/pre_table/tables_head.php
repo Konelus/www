@@ -74,9 +74,11 @@
 <div class='container-fluid' style = '<?php echo $margin; ?>'>
     <div class='row main_div_margin'>
         <div class = 'col-lg-12 col-md-12 col-sm-12 affix' style = 'padding-left: 0; padding-right: 0; z-index: 1'>
-        <?php if (($_COOKIE['user'] == 'admin') || ($current_users_access[$podcat_name[1].'_status'] == 'superuser'))
+
+        <?php
+        if ($_COOKIE['user'] != 'admin') { $bag_1 = 1; } else { $bag_1 = 0; }
+        if (($_COOKIE['user'] == 'admin') || ($current_users_access[$podcat_name[1].'_status'] == 'superuser'))
         {
-            if ($_COOKIE['user'] != 'admin') { $bag_1 = 1; } else { $bag_1 = 0; }
             require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/user_head.php');
             require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/admin_head.php');
          }
