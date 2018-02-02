@@ -36,7 +36,7 @@
         while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var = $row; }
         $time_1 = explode(':', date("H:i:s"));
         $time_2 = explode(':', $current_var['time']);
-        if ((($time_1[1] - $time_2[1]) >= 2) || ($time_1[0] > $time_2[0]))
+        if (((($time_1[1] - $time_2[1]) >= 1) || ($time_1[0] > $time_2[0])) || (date("m.d.y") != $current_var['date']))
         {
             $output_ping_gateway = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_shlyuza'].' ');
             if (strpos($output_ping_gateway, 'OK')) { $ping_gateway = 'success'; } else if (strpos($output_ping_gateway, 'CRITICAL')) { $ping_gateway = 'danger'; }
@@ -47,15 +47,18 @@
 
             if ($ping == 'success')
             {
-                $output_port_status_1 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port1Status -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'].' ');
-                $output_error_1 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port1Er -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'].' ');
-                $output_port_status_2 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port2Status -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'].' ');
-                $output_error_2 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port2Er -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'].' ');
-                $output_port_status_8 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port8Status -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'].' ');
-                $output_error_8 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port8Er -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'].' ');
+                $output_snmp = str_replace('"', '\'', shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_Vendor -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']));
+                $snmp = 'info';
+                $output_port_status_1 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port1Status -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']);
+                $output_error_1 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port1Er -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']);
+                $output_port_status_2 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port2Status -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']);
+                $output_error_2 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port2Er -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']);
+                $output_port_status_8 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port8Status -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']);
+                $output_error_8 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port8Er -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']);
             }
             else
             {
+                $snmp = 'info';
                 $output_port_status_1 = 'Устройство недоступно!'; $port_status_1 = 'danger';
                 $output_error_1 = 'Устройство недоступно!'; $error_1 = 'danger';
                 $output_port_status_2 = 'Устройство недоступно!'; $port_status_2 = 'danger';
@@ -74,7 +77,7 @@
             else { $output_ststus_cam_1 = 'Устройство недоступно!'; $ststus_cam_1 = 'danger'; }
 
 
-            $output_ping_cam_2 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_adres_cam1'].' ');
+            $output_ping_cam_2 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_adres_cam2'].' ');
             if (strpos($output_ping_cam_2, 'OK')) { $ping_cam_2 = 'success'; } else if (strpos($output_ping_cam_2, 'CRITICAL')) { $ping_cam_2 = 'danger'; }
 
 
@@ -85,7 +88,8 @@
 
             if ($current_var['uik'] == $uik_monitoring['naimenovanie_uik_tik'])
             { $SQL_QUERY_del_monitoring = $mysqli->query("DELETE FROM `vibory_monitoring` WHERE `uik`='".$current_var['uik']."'"); }
-            $SQL_QUERY_insert_monitoring = $mysqli->query('INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("m.d.y").'", "'.date("H:i:s").'") ');
+            $SQL_QUERY_insert_monitoring = $mysqli->query('INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("m.d.y").'", "'.date("H:i:s").'") ');
+            echo 'INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("m.d.y").'", "'.date("H:i:s").'") ';
         }
         else
         {
@@ -99,7 +103,7 @@
             $output_error_8 = $current_var['port_8_errors'];
             $output_ping_cam_1 = $current_var['ping_cam_1'];
             $output_ststus_cam_1 = $current_var['status_cam1'];
-            $output_ping_cam_2 = $current_var['ping_cam_1'];
+            $output_ping_cam_2 = $current_var['ping_cam_2'];
             $output_ststus_cam_2 = $current_var['status_cam2'];
             $load_time = "<tr><td colspan = '3' style = 'text-align: center;'>Данные актуальны на ".$current_var['time']."</td></tr>";
         }
@@ -184,9 +188,13 @@
                 <td><?php echo $output_ping_gateway ?></td>
             </tr>
             <tr>
-                <td class = '<?php echo $commutator ?>' rowspan = '7' style = 'width: 200px; border-right: solid 1px lightgrey;'>Коммутатор<br><?php echo $uik_monitoring['ip_addres_kommutatora_na_obekte'] ?></td>
+                <td class = '<?php echo $commutator ?>' rowspan = '8' style = 'width: 200px; border-right: solid 1px lightgrey;'>Коммутатор<br><?php echo $uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'] ?></td>
                 <td class = '<?php echo $ping ?>' style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
                 <td class = '<?php echo $ping ?>'><?php echo $output_ping ?></td>
+            </tr>
+            <tr class = '<?php echo $snmp ?>'>
+                <td style = 'width: 200px; border-right: solid 1px lightgrey;'>SNMP</td>
+                <td><?php echo $output_snmp ?></td>
             </tr>
             <tr class = '<?php echo $port_status_1 ?>'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Port 1 - status UP/DOWN</td>

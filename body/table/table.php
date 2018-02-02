@@ -92,6 +92,8 @@
                                 current_tr = (parseInt(this_tr - 5) * <?php echo $scroll ?>);
                                 window.onload = function(){ window.scrollTo( 0, current_tr ); }
                             </script><?php
+//                            $searched_td = $_POST['hidden_sort_5'];
+//                            $caption = $_POST['hidden_sort_6'];
 
                 }
                         // ↑ Скроллинг при нажатии кнопки редактирования ↑
@@ -107,7 +109,8 @@
                         {
                             $bool_edit = true;
                             $bool_query = 1;
-
+//                            $searched_td = $_POST['hidden_sort_5'];
+//                            $caption = $_POST['hidden_sort_6'];
 
                             // ↓ Скроллинг при нажатии кнопки редактирования ↓
                             if (isset ($_POST['edit_true_' . ($tr + $searched_tr)]))

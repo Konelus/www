@@ -40,7 +40,8 @@
     <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/sys/csv.php'); ?>
 
     <input type = 'hidden' name = 'ver' value = '<?php echo $ver; ?>'>
-<div class = 'container-fluid'>
+
+<div class = 'container-fluid' style = 'margin-top: -30px;'>
     <div class = 'row'>
         <div class = 'col-lg-12' style = 'padding-left: 0px; padding-right: 0px;'>
 
@@ -48,6 +49,7 @@
 
                     <!-- ↓ Заголовок таблицы ↓ -->
                     <thead><?php require("pre_table/tables_title.php"); ?></thead>
+
                     <!-- ↑ Заголовок таблицы ↑ -->
 
                     <input type = 'hidden' name = 'hidden_sort_1'> <!-- Название столбца SQL -->
@@ -65,6 +67,7 @@
                     ?>
 
 
+
                     <!-- ↓ Форма добавления строки ↓ -->
                     <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/add_tr.php'); ?>
                     <!-- ↑ Форма добавления строки ↑ -->
@@ -79,5 +82,8 @@
         </div>
     </div>
 </div>
+    <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'>
+        Показано записей: <?php echo $max_count ?>
+    </div>
 
 </form>

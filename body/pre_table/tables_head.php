@@ -52,115 +52,36 @@
             { $searched_td = $row[0]; }
         }
         $row_count = 0;
-        $qqzz = $mysqli->query("select * from `".$podcat_name[1]."` where `".$searched_td."` =  '".$_POST['caption']."' ");
-        $max_count_searched = mysqli_num_rows($qqzz);
-        $max_count = $max_count_searched;
+
+        //$max_count = $max_count_searched;
 
     //}
         //echo "select * from `".$podcat_name[1]."` where `".$searched_td ."` =  '".$_POST['caption']."' ".$sort." ";
     }
+    $qqzz = $mysqli->query("select * from `".$podcat_name[1]."` ");
+    //echo "select * from `".$podcat_name[1]."` ";
+    //echo "select * from `".$podcat_name[1]."` where `".$searched_td."` =  '".$_POST['caption']."' ";
+    $max_count_title = mysqli_num_rows($qqzz);
 
+    if (($_COOKIE['user'] == 'admin') || ($current_users_access[$podcat_name[1].'_status'] == 'superuser'))
+    { $margin = 'margin-bottom: 110px;'; }
+    else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$podcat_name[1].'_status'] != 'superuser'))
+    { $margin = 'margin-bottom: 70px;'; }
 
 
 ?>
 
-<div class='container-fluid' style = 'margin-bottom: 40px;'>
+<div class='container-fluid' style = '<?php echo $margin; ?>'>
     <div class='row main_div_margin'>
         <div class = 'col-lg-12 col-md-12 col-sm-12 affix' style = 'padding-left: 0; padding-right: 0; z-index: 1'>
-        <?php if (($_COOKIE['user'] == 'admin') || ($current_users_access[$podcat_name[1].'_status'] == 'superuser')) { if ($_COOKIE['user'] != 'admin') { $bag_1 = 1; } else { $bag_1 = 0; } ?>
-
-
-            <div class='col-lg-5 col-md-6 table_title_div table_bar_div'>
-
-                <!-- ↓ Кнопки home и exit ↓ -->
-                <div style = 'float: left; margin-left: 20px;' class = 'second_bar_div'><div class = 'exit_div'><input name = 'exit' class = 'exit_btn' type = 'submit' value = 'exit'></div></div>
-                <div style = 'float: left; margin-left: 20px;' class = 'second_bar_div'><a href='/' class='table_add_href'>Home</a></div>
-                <!-- ↑ Кнопки home и exit ↑ -->
-                <?php if ($_COOKIE['user'] == 'admin') { ?>
-                <div style = 'float: left; margin-left: 20px; margin-right: 10px;' class = 'second_bar_div'><div style = 'width: 100px; border: solid 1px gold;'><input name = 'break' class = 'exit_btn' type = 'submit' value = '<?php echo $value ?>'></div></div>
-                <?php } ?>
-
-
-                <!-- ↓ Форма поиска записей в таблице ↓ -->
-                <div style = 'width: 15%; float: left; margin-right: 5px;'><input class = 'form-control table_search_input' autocomplete='off' type = 'text' name = 'caption'></div>
-                <div style = 'width: 15%; float: left; margin-right: 5px;'>
-                    <select class = 'form-control table_search_input' name = 'selected_td'>
-                        <script> while (table_count <= (max_td_count - 1)) { document.write("<option>" + table_mass[table_count + <?php echo $bag_1 ?>] + "</option>"); table_count++; } table_count = 0; </script>
-                    </select></div>
-                <div style = 'width: 12%; float: left;' class = 'second_bar_div'><input value = 'search' type = 'submit' name = 'search_btn' class = 'table_search_btn'></div>
-                <!-- ↑ Форма поиска записей в таблице ↑ -->
-            </div>
-
-
-            <div class='col-lg-2 col-md-2 table_title_div'>
-                <div style = 'margin-top: 2px;'>
-                    <?php $status = $current_users_access[$podcat_name[1].'_status'];
-                    if (($_COOKIE['user'] == 'admin') || ($status == 'superuser')) { ?>
-                        <input style = 'color: white; border: 0; background: black;' name = 'csv' type = 'submit' value = '<?php echo $table_name." (".($max_count).")"; ?>'>
-                    <?php } ?>
-                </div>
-            </div>
-
-            <div class='col-lg-5 col-md-4 table_title_div table_input_padding'>
-            <!-- ↓ Форма установки лимита ↓ -->
-                <div style = 'float: left; width: 25%;'>
-                    <?php if ($_COOKIE['user'] == 'admin') { ?>
-                    <input type='text' class = 'table_add_new_td_btn' value = '<?php echo ($lim - 2) ?>' style = 'width: 60%; float: left;' autocomplete='off' name='lim_text'>
-                    <input class = 'table_small_add_btn' type='submit' value='!' name='lim_btn' style = 'width: 15%; float: left; margin-top: 4px; border: solid 1px grey;'>
-                    <?php } ?>
-                </div>
-            <!-- ↑ Форма установки лимита ↑ -->
-
-
-            <!-- ↓ Форма добавления столбца таблицы ↓ -->
-                <div style = 'float: left; width: 25%;'>
-                    <input type='text' class = 'table_add_new_td_btn' style = 'width: 60%; float: left;' autocomplete='off' name='new_td'>
-                    <input class = 'table_small_add_btn' type='submit' value='+' name='add_td' style = 'width: 15%; float: left; margin-top: 4px; border: solid 1px grey;'>
-                </div>
-            <!-- ↑ Форма добавления столбца таблицы ↑ -->
-
-
-            <!-- ↓ Форма удаления столбца таблицы ↓ -->
-                <div style = 'float: left; width: 25%;'>
-                    <select class = 'table_add_new_td_btn' name='old_td' style = 'width: 60%; float: left;'>
-                        <script> while (table_count <= (max_td_count - 1)) { document.write("<option>" + table_mass[table_count + <?php echo $bag_1 ?> ] + "</option>"); table_count++; } table_count = 0; </script>
-                    </select>
-                    <input class = 'table_small_add_btn' type='submit' value='-' name='del_td' style = 'width: 15%; float: left; margin-top: 4px; border: solid 1px grey;'>
-                </div>
-            <!-- ↑ Форма удаления столбца таблицы ↑ -->
-
-
-            <!-- ↓ Кнопка добавления новой записи ↓ -->
-                <div style = 'float: right; margin-right: 10px; width: 20%;' class = 'table_add_div border_g'>
-                    <input class = 'table_small_add_btn' type='submit' value='add' name='hide'>
-                </div>
-            <!-- ↑ Кнопка добавления новой записи ↑ -->
-            </div>
-
-
-        <?php } else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$podcat_name[1].'_status'] != 'superuser')) {?>
-
-            <!-- ↓ Форма поиска записей в таблице ↓ -->
-
-                <div class='col-lg-3 col-md-4 col-sm-4 table_title_div table_search_input_div'>
-                    <div style = 'width: 35%; float: left; margin-right: 5px;'><input class = 'form-control table_search_input' autocomplete='off' type = 'text' name = 'caption'></div>
-                    <div style = 'width: 35%; float: left; margin-right: 5px;'><select class = 'form-control table_search_input' name = 'selected_td'>
-                            <script> while (table_count <= (max_td_count - 1)) { document.write("<option>" + table_mass[table_count + 1] + "</option>"); table_count++; } table_count = 0; </script>
-                        </select></div>
-                    <div style = 'width: 20%; float: left;' class = 'second_bar_div'><input value = 'search' type = 'submit' name = 'search_btn' class = 'table_search_btn'></div>
-                </div>
-
-            <!-- ↑ Форма поиска записей в таблице ↑ -->
-
-            <div class = 'col-lg-6 col-md-4 col-sm-3 table_title_div'><?php echo $table_name." (".($max_count).")"; ?></div>
-
-            <!-- ↓ Кнопки home и exit ↑↓ -->
-            <div class='col-lg-3 col-md-4 col-sm-5 table_title_div table_bar_div' style = 'float: right;'>
-                <div class = 'second_bar_div'><div class = 'exit_div'><input name = 'exit' class = 'exit_btn' type = 'submit' value = 'exit' style = ''></div></div>
-                <div class = 'second_bar_div' style = 'margin-left: 20px; margin-right: 30px;'><a href='/' class='table_add_href'>Home</a></div>
-                <div class = '' style = 'margin-top: 1px; width: 160px; float: right;'><div class = '' style = 'width: 100%;'><a href = '<?php echo $cat_name ?>' style = 'background: black; border: 0; text-decoration: underline; color: white;'>Отмена сортировки</a></div></div>
-            </div>
-            <!-- ↑ Кнопки home и exit ↑ -->
-        <?php } ?></div>
+        <?php if (($_COOKIE['user'] == 'admin') || ($current_users_access[$podcat_name[1].'_status'] == 'superuser'))
+        {
+            if ($_COOKIE['user'] != 'admin') { $bag_1 = 1; } else { $bag_1 = 0; }
+            require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/user_head.php');
+            require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/admin_head.php');
+         }
+         else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$podcat_name[1].'_status'] != 'superuser'))
+         { require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/user_head.php'); } ?>
+        </div>
     </div>
 </div>

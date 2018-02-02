@@ -90,7 +90,8 @@
                 $('input[name = "hidden_sort_4"]').val("<?php echo $lim ?>");
                 $('input[name = "lim_text"]').val("<?php echo $lim - 2 ?>");
                 $('input[name = "hidden_sort_5"]').val("<?php echo $searched_td ?>");
-                $('input[name = "hidden_sort_6"]').val("<?php echo $caption ?>");
+                $('input[name = "hidden_sort_6"]').val("<?php echo trim($caption) ?>");
+                $('input[name = "caption"]').val("<?php echo trim($caption) ?>");
             </script><?php
 
             if (($hid_1 != '') || ($hid_2 != ''))
