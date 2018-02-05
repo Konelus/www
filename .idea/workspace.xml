@@ -29,6 +29,67 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="admin.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/home/admin.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="30" column="46" lean-forward="true" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+              <folding>
+                <element signature="n#style#0;n#div#1;n#div#4;n#div#0;n#div#1;n#!!top" expanded="true" />
+                <marker date="1517833024759" expanded="true" signature="741:765" ph="DELETE FROM `vibory_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="820:846" ph="SELECT * FRO... vibory_sys" />
+                <marker date="1517833024759" expanded="true" signature="1213:1228" ph="SELECT * FRO... " />
+                <marker date="1517833024759" expanded="true" signature="1213:1235" ph="SELECT * FRO... " />
+                <marker date="1517833024759" expanded="true" signature="1566:1651" ph="UPDATE `vibory_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="1566:1664" ph="UPDATE `vibory_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="1566:1665" ph="UPDATE `vibory_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="1824:1907" ph="UPDATE `vibory_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="1969:1982" ph="INSERT INTO " />
+                <marker date="1517833024759" expanded="true" signature="1969:1993" ph="INSERT INTO ``... " />
+                <marker date="1517833024759" expanded="true" signature="1969:2031" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="1969:2032" ph="INSERT INTO `vibory_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="1969:2147" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="1969:2148" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="1969:2149" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+                <marker date="1517833024759" expanded="true" signature="2431:2471" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="2586:2631" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="3277:3322" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="4490:4530" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="4587:4636" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="4696:4729" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="5492:5532" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="5641:5670" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="6142:6182" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="6289:6318" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="6841:6881" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="7022:7067" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="7291:7336" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="7848:7888" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="8034:8079" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="8306:8351" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="8600:8645" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="9199:9239" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="9385:9430" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="9661:9706" ph="..." />
+                <marker date="1517833024759" expanded="true" signature="10165:10219" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="script.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config_script/script.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="17" selection-end-column="15" />
+              <folding>
+                <marker date="1517397679130" expanded="true" signature="1063:1085" ph="SELECT * FRO... vibory" />
+                <marker date="1517397679130" expanded="true" signature="3028:3065" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="body.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/body/body.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -48,24 +109,6 @@
               <caret line="15" column="100" lean-forward="false" selection-start-line="15" selection-start-column="97" selection-end-line="15" selection-end-column="100" />
               <folding>
                 <element signature="n#style#0;n#a#0;n#div#1;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="data.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/body/data.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="4" lean-forward="false" selection-start-line="2" selection-start-column="4" selection-end-line="2" selection-end-column="15" />
-              <folding>
-                <marker date="1517564854504" expanded="true" signature="234:286" ph="select * fro... ${$podcat_name[1]}" />
-                <marker date="1517564854504" expanded="true" signature="587:680" ph="select `sql_... ${$podcat_name[1]}_table" />
-                <marker date="1517564854504" expanded="true" signature="1516:1644" ph="select * fro... ${$podcat_name[1]}" />
-                <marker date="1517564854504" expanded="true" signature="1770:1840" ph="select * fro... ${$podcat_name[1]}" />
-                <marker date="1517564854504" expanded="true" signature="1770:1878" ph="select * fro... ${$podcat_name[1]}" />
-                <marker date="1517564854504" expanded="true" signature="2017:2119" ph="select * fro... ${$podcat_name[1]}" />
-                <marker date="1517564854504" expanded="true" signature="2147:2244" ph="select * fro... ${$podcat_name[1]}" />
               </folding>
             </state>
           </provider>
@@ -129,21 +172,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="669">
-              <caret line="55" column="8" lean-forward="false" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="75" />
-              <folding>
-                <marker date="1517824065466" expanded="true" signature="872:944" ph="select `tabl... users" />
-                <marker date="1517824065466" expanded="true" signature="1207:1283" ph="select * fro... group_namespace" />
-                <marker date="1517824065466" expanded="true" signature="1485:1508" ph="select `ver`... ver" />
-                <marker date="1517824065466" expanded="true" signature="1711:1734" ph="select `ver`... ver" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
@@ -175,9 +203,9 @@
       <find>if ($_</find>
       <find>DOCUMENT_ROOT</find>
       <find>$new_td</find>
-      <find>&lt;?</find>
-      <find>echo</find>
       <find>csv</find>
+      <find>echo</find>
+      <find>&lt;?</find>
     </findStrings>
     <replaceStrings>
       <replace>default</replace>
@@ -221,7 +249,6 @@
         <option value="$PROJECT_DIR$/body/table/sys/content/user_content.php" />
         <option value="$PROJECT_DIR$/body/table/sys/content/admin_content.php" />
         <option value="$PROJECT_DIR$/body/table/sys/style.css" />
-        <option value="$PROJECT_DIR$/home/admin.php" />
         <option value="$PROJECT_DIR$/config_script/script.php" />
         <option value="$PROJECT_DIR$/body/table/sys/tr_edit.php" />
         <option value="$PROJECT_DIR$/body/query.php" />
@@ -236,6 +263,7 @@
         <option value="$PROJECT_DIR$/body/body.php" />
         <option value="$PROJECT_DIR$/body/sys/csv.php" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/home/admin.php" />
       </list>
     </option>
   </component>
@@ -302,40 +330,12 @@
             <path>
               <item name="www" type="b2602c69:ProjectViewProjectNode" />
               <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="body" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="config_script" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
             <path>
               <item name="www" type="b2602c69:ProjectViewProjectNode" />
               <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="body" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="pre_table" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="www" type="b2602c69:ProjectViewProjectNode" />
-              <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="body" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="sys" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="www" type="b2602c69:ProjectViewProjectNode" />
-              <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="body" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="table" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="www" type="b2602c69:ProjectViewProjectNode" />
-              <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="body" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="table" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="sys" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="www" type="b2602c69:ProjectViewProjectNode" />
-              <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="body" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="table" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="sys" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="content" type="2a2b976b:PhpTreeStructureProvider$1" />
+              <item name="home" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -406,12 +406,12 @@
       <workItem from="1517289336065" duration="46560000" />
       <workItem from="1517404448760" duration="1307000" />
       <workItem from="1517467760848" duration="38596000" />
-      <workItem from="1517811324487" duration="9175000" />
+      <workItem from="1517811324487" duration="16137000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="334515000" />
+    <option name="totallyTimeSpent" value="341477000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -607,24 +607,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
           <caret line="8" column="41" lean-forward="false" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/config_script/script.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="66" lean-forward="false" selection-start-line="22" selection-start-column="60" selection-end-line="22" selection-end-column="66" />
-          <folding>
-            <marker date="1517397679130" expanded="true" signature="1063:1085" ph="SELECT * FRO... vibory" />
-            <marker date="1517397679130" expanded="true" signature="3028:3065" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/home/admin.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="133" column="26" lean-forward="false" selection-start-line="133" selection-start-column="26" selection-end-line="133" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -757,21 +740,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/body/sys/csv.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="745">
-          <caret line="102" column="155" lean-forward="false" selection-start-line="102" selection-start-column="155" selection-end-line="102" selection-end-column="155" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#a#0;n#div#1;n#body#0;n#!!top" expanded="true" />
-            <marker date="1517823070780" expanded="true" signature="776:811" ph="select * fro... ${$podcat_name[1]}" />
-            <marker date="1517823070780" expanded="true" signature="1263:1309" ph="select `name... ${$podcat_name[1]}_table" />
-            <marker date="1517823070780" expanded="true" signature="2431:2518" ph="select `id_t... ${$podcat_name[1]}_vision" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/body/table/table.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="281">
@@ -808,15 +776,87 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/config_script/script.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="17" selection-end-column="15" />
+          <folding>
+            <marker date="1517397679130" expanded="true" signature="1063:1085" ph="SELECT * FRO... vibory" />
+            <marker date="1517397679130" expanded="true" signature="3028:3065" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="669">
+        <state relative-caret-position="68">
           <caret line="55" column="8" lean-forward="false" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="75" />
           <folding>
             <marker date="1517824065466" expanded="true" signature="872:944" ph="select `tabl... users" />
             <marker date="1517824065466" expanded="true" signature="1207:1283" ph="select * fro... group_namespace" />
             <marker date="1517824065466" expanded="true" signature="1485:1508" ph="select `ver`... ver" />
             <marker date="1517824065466" expanded="true" signature="1711:1734" ph="select `ver`... ver" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/body/sys/csv.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="745">
+          <caret line="102" column="155" lean-forward="false" selection-start-line="102" selection-start-column="155" selection-end-line="102" selection-end-column="155" />
+          <folding>
+            <element signature="n#style#0;n#div#0;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#body#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#a#0;n#div#1;n#body#0;n#!!top" expanded="true" />
+            <marker date="1517823070780" expanded="true" signature="776:811" ph="select * fro... ${$podcat_name[1]}" />
+            <marker date="1517823070780" expanded="true" signature="1263:1309" ph="select `name... ${$podcat_name[1]}_table" />
+            <marker date="1517823070780" expanded="true" signature="2431:2518" ph="select `id_t... ${$podcat_name[1]}_vision" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/home/admin.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="30" column="46" lean-forward="true" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+          <folding>
+            <element signature="n#style#0;n#div#1;n#div#4;n#div#0;n#div#1;n#!!top" expanded="true" />
+            <marker date="1517833024759" expanded="true" signature="741:765" ph="DELETE FROM `vibory_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="820:846" ph="SELECT * FRO... vibory_sys" />
+            <marker date="1517833024759" expanded="true" signature="1213:1228" ph="SELECT * FRO... " />
+            <marker date="1517833024759" expanded="true" signature="1213:1235" ph="SELECT * FRO... " />
+            <marker date="1517833024759" expanded="true" signature="1566:1651" ph="UPDATE `vibory_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="1566:1664" ph="UPDATE `vibory_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="1566:1665" ph="UPDATE `vibory_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="1824:1907" ph="UPDATE `vibory_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="1969:1982" ph="INSERT INTO " />
+            <marker date="1517833024759" expanded="true" signature="1969:1993" ph="INSERT INTO ``... " />
+            <marker date="1517833024759" expanded="true" signature="1969:2031" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="1969:2032" ph="INSERT INTO `vibory_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="1969:2147" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="1969:2148" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="1969:2149" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+            <marker date="1517833024759" expanded="true" signature="2431:2471" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="2586:2631" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="3277:3322" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="4490:4530" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="4587:4636" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="4696:4729" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="5492:5532" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="5641:5670" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="6142:6182" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="6289:6318" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="6841:6881" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="7022:7067" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="7291:7336" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="7848:7888" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="8034:8079" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="8306:8351" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="8600:8645" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="9199:9239" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="9385:9430" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="9661:9706" ph="..." />
+            <marker date="1517833024759" expanded="true" signature="10165:10219" ph="..." />
           </folding>
         </state>
       </provider>
