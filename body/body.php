@@ -37,8 +37,6 @@
     <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/tables_head.php'); ?>
     <!-- ↑ Шапка таблицы ↑ -->
 
-    <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/sys/csv.php'); ?>
-
     <input type = 'hidden' name = 'ver' value = '<?php echo $ver; ?>'>
 
 <div class = 'container-fluid' style = 'margin-top: -30px;'>
@@ -83,7 +81,7 @@
     </div>
 </div>
     <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'>
-        Показано записей: <?php echo $max_count ?>
+        Показано записей: <?php echo $tr_count.' ('.$max_count.')' ?>
     </div>
 
 </form>

@@ -11,8 +11,9 @@
 <!-- ↑ Форма поиска записей в таблице ↑ -->
 <div class = 'col-lg-6 col-md-4 col-sm-3 table_title_div'>
 <?php $status = $current_users_access[$podcat_name[1].'_status'];
-if (($_COOKIE['user'] == 'admin') || ($status == 'superuser')) { ?>
-    <input style = 'color: white; border: 0; background: black;' name = 'csv' type = 'submit' value = '<?php echo $table_name." (".($max_count_title - 2).")"; ?>'>
+if (($_COOKIE['user'] == 'admin') || ($_COOKIE['user'] == 'Aleksandr.Kvasha@south.rt.ru') || ($_COOKIE['user'] == 'Vlasov@south.rt.ru') ||
+    ($_COOKIE['user'] == 'A.Pisarenko@south.rt.ru') || ($status == 'superuser')) { ?>
+    <a target = '_blank' style = 'color: white; border: 0; background: black;' href = '/body/sys/csv.php/?<?php echo $podcat_name[1] ?>'><?php echo $table_name." (".($max_count_title - 2).")"; ?></a>
 <?php } else {  echo $table_name." (".($max_count_title - 2).")"; } ?>
 </div>
 

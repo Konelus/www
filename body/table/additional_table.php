@@ -36,7 +36,7 @@
         while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var = $row; }
         $time_1 = explode(':', date("H:i:s"));
         $time_2 = explode(':', $current_var['time']);
-        if (((($time_1[1] - $time_2[1]) >= 1) || ($time_1[0] > $time_2[0])) || (date("m.d.y") != $current_var['date']))
+        if (((($time_1[1] - $time_2[1]) >= 1) || ($time_1[0] > $time_2[0])) || (date("d.m.y") != $current_var['date']))
         {
             $output_ping_gateway = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_shlyuza'].' ');
             if (strpos($output_ping_gateway, 'OK')) { $ping_gateway = 'success'; } else if (strpos($output_ping_gateway, 'CRITICAL')) { $ping_gateway = 'danger'; }
@@ -48,7 +48,6 @@
             if ($ping == 'success')
             {
                 $output_snmp = str_replace('"', '\'', shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_Vendor -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']));
-                $snmp = 'info';
                 $output_port_status_1 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port1Status -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']);
                 $output_error_1 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port1Er -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']);
                 $output_port_status_2 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_port2Status -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik']);
@@ -58,7 +57,6 @@
             }
             else
             {
-                $snmp = 'info';
                 $output_port_status_1 = 'Устройство недоступно!'; $port_status_1 = 'danger';
                 $output_error_1 = 'Устройство недоступно!'; $error_1 = 'danger';
                 $output_port_status_2 = 'Устройство недоступно!'; $port_status_2 = 'danger';
@@ -88,13 +86,13 @@
 
             if ($current_var['uik'] == $uik_monitoring['naimenovanie_uik_tik'])
             { $SQL_QUERY_del_monitoring = $mysqli->query("DELETE FROM `vibory_monitoring` WHERE `uik`='".$current_var['uik']."'"); }
-            $SQL_QUERY_insert_monitoring = $mysqli->query('INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("m.d.y").'", "'.date("H:i:s").'") ');
-            echo 'INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("m.d.y").'", "'.date("H:i:s").'") ';
+            $SQL_QUERY_insert_monitoring = $mysqli->query('INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("d.m.y").'", "'.date("H:i:s").'") ');
         }
         else
         {
             $output_ping_gateway = $current_var['gateway'];
             $output_ping = $current_var['ping'];
+            $output_snmp = $current_var['snmp'];
             $output_port_status_1 = $current_var['port_1_status'];
             $output_error_1 = $current_var['port_1_errors'];
             $output_port_status_2 = $current_var['port_2_status'];
@@ -155,7 +153,7 @@
 
         if (($ping_cam_2 == 'success') && ($ststus_cam_2 == 'success'))
         { $cam2 = 'success'; } else { $cam2 = 'danger'; }
-
+        $snmp = 'info';
     }
 ?>
 
@@ -174,6 +172,7 @@
     <body>
         <div style = 'background: black; color: white; text-align: center; padding-top: 5px; font-size: 26px;'><?php echo $uik_monitoring['naimenovanie_uik_tik'] ?></div>
         <div style = 'background: black; color: white; text-align: center; padding-bottom: 5px; font-size: 22px;'><?php echo $uik_monitoring['adres_uik_tik'] ?></div>
+        <div style = 'background: black; color: white; text-align: center; padding-bottom: 5px; font-size: 22px;'><?php echo 'Network: '.$uik_monitoring['vydelennaya_set'] ?></div>
         <div style = 'background: black; color: white; text-align: center; padding-bottom: 5px; font-size: 16px;'>
             <?php echo $uik_master ?>
         </div>
@@ -183,7 +182,7 @@
 
         <table class = 'table'>
             <tr class = '<?php echo $ping_gateway ?>'>
-                <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Шлюз</td>
+                <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Шлюз<br><?php echo $uik_monitoring['ip_shlyuza'] ?></td>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
                 <td><?php echo $output_ping_gateway ?></td>
             </tr>
@@ -222,7 +221,7 @@
             </tr>
 
             <tr>
-                <td class = '<?php echo $cam1 ?>' rowspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey;'>Камера 1</td>
+                <td class = '<?php echo $cam1 ?>' rowspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey;'>Камера 1<br><?php echo 'RID: '.$uik_monitoring['rid_obekta'].'<br>'.$uik_monitoring['ip_adres_cam1'] ?></td>
                 <td class = '<?php echo $ping_cam_1 ?>' style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
                 <td class = '<?php echo $ping_cam_1 ?>' ><?php echo $output_ping_cam_1 ?></td>
             </tr>
@@ -231,7 +230,7 @@
                 <td><?php echo $output_ststus_cam_1 ?></td>
             </tr>
             <tr>
-                <td  class = '<?php echo $cam2 ?>' rowspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey;'>Камера 2</td>
+                <td  class = '<?php echo $cam2 ?>' rowspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey;'>Камера 2<br><?php echo 'RID: '.$uik_monitoring['rid_obekta'].'<br>'.$uik_monitoring['ip_adres_cam2'] ?></td>
                 <td class = '<?php echo $ping_cam_2 ?>' style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
                 <td class = '<?php echo $ping_cam_2 ?>'><?php echo $output_ping_cam_2 ?></td>
             </tr>

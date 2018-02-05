@@ -29,6 +29,7 @@
     $bool_chb = false;
     $bool_edit = false;
     $td_td = 1;
+    $tr_count = 0;
     $bool_query = 0;
     $tr_vision_count = 2;
 
@@ -67,8 +68,6 @@
     {
         for ($tr = 0; $tr <= $max_count; $tr++)
         {
-            if ($csv_var != '')
-            { $csv_var = $csv_var.iconv("UTF-8", "windows-1251", "\n"); }
             if ((($tr_vision[$title[$tr][0]]) == ($title[$tr][0])) || ($_COOKIE['user'] == 'admin'))
             {
                 if ($title[$tr][0] != '')
@@ -95,7 +94,7 @@
 //                            $searched_td = $_POST['hidden_sort_5'];
 //                            $caption = $_POST['hidden_sort_6'];
 
-                }
+                        }
                         // ↑ Скроллинг при нажатии кнопки редактирования ↑
 
 
@@ -155,7 +154,7 @@
                                 while ($row = mysqli_fetch_row($SQL_QUERY_select_searched_id))
                                 { $td_title_count = $row[0]; }
                                 if ($new_td[$td_td] == $td_title_count)
-                                { $class_color = 'table_head_bg2'; }
+                                { $class_color = 'table_bg_search'; }
                                 else { $class_color = ''; }
                             }
                             else { $class_color = ''; }
@@ -189,10 +188,11 @@
                         // ↓ Для юзера ↓
                         else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$podcat_name[1].'_status'] == 'user'))  { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/user_edit_buttons.php'); }
                         // ↑ Для рюзера ↑
-                        $csv_var = $csv_var.iconv("UTF-8", "windows-1251", $title[$tr][$new_td[$td_td]]).';';
+
         /*  ↑ - - - - - - - - - - ↑ Формирование кнопок edit и del ↑ - - - - - - - - - - */
 
                     }
+                    $tr_count++;
                     $bool_query = 0;
                     $bool_var_2 = 0;
                     $td_td = 1;
