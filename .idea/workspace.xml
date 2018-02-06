@@ -29,62 +29,64 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="admin.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/home/admin.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="30" column="46" lean-forward="true" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+            <state relative-caret-position="357">
+              <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#div#4;n#div#0;n#div#1;n#!!top" expanded="true" />
-                <marker date="1517833024759" expanded="true" signature="741:765" ph="DELETE FROM `vibory_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="820:846" ph="SELECT * FRO... vibory_sys" />
-                <marker date="1517833024759" expanded="true" signature="1213:1228" ph="SELECT * FRO... " />
-                <marker date="1517833024759" expanded="true" signature="1213:1235" ph="SELECT * FRO... " />
-                <marker date="1517833024759" expanded="true" signature="1566:1651" ph="UPDATE `vibory_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="1566:1664" ph="UPDATE `vibory_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="1566:1665" ph="UPDATE `vibory_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="1824:1907" ph="UPDATE `vibory_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="1969:1982" ph="INSERT INTO " />
-                <marker date="1517833024759" expanded="true" signature="1969:1993" ph="INSERT INTO ``... " />
-                <marker date="1517833024759" expanded="true" signature="1969:2031" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="1969:2032" ph="INSERT INTO `vibory_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="1969:2147" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="1969:2148" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="1969:2149" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
-                <marker date="1517833024759" expanded="true" signature="2431:2471" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="2586:2631" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="3277:3322" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="4490:4530" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="4587:4636" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="4696:4729" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="5492:5532" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="5641:5670" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="6142:6182" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="6289:6318" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="6841:6881" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="7022:7067" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="7291:7336" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="7848:7888" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="8034:8079" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="8306:8351" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="8600:8645" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="9199:9239" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="9385:9430" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="9661:9706" ph="..." />
-                <marker date="1517833024759" expanded="true" signature="10165:10219" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="741:765" ph="DELETE FROM `vibory_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="820:846" ph="SELECT * FRO... vibory_sys" />
+                <marker date="1517890130402" expanded="true" signature="1145:1160" ph="SELECT * FRO... " />
+                <marker date="1517890130402" expanded="true" signature="1145:1167" ph="SELECT * FRO... " />
+                <marker date="1517890130402" expanded="true" signature="1391:1461" ph="UPDATE `vibory_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="1391:1474" ph="UPDATE `vibory_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="1391:1475" ph="UPDATE `vibory_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="1634:1703" ph="UPDATE `vibory_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="1634:1717" ph="UPDATE `vibory_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="1800:1813" ph="INSERT INTO " />
+                <marker date="1517890130402" expanded="true" signature="1800:1824" ph="INSERT INTO ``... " />
+                <marker date="1517890130402" expanded="true" signature="1800:1862" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="1800:1863" ph="INSERT INTO `vibory_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="1800:1978" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="1800:1979" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="1800:1980" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+                <marker date="1517890130402" expanded="true" signature="2262:2302" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="2417:2462" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="3108:3153" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="4321:4361" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="4418:4467" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="4527:4560" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="5323:5363" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="5472:5501" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="5973:6013" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="6120:6149" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="6672:6712" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="6853:6898" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="7122:7167" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="7679:7719" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="7865:7910" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="8137:8182" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="8431:8476" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="9030:9070" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="9216:9261" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="9492:9537" ph="..." />
+                <marker date="1517890130402" expanded="true" signature="9996:10050" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="script.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="script.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/config_script/script.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="17" selection-end-column="15" />
+            <state relative-caret-position="485">
+              <caret line="78" column="3" lean-forward="true" selection-start-line="78" selection-start-column="3" selection-end-line="78" selection-end-column="3" />
               <folding>
-                <marker date="1517397679130" expanded="true" signature="1063:1085" ph="SELECT * FRO... vibory" />
-                <marker date="1517397679130" expanded="true" signature="3028:3065" ph="..." />
+                <marker date="1517896622432" expanded="true" signature="1085:1107" ph="SELECT * FRO... vibory" />
+                <marker date="1517896622432" expanded="true" signature="1301:1327" ph="SELECT * FRO... vibory" />
+                <marker date="1517896622432" expanded="true" signature="3806:3843" ph="..." />
               </folding>
             </state>
           </provider>
@@ -176,8 +178,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>$ping</find>
-      <find>$output_ping</find>
       <find>$qq</find>
       <find>title</find>
       <find>max_count</find>
@@ -206,6 +206,8 @@
       <find>csv</find>
       <find>echo</find>
       <find>&lt;?</find>
+      <find>hostgroups</find>
+      <find>$var</find>
     </findStrings>
     <replaceStrings>
       <replace>default</replace>
@@ -249,7 +251,6 @@
         <option value="$PROJECT_DIR$/body/table/sys/content/user_content.php" />
         <option value="$PROJECT_DIR$/body/table/sys/content/admin_content.php" />
         <option value="$PROJECT_DIR$/body/table/sys/style.css" />
-        <option value="$PROJECT_DIR$/config_script/script.php" />
         <option value="$PROJECT_DIR$/body/table/sys/tr_edit.php" />
         <option value="$PROJECT_DIR$/body/query.php" />
         <option value="$PROJECT_DIR$/body/pre_table/sys/admin_head.php" />
@@ -264,6 +265,7 @@
         <option value="$PROJECT_DIR$/body/sys/csv.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/home/admin.php" />
+        <option value="$PROJECT_DIR$/config_script/script.php" />
       </list>
     </option>
   </component>
@@ -331,11 +333,6 @@
               <item name="www" type="b2602c69:ProjectViewProjectNode" />
               <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
               <item name="config_script" type="2a2b976b:PhpTreeStructureProvider$1" />
-            </path>
-            <path>
-              <item name="www" type="b2602c69:ProjectViewProjectNode" />
-              <item name="www" type="2a2b976b:PhpTreeStructureProvider$1" />
-              <item name="home" type="2a2b976b:PhpTreeStructureProvider$1" />
             </path>
           </expand>
           <select />
@@ -406,12 +403,12 @@
       <workItem from="1517289336065" duration="46560000" />
       <workItem from="1517404448760" duration="1307000" />
       <workItem from="1517467760848" duration="38596000" />
-      <workItem from="1517811324487" duration="16137000" />
+      <workItem from="1517811324487" duration="22262000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="341477000" />
+    <option name="totallyTimeSpent" value="347602000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -776,17 +773,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config_script/script.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="8" lean-forward="false" selection-start-line="15" selection-start-column="8" selection-end-line="17" selection-end-column="15" />
-          <folding>
-            <marker date="1517397679130" expanded="true" signature="1063:1085" ph="SELECT * FRO... vibory" />
-            <marker date="1517397679130" expanded="true" signature="3028:3065" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -817,46 +803,59 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/home/admin.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="46" lean-forward="true" selection-start-line="30" selection-start-column="46" selection-end-line="30" selection-end-column="46" />
+        <state relative-caret-position="357">
+          <caret line="33" column="0" lean-forward="false" selection-start-line="33" selection-start-column="0" selection-end-line="33" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#div#1;n#div#4;n#div#0;n#div#1;n#!!top" expanded="true" />
-            <marker date="1517833024759" expanded="true" signature="741:765" ph="DELETE FROM `vibory_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="820:846" ph="SELECT * FRO... vibory_sys" />
-            <marker date="1517833024759" expanded="true" signature="1213:1228" ph="SELECT * FRO... " />
-            <marker date="1517833024759" expanded="true" signature="1213:1235" ph="SELECT * FRO... " />
-            <marker date="1517833024759" expanded="true" signature="1566:1651" ph="UPDATE `vibory_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="1566:1664" ph="UPDATE `vibory_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="1566:1665" ph="UPDATE `vibory_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="1824:1907" ph="UPDATE `vibory_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="1969:1982" ph="INSERT INTO " />
-            <marker date="1517833024759" expanded="true" signature="1969:1993" ph="INSERT INTO ``... " />
-            <marker date="1517833024759" expanded="true" signature="1969:2031" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="1969:2032" ph="INSERT INTO `vibory_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="1969:2147" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="1969:2148" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="1969:2149" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
-            <marker date="1517833024759" expanded="true" signature="2431:2471" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="2586:2631" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="3277:3322" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="4490:4530" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="4587:4636" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="4696:4729" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="5492:5532" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="5641:5670" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="6142:6182" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="6289:6318" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="6841:6881" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="7022:7067" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="7291:7336" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="7848:7888" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="8034:8079" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="8306:8351" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="8600:8645" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="9199:9239" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="9385:9430" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="9661:9706" ph="..." />
-            <marker date="1517833024759" expanded="true" signature="10165:10219" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="741:765" ph="DELETE FROM `vibory_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="820:846" ph="SELECT * FRO... vibory_sys" />
+            <marker date="1517890130402" expanded="true" signature="1145:1160" ph="SELECT * FRO... " />
+            <marker date="1517890130402" expanded="true" signature="1145:1167" ph="SELECT * FRO... " />
+            <marker date="1517890130402" expanded="true" signature="1391:1461" ph="UPDATE `vibory_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="1391:1474" ph="UPDATE `vibory_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="1391:1475" ph="UPDATE `vibory_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="1634:1703" ph="UPDATE `vibory_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="1634:1717" ph="UPDATE `vibory_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="1800:1813" ph="INSERT INTO " />
+            <marker date="1517890130402" expanded="true" signature="1800:1824" ph="INSERT INTO ``... " />
+            <marker date="1517890130402" expanded="true" signature="1800:1862" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="1800:1863" ph="INSERT INTO `vibory_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="1800:1978" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="1800:1979" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="1800:1980" ph="INSERT INTO `${$podcat_name[1]}_sys`... " />
+            <marker date="1517890130402" expanded="true" signature="2262:2302" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="2417:2462" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="3108:3153" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="4321:4361" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="4418:4467" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="4527:4560" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="5323:5363" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="5472:5501" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="5973:6013" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="6120:6149" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="6672:6712" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="6853:6898" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="7122:7167" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="7679:7719" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="7865:7910" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="8137:8182" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="8431:8476" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="9030:9070" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="9216:9261" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="9492:9537" ph="..." />
+            <marker date="1517890130402" expanded="true" signature="9996:10050" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config_script/script.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="485">
+          <caret line="78" column="3" lean-forward="true" selection-start-line="78" selection-start-column="3" selection-end-line="78" selection-end-column="3" />
+          <folding>
+            <marker date="1517896622432" expanded="true" signature="1085:1107" ph="SELECT * FRO... vibory" />
+            <marker date="1517896622432" expanded="true" signature="1301:1327" ph="SELECT * FRO... vibory" />
+            <marker date="1517896622432" expanded="true" signature="3806:3843" ph="..." />
           </folding>
         </state>
       </provider>
