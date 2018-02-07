@@ -2,7 +2,7 @@
 
 <?php
 
-    $node = '10.153.29.134';
+    $node = '10.234.255.42';
 
     /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
     $link = '';
@@ -154,6 +154,13 @@
         if (($ping_cam_2 == 'success') && ($ststus_cam_2 == 'success'))
         { $cam2 = 'success'; } else { $cam2 = 'danger'; }
         $snmp = 'info';
+
+        $ready_class = '';
+        $ready = $uik_monitoring['gotovnost_obekta_da'];
+        $ready_ex = explode(' ', $ready);
+        if (($ready_ex[0] == 'монтаж') && (($ready_ex[1] == 'не'))) { $ready_class = 'danger'; }
+        else if (($ready_ex[0] != 'монтаж') && (($ready_ex[0] != 'не'))) { $ready_class = 'success'; }
+
     }
 ?>
 
@@ -162,6 +169,7 @@
 <html lang="ru">
     <head>
         <title><?php echo $uik_monitoring['naimenovanie_uik_tik'] ?> (Мониторинг)</title>
+        <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -181,6 +189,10 @@
         </div>
 
         <table class = 'table'>
+            <tr class = '<?php echo $ready_class ?>'>
+                <td colspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey; text-align: center; font-weight: bold; border-bottom: solid 2px black;'>Готовность объекта</td>
+                <td style = 'border-bottom: solid 2px black;'><?php echo $ready ?></td>
+            </tr>
             <tr class = '<?php echo $ping_gateway ?>'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Шлюз<br><?php echo $uik_monitoring['ip_shlyuza'] ?></td>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
