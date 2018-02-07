@@ -53,65 +53,117 @@ if (isset ($_POST['create']))
     {
         $hostgroups = explode(',', $sys_var[$count]['hostgroups']);
 
-//
-//        if ($hostgroups[1] == '0_AZV') { $host_1 = $host_1.$hostgroups[1]; }
-//        else if ($hostgroups[1] == '0_KSH') { $host_2 = $host_2.$hostgroups[1]; }
-//        else if ($hostgroups[1] == '0_NVCH') { $host_3 = $host_3.$hostgroups[1]; }
-//        if ($hostgroups[1] == '0_RND')
-//        {
-//            $host_4 = $host_4.$hostgroups[1];
-//            if ($hostgroups[2] == '0_USTP1') { $host_5 = $host_5.$hostgroups[2]; }
-//            else if ($hostgroups[2] == '0_USTP2') { $host_6 = $host_6.$hostgroups[2]; }
-//            else if ($hostgroups[2] == '0_USTP3') { $host_7 = $host_7.$hostgroups[2]; }
-//            else if ($hostgroups[2] == '0_USTP4') { $host_8 = $host_8.$hostgroups[2]; }
-//            else if ($hostgroups[2] == '0_USTP5') { $host_9 = $host_9.$hostgroups[2]; }
-//            else if ($hostgroups[2] == '0_USTP6') { $host_10 = $host_10.$hostgroups[2]; }
-//            else if ($hostgroups[2] == '0_USTP7')
-//            { $host_11 = $host_11.$hostgroups[2]; }
-//        }
-//
-//        else if ($hostgroups[1] == '0_TG')  { $host_12 = $host_12.$hostgroups[1]; }
-//        else if ($hostgroups[1] == '0_VGD')  { $host_13 = $host_13.$hostgroups[1]; }
-//
-//
-//        if ($hostgroups[2] == '0_AISS_R') { $host_14 = $host_14.$hostgroups[2]; }
-//        if (($hostgroups[2] == '0_USTP1') || ($hostgroups[2] == '0_USTP2') || ($hostgroups[2] == '0_USTP4') || ($hostgroups[2] == '0_USTP5'))
-//        { if ($hostgroups[3] == '0_AISS_R') { $host_15 = $host_15.$hostgroups[3]; } }
-//        if (($hostgroups[1] == '0_VGD') || ($hostgroups[1] == '0_TG') || ($hostgroups[1] == '0_NVCH'))
-//        {
-//            if ($hostgroups[2] == '0_AISS_R') { $host_16 = $host_16.$hostgroups[2]; }
-//            if ($hostgroups[2] == '0_ARK') { $host_17 = $host_17.$hostgroups[2]; }
-//        }
-//        if (($hostgroups[2] == '0_USTP1') || ($hostgroups[2] == '0_USTP3') || ($hostgroups[2] == '0_USTP5'))
-//        { if ($hostgroups[3] == '0_ARK') { $host_18 = $host_18.$hostgroups[3]; } }
-//        if (($hostgroups[1] == '0_AZV') || ($hostgroups[1] == '0_NVCH') || ($hostgroups[2] == '0_USTP1') || ($hostgroups[2] == '0_USTP2') || ($hostgroups[2] == '0_USTP6') || ($hostgroups[2] == '0_USTP7') || ($hostgroups[1] == '0_VGD'))
-//        {
-//            if ($hostgroups[2] == '0_Donsv') { $host_19 = $host_19.$hostgroups[2]; }
-//            if ($hostgroups[3] == '0_Donsv') { $host_20 = $host_20.$hostgroups[3]; }
-//        }
 
 
+        //echo '321!';
+        $ready = $vibory_var[$count]['gotovnost_obekta_da'];
 
-        if ($hostgroups[1] == '0_AZV') { $host_gr_1 = '0_AZV'; $host_1 = $host_1.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[1] == '0_KSH') { $host_gr_2 = '0_KSH'; $host_2 = $host_2.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[1] == '0_NVCH') { $host_gr_3 = '0_NVCH'; $host_3 = $host_3.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[1] == '0_RND') { $host_gr_4 = '0_RND'; $host_4 = $host_4.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[1] == '0_TG')  { $host_gr_5 = '0_TG'; $host_5 = $host_5.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[1] == '0_VGD')  { $host_gr_6 = '0_VGD'; $host_6 = $host_6.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
+        $ready_ex = explode(' ', $ready);
 
-        if ($hostgroups[2] == '0_USTP1') { $host_gr_7 = '0_USTP1'; $host_7 = $host_7.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[2] == '0_USTP2') { $host_gr_8 = '0_USTP2'; $host_8 = $host_8.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[2] == '0_USTP3') { $host_gr_9 = '0_USTP3'; $host_9 = $host_9.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[2] == '0_USTP4') { $host_gr_10 = '0_USTP4'; $host_10 = $host_10.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[2] == '0_USTP5') { $host_gr_11 = '0_USTP5'; $host_11 = $host_11.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[2] == '0_USTP6') { $host_gr_12 = '0_USTP6'; $host_12 = $host_12.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[2] == '0_USTP7') { $host_gr_13 = '0_USTP7'; $host_13 = $host_13.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        else if ($hostgroups[2] == '0_AISS_R') { $host_gr_14 = '0_AISS_R'; $host_14 = $host_14.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        //else if ($hostgroups[2] == '0_AISS_R') { $host_15 = $host_15.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
+        if (($ready_ex[0] != 'монтаж') && (($ready_ex[1] != 'не')))
+        {
+            //echo $hostgroups[1]."<br>";
+            //echo '123!';
+            if ($hostgroups[1] == '0_AZV')
+            {
+                $host_gr_1 = '00_AZV';
+                if ($host_1 != '') { $dot_1 = ','; }
+                $host_1 = $host_1.$dot_1.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[1] == '0_KSH')
+            {
+                $host_gr_2 = '00_KSH';
+                if ($host_2 != '') { $dot_2 = ','; }
+                $host_2 = $host_2.$dot_2.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[1] == '0_NVCH')
+            {
+                $host_gr_3 = '00_NVCH';
+                if ($host_3 != '') { $dot_3 = ','; }
+                $host_3 = $host_3.$dot_3.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[1] == '0_RND')
+            {
+                $host_gr_4 = '00_RND';
+                if ($host_4 != '') { $dot_4 = ','; }
+                $host_4 = $host_4.$dot_4.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[1] == '0_TG')
+            {
+                $host_gr_5 = '00_TG';
+                if ($host_5 != '') { $dot_5 = ','; }
+                $host_5 = $host_5.$dot_5.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[1] == '0_VGD')
+            {
+                $host_gr_6 = '00_VGD';
+                if ($host_6 != '') { $dot_6 = ','; }
+                $host_6 = $host_6.$dot_6.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
 
-        if (($hostgroups[2] == '0_ARK') || ($hostgroups[3] == '0_ARK')) { $host_gr_15 = '0_ARK'; $host_15 = $host_15.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        if (($hostgroups[2] == '0_Donsv') || ($hostgroups[3] == '0_Donsv')) { $host_gr_16 = '0_Donsv'; $host_16 = $host_16.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
-        if ($hostgroups[3] == '0_AISS_R') { $host_gr_17 = '0_AISS_R'; $host_17 = $host_17.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2;'; }
+            if ($hostgroups[2] == '0_USTP1')
+            {
+                $host_gr_7 = '00_USTP1';
+                if ($host_7 != '') { $dot_7 = ','; }
+                $host_7 = $host_7.$dot_7.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[2] == '0_USTP2')
+            {
+                $host_gr_8 = '00_USTP2';
+                if ($host_8 != '') { $dot_8 = ','; }
+                $host_8 = $host_8.$dot_8.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[2] == '0_USTP3')
+            {
+                $host_gr_9 = '00_USTP3';
+                if ($host_9 != '') { $dot_9 = ','; }
+                $host_9 = $host_9.$dot_9.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[2] == '0_USTP4')
+            {
+                $host_gr_10 = '00_USTP4';
+                if ($host_10 != '') { $dot_10 = ','; }
+                $host_10 = $host_10.$dot_10.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[2] == '0_USTP5')
+            {
+                $host_gr_11 = '00_USTP5';
+                if ($host_11 != '') { $dot_11 = ','; }
+                $host_11 = $host_11.$dot_11.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[2] == '0_USTP6')
+            {
+                $host_gr_12 = '00_USTP6';
+                if ($host_12 != '') { $dot_12 = ','; }
+                $host_12 = $host_12.$dot_12.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if ($hostgroups[2] == '0_USTP7')
+            {
+                $host_gr_13 = '00_USTP7';
+                if ($host_13 != '') { $dot_13 = ','; }
+                $host_13 = $host_13.$dot_13.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            else if (($hostgroups[2] == '0_AISS_R') || ($hostgroups[3] == '0_AISS_R'))
+            {
+                $host_gr_14 = '00_AISS_R';
+                if ($host_14 != '') { $dot_14 = ','; }
+                $host_14 = $host_14.$dot_14.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+
+            if (($hostgroups[2] == '0_ARK') || ($hostgroups[3] == '0_ARK'))
+            {
+                $host_gr_15 = '00_ARK';
+                if ($host_15 != '') { $dot_15 = ','; }
+                $host_15 = $host_15.$dot_15.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+            if (($hostgroups[2] == '0_Donsv') || ($hostgroups[3] == '0_Donsv'))
+            {
+                $host_gr_16 = '00_Donsv';
+                if ($host_16 != '') { $dot_16 = ','; }
+                $host_16 = $host_16.$dot_16.$vibory_var[$count]['description'].'_SW,'.$vibory_var[$count]['description'].'_CAM1,'.$vibory_var[$count]['description'].'_CAM2';
+            }
+        }
+
 
             $str = 'define hostgroup{
     hostgroup_name '.$vibory_var[$count]['description'].';
@@ -164,112 +216,107 @@ define host{
     }
 
     $str_2 = 'define hostgroup{
-    hostgroup_name '.$vibory_var[$count]['description'].';
-    hostgroup_members '.$host_gr_1.','.$host_gr_2.','.$host_gr_3.','.$host_gr_4.','.$host_gr_5.','.$host_gr_6.','.$host_gr_7.','.$host_gr_8.','.$host_gr_9.','. $host_gr_10.','.$host_gr_11.','.$host_gr_12.','.$host_gr_13.','.$host_gr_14.','.$host_gr_15.','.$host_gr_16.','.$host_gr_17.';
+    hostgroup_name 00_vib_allPrin;
+    hostgroup_members '.$host_gr_1.','.$host_gr_2.','.$host_gr_3.','.$host_gr_4.','.$host_gr_5.','.$host_gr_6.','.$host_gr_7.','.$host_gr_8.','.$host_gr_9.','. $host_gr_10.','.$host_gr_11.','.$host_gr_12.','.$host_gr_13.','.$host_gr_14.','.$host_gr_15.','.$host_gr_16.';
     alias '.$vibory_var[$count]['naimenovanie_uik_tik'].' '.$vibory_var[$count]['adres_uik_tik'].';
 }
         
         define hostgroup{
 hostgroup_name '.$host_gr_1.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_1.'
+members '.$host_1.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_2.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_2.'
+members '.$host_2.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_3.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_3.'
+members '.$host_3.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_4.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_4.'
+members '.$host_4.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_5.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_5.'
+members '.$host_5.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_6.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_6.'
+members '.$host_6.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_7.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_7.'
+members '.$host_7.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_8.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_8.'
+members '.$host_8.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_9.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_9.'
+members '.$host_9.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_10.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_10.'
+members '.$host_10.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_11.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_11.'
+members '.$host_11.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_12.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_12.'
+members '.$host_12.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_13.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_13.'
+members '.$host_13.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_14.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_14.'
+members '.$host_14.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_15.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_15.'
+members '.$host_15.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_16.';
 alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_16.'
+members '.$host_16.';
 }
 
-        define hostgroup{
-hostgroup_name '.$host_gr_17.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
-members '.$host_17.'
-}
         ';
 
     $win_str_2 = iconv("UTF-8", "windows-1251", $str_2);

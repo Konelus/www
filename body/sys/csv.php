@@ -32,6 +32,23 @@
             $count++;
         }
     }
+
+    //while ($td_count <= mysqli_num_fields($SQL_QUERY_select_data))
+    //{
+
+    //}
+
+    $SQL_select_td_name = $mysqli->query("SELECT * FROM `".$podcat_name[1]."_table`");
+    while ($row = mysqli_fetch_row($SQL_select_td_name))
+    {
+        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\n', ' ')");
+        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\r', ' ')");
+        //echo "<br>"."UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\n', ' ')";
+
+    }
+
+
+
     $max_count = mysqli_num_rows($SQL_QUERY_select_data);
     $max_td = mysqli_num_fields($SQL_QUERY_select_data);
 
@@ -86,9 +103,9 @@
     }
 
 
-    $file = $_SERVER['DOCUMENT_ROOT'].'temp/'.$podcat_name[1].".csv";
+    $file = $_SERVER['DOCUMENT_ROOT'].'/temp/'.$podcat_name[1].".csv";
     unlink($file);
-    $fd = fopen($file, 'w') or die($_SERVER['DOCUMENT_ROOT'].'temp/'.$podcat_name[1].".csv");
+    $fd = fopen($file, 'w') or die($_SERVER['DOCUMENT_ROOT'].'/temp/'.$podcat_name[1].".csv");
     fwrite($fd, $csv_var);
     fclose($fd);
 ?>
@@ -100,5 +117,5 @@
     <title>Выгрузка CSV</title>
 </head>
 <body>
-    <div style = 'text-align: center;'>Выгрузка успешно сформирована.</div><div style = 'text-align: center;'>Нажмите на <a style = 'color: red;' href = '/<?php echo $podcat_name[1].".csv" ?>'>ссылку</a>, чтобы скачать</div>
+    <div style = 'text-align: center;'>Выгрузка успешно сформирована.</div><div style = 'text-align: center;'>Нажмите на <a style = 'color: red;' href = '/temp/<?php echo $podcat_name[1].".csv" ?>'>ссылку</a>, чтобы скачать</div>
 </body>
