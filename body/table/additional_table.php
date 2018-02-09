@@ -85,7 +85,7 @@
 
 
             if ($current_var['uik'] == $uik_monitoring['naimenovanie_uik_tik'])
-            { $SQL_QUERY_del_monitoring = $mysqli->query("DELETE FROM `vibory_monitoring` WHERE `uik`='".$current_var['uik']."'"); }
+            { $DB->delete("vibory_monitoring","`uik` = '".$current_var['uik']."'"); }
             $SQL_QUERY_insert_monitoring = $mysqli->query('INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("d.m.y").'", "'.date("H:i:s").'") ');
         }
         else

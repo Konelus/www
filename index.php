@@ -19,6 +19,7 @@
     $podcat_name = explode('?', $cat_name);
 
     require_once($_SERVER['DOCUMENT_ROOT']."/body/sys/translit.php");
+    require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
 
 
     // ↓ Получение группы пользователя ↓

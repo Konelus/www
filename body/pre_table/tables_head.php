@@ -31,7 +31,7 @@
             while ($row = mysqli_fetch_row($SQL_QUERY_ver))
             { $ver = $row[0]; }
             $ver_update = explode('.', $ver);
-            $SQL_QUERY_ver_update = $mysqli->query("UPDATE ver SET `ver` = '" . $ver_update[0].'.'.$ver_update[1].'.'.($ver_update[2] + 1) . "' ");
+            $DB->update("ver","ver","".$ver_update[0].'.'.$ver_update[1].'.'.($ver_update[2] + 1),"");
         }
         echo "<script>window.location.href = window.location.href;</script>";
     }

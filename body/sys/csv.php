@@ -33,18 +33,12 @@
         }
     }
 
-    //while ($td_count <= mysqli_num_fields($SQL_QUERY_select_data))
-    //{
-
-    //}
 
     $SQL_select_td_name = $mysqli->query("SELECT * FROM `".$podcat_name[1]."_table`");
     while ($row = mysqli_fetch_row($SQL_select_td_name))
     {
         $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\n', ' ')");
         $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\r', ' ')");
-        //echo "<br>"."UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\n', ' ')";
-
     }
 
 

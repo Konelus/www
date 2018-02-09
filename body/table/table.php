@@ -73,15 +73,11 @@
                 if ($title[$tr][0] != '')
                 {
                     if (isset ($_POST['add_in_vision_submit_'.$tr]))
-                    {
-                        $SQL_QUERY_add_in_vision = $mysqli->query("UPDATE `".$podcat_name[1]."_vision` SET `".$_POST['add_in_vision_text_'.$tr]."` = '+' WHERE `id_tr` = '".$title[$tr][0]."' ");
-                        //echo "<br><br>UPDATE `".$podcat_name[1]."_vision` SET `".$_POST['add_in_vision_text_'.$tr]."` = '+' WHERE `id_tr` = '".$title[$tr][0]."' ";
-                    }
+                    { $DB->update($podcat_name[1]."_vision`","".$_POST['add_in_vision_text_'.$tr],"+","`id_tr` = '".$title[$tr][0]."'"); }
 
                     ?><tr style='<?php echo $height ?>' id = '<?php echo $tr ?>'><?php
                     for ($td = 1; $td <= ($max_td + 3); $td++)
                     {
-                        //echo $td.' / ';
                         // ↓ Скроллинг при нажатии кнопки редактирования ↓
                         if (isset ($_POST['edit_' . ($tr + $searched_tr)]))
                         {
@@ -97,10 +93,6 @@
                         }
                         // ↑ Скроллинг при нажатии кнопки редактирования ↑
 
-
-                        // ↓ Отправка запроса при нажатии на "бегунок" ↓
-                        require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/checkbox_query.php');
-                        // ↑ Отправка запроса при нажатии на "бегунок" ↑
 
 
         /*  ↓ - - - - - - - - - - ↓ Сохранение отредактированной строки ↓ - - - - - - - - - - */

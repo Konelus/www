@@ -69,19 +69,19 @@
         if ($_POST['gr_name'] != '')
         {
             if ($group_perm_isset == 'false')
-            {$strSQL1 = $mysqli->query("INSERT INTO `" . $kostil . "_permission`  VALUES ($str) "); }
+            { $DB->insert($kostil . "_permission","".$str); }
             else if ($group_perm_isset == 'true')
             {
                 for ($td_count = 0; $td_count <= $max_td_count - 1; $td_count++)
-                { $SQL_update_00 = $mysqli->query("UPDATE `" . $kostil . "_permission` SET " . $table_sql[$td_count] . " = '" . $_POST['textBox' . $td_count] . "'  WHERE " . $kostil . "_group = '" . $_POST['gr_name'] . "' "); }
+                { $DB->update($kostil."_permission`","".$table_sql[$td_count],"". $_POST['textBox' . $td_count],"`".$kostil."_group` = '" . $_POST['gr_name'] . "'"); }
             }
 
             if ($group_perm_edit_isset == 'false')
-            {$strSQL1 = $mysqli->query("INSERT INTO `" . $kostil . "_permission`  VALUES ($str_edit) "); }
+            { $DB->insert($kostil . "_permission","".$str_edit); }
             else if ($group_perm_edit_isset == 'true')
             {
                 for ($td_count = 0; $td_count <= $max_td_count - 1; $td_count++)
-                { $SQL_update_00 = $mysqli->query("UPDATE `" . $kostil . "_permission` SET " . $table_sql[$td_count] . " = '" . $_POST['edit_listBox' . $td_count] . "'  WHERE " . $kostil . "_group = '" . $_POST['gr_name'] . "_edit' "); }
+                { $DB->update($kostil . "_permission`","".$table_sql[$td_count],"".$_POST['edit_listBox'.$td_count],"`".$kostil."_group` = '".$_POST['gr_name']."_edit'"); }
             }
         }
         // ↑ Формирование запроса ↑
@@ -155,7 +155,7 @@
     // ↓ Добавление пользователя ↓
     if (isset ($_POST['add_user']))
     {
-        $strSQL1 = $mysqli->query("INSERT INTO `users` (id, login, password, region, table_group, fio, position, phone, mail) VALUES (null, '".$_POST['login']."','".$_POST['password']."', '', '', '".$_POST['fio']."','".$_POST['position']."', '".$_POST['phone']."','".$_POST['mail']."')");
+        $DB->insert("users","null, '".$_POST['login']."','".$_POST['password']."', '', '', '".$_POST['fio']."','".$_POST['position']."', '".$_POST['phone']."','".$_POST['mail']."'");
         header ("Location: /");
     }
     // ↑ Добавление пользователя ↑
@@ -164,7 +164,7 @@
     // ↓ Удаление пользователя ↓
     if (isset ($_POST['del_user']))
     {
-        $strSQL1 = $mysqli->query("DELETE FROM `users` WHERE login = '".$_POST['del_user_name']."'");
+        $DB->delete("users","`login` = '".$_POST['del_user_name']."'");
         header ("Location: /");
     }
     // ↑ Удаление пользователя ↑
@@ -176,7 +176,7 @@
     // ↓ Изменение группы пользователя ↓
     if (isset ($_POST['edit_users_group']))
     {
-        $strSQL1 = $mysqli->query("UPDATE `users` SET `table_group` = '".$_POST['selected_group']."' WHERE login = '".$_POST['selected_user']."' ");
+        $DB->update("users","table_group","".$_POST['selected_group'],"`login` = '".$_POST['selected_user']."'");
         header ("Location: /");
     }
     // ↑ Изменение группы пользователя ↑
