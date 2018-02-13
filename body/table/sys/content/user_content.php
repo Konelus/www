@@ -1,4 +1,4 @@
-<td style='min-width: 150px; <?php echo $height ?>' class='<?php echo $class_color ?>'><?php
+<td style='min-width: 150px; <?php echo $height ?>' class='<?php echo $class_color.''.$ready ?>'><?php
     // ↓ Заполнение таблицы данными ↓
     if ($bool_var_2 == 0)
     {
@@ -16,7 +16,7 @@
     { ?><textarea <?php echo $ro[$new_td[$td_td]] ?>
             name = 'editBox_<?php echo $tr . "_" . $new_td[$td_td] ?>'
             style = 'height: 100px; padding: 0; font-size: 10px; text-align: center; border: solid 1px black; width: 100%;'
-            class = 'form-control'
+            class = 'form-control <?php echo $ready ?>'
             autocomplete = 'off'><?php echo $title[$tr][$new_td[$td_td]] ?></textarea>
         <?php $td_td++;
     }

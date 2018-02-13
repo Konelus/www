@@ -78,9 +78,16 @@
                     if (isset ($_POST['add_in_vision_submit_'.$tr]))
                     { $DB->update($podcat_name[1]."_vision`","".$_POST['add_in_vision_text_'.$tr],"+","`id_tr` = '".$title[$tr][0]."'"); }
 
-                    ?><tr class = '<?php echo $ready ?>' style='<?php echo $height ?>' id = '<?php echo $tr ?>'><?php
+                    $DB->select("alarm",$podcat_name[1]."_monitoring","`uik` = '".$title[$tr][3]."'");
+                    while ($row = mysqli_fetch_row($DB->sql_query_select))
+                    { $ready_date = $row[0]; }
+
+
+
+                    ?><tr style='<?php echo $height ?>' id = '<?php echo $tr ?>'><?php
                     for ($td = 1; $td <= ($max_td + 3); $td++)
                     {
+
                         // ↓ Скроллинг при нажатии кнопки редактирования ↓
                         if (isset ($_POST['edit_' . ($tr + $searched_tr)]))
                         {
@@ -153,6 +160,12 @@
                                 else { $class_color = ''; }
                             }
                             else { $class_color = ''; }
+
+                            if (($ready_date != null) && ($class_color == ''))
+                            { $ready = 'danger'; }
+                            else if (($title[$tr][18] != 'монтаж не произведён') && ($class_color == ''))
+                            { $ready = 'success'; }
+                            else { $ready = ''; }
 
                             // ↓ Для админа ↓
                             if ($_COOKIE['user'] == 'admin')

@@ -32,10 +32,13 @@
     if (isset ($_POST['confirm']))
     {
         $load_time = '';
+        //echo "SELECT * FROM `vibory_monitoring` WHERE `uik` = '".$uik_monitoring['naimenovanie_uik_tik']."' <br>";
         $SQL_QUERY_select_monitoring = $mysqli->query("SELECT * FROM `vibory_monitoring` WHERE `uik` = '".$uik_monitoring['naimenovanie_uik_tik']."' ");
         while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var = $row; }
         $time_1 = explode(':', date("H:i:s"));
         $time_2 = explode(':', $current_var['time']);
+        //echo $time_1[1].' --> '.$time_2[1];
+        //print_r($SQL_QUERY_select_monitoring);
         if (((($time_1[1] - $time_2[1]) >= 1) || ($time_1[0] > $time_2[0])) || (date("d.m.y") != $current_var['date']))
         {
             $output_ping_gateway = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_shlyuza'].' ');
@@ -84,9 +87,10 @@
             else { $output_ststus_cam_2 = 'Устройство недоступно!'; $ststus_cam_2 = 'danger'; }
 
 
-            if ($current_var['uik'] == $uik_monitoring['naimenovanie_uik_tik'])
-            { $DB->delete("vibory_monitoring","`uik` = '".$current_var['uik']."'"); }
-            $SQL_QUERY_insert_monitoring = $mysqli->query('INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("d.m.y").'", "'.date("H:i:s").'") ');
+
+//            if ($current_var['uik'] == $uik_monitoring['naimenovanie_uik_tik'])
+//            { $DB->delete("vibory_monitoring","`uik` = '".$current_var['uik']."'"); }
+//            $SQL_QUERY_insert_monitoring = $mysqli->query('INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "") ');
         }
         else
         {
@@ -160,6 +164,36 @@
         $ready_ex = explode(' ', $ready);
         if (($ready_ex[0] == 'монтаж') && (($ready_ex[1] == 'не'))) { $ready_class = 'danger'; }
         else if (($ready_ex[0] != 'монтаж') && (($ready_ex[0] != 'не'))) { $ready_class = 'success'; }
+        else if (($ready_ex[0] != 'монтаж') && (($ready_ex[0] != 'не'))) { $ready_class = 'success'; }
+
+
+            if (($commutator == 'success') && ($cam1 == 'success') && ($cam2 == 'success'))
+            {
+                echo $ready;
+                $ready = 'success';
+                $DB->select("`alarm`",$podcat_name[1]."_monitoring","`uik` = '".$title[$tr][3]."'");
+                while ($row = mysqli_fetch_row($DB->sql_query_select))
+                { $alarm = $row[1]; }
+                if ($lalrm != null)
+                {
+                    $DB->delete($podcat_name[1]."_monitoring","`uik` = '".$title[$tr][3]."'");
+                    $DB->insert($podcat_name[1]."_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("d.m.y").'", "'.date("H:i:s").'", ""');
+                }
+            }
+            else
+            {
+                echo $ready;
+                $ready = 'danger';
+                $DB->select("`alarm`",$podcat_name[1]."_monitoring","`uik` = '".$title[$tr][3]."'");
+                while ($row = mysqli_fetch_row($DB->sql_query_select))
+                { $alarm = $row[1]; }
+                if ($lalrm == null)
+                {
+                    $DB->delete($podcat_name[1]."_monitoring","`uik` = '".$title[$tr][3]."'");
+                    $DB->insert($podcat_name[1]."_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.date("d.m.y H:i:s").'"');
+                }
+            }
+
 
     }
 ?>

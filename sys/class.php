@@ -12,6 +12,8 @@
             if ($descriptor) { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
             $mysqli = new mysqli("localhost", "root", "".$link, "rtk_01");
             $this->mysqli = $mysqli;
+            mysqli_set_charset($mysqli, 'utf8');
+
         }
 
         function select($value, $table, $where)
@@ -31,6 +33,7 @@
         function insert($table, $values)
         {
             $this->mysqli->query("INSERT INTO `".$table."` VALUES (".$values.") ");
+            //echo "INSERT INTO `".$table."` VALUES (".$values.") ";
         }
 
         function update($table, $cell, $value, $where)
@@ -43,6 +46,7 @@
         {
             if ($where != null) { $where = ' WHERE '.$where; }
             $this->mysqli->query("DELETE FROM `".$table."`".$where);
+            //echo "DELETE FROM `".$table."`".$where;
         }
 
 //        function alter_add()
