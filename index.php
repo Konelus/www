@@ -1,6 +1,8 @@
-<!DOCTYPE html>
-
 <?php
+
+    header("Cache-Control: no-store, no-cache, must-revalidate");
+    header("Expires: " . date("r"));
+
     /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
     $link = '';
     $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
@@ -41,7 +43,7 @@
     { $ver = $row[0]; }
 
     if ($_COOKIE['user'] == 'admin')
-    { $lim = 27; }
+    { $lim = 50002; }
     else { $lim = 50002; }
 
     $SQL_QUERY_ver = $mysqli->query("select `ver` from `ver` ");
@@ -50,6 +52,9 @@
 
 
 ?>
+
+
+<!DOCTYPE html>
 
 <html lang="ru">
     <head>

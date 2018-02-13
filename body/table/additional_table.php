@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-
 <?php
 
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
     $node = '10.234.255.42';
+
 
     /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
     $link = '';
@@ -164,7 +164,7 @@
     }
 ?>
 
-
+<!DOCTYPE html>
 
 <html lang="ru">
     <head>

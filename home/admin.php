@@ -11,6 +11,14 @@
 </script>
 
 <?php
+    $table_count = 0;
+    $SQL_QUERY_select_table = $mysqli->query("SELECT * FROM  `tables_namespace` WHERE `released` = '+' ");
+    while ($row = mysqli_fetch_row($SQL_QUERY_select_table))
+    {
+        $table_name[$table_count] = $row[1];
+        $table_description[$table_count] = $row[2];
+        $table_count++;
+    }
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
 ?>
 
@@ -104,7 +112,17 @@
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Таблицы</td>
-                                <td><select name = 'selected_table' class = 'form-control select_cursor'><option>vibory</option><option>schools</option></select></td>
+                                <td><select name = 'selected_table' class = 'form-control select_cursor'>
+                                        <option>vibory</option><option>schools</option>
+                                        <?php
+//                                        if ($selected_table_description == null) { echo '<option></option>'; }
+//                                        for ($count = 0; $count < mysqli_num_rows($SQL_QUERY_select_table); $count++)
+//                                        {
+//                                            if ($selected_table_description == $table_description[$count]) { $selected_table = 'selected'; } else { $selected_table = ''; }
+//                                            echo "<option ".$selected_table.">".$table_description[$count]."</option>";
+//                                        }
+                                        ?>
+                                    </select></td>
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Права</td>
@@ -124,7 +142,17 @@
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Таблицы</td>
-                                <td><select name = 'selected_del_table' class = 'form-control select_cursor'><option>vibory</option><option>schools</option></select></td>
+                                <td><select name = 'selected_del_table' class = 'form-control select_cursor'>
+                                        <option>vibory</option><option>schools</option>
+                                        <?php
+//                                        if ($selected_table_description == null) { echo '<option></option>'; }
+//                                        for ($count = 0; $count < mysqli_num_rows($SQL_QUERY_select_table); $count++)
+//                                        {
+//                                            if ($selected_table_description == $table_description[$count]) { $selected_table = 'selected'; } else { $selected_table = ''; }
+//                                            echo "<option ".$selected_table.">".$table_description[$count]."</option>";
+//                                        }
+                                        ?>
+                                    </select></td>
                             </tr>
                             <tr><td colspan = '2'><input name = 'group_to_table_del' value = 'Изменить' class = 'btn button' type = 'submit'></td></tr>
                         </table>

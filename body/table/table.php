@@ -2,6 +2,8 @@
 
     if ($podcat_name[1] == 'vibory')
     { $height = 'height: 100px;'; $scroll = 111; }
+
+
     else if ($podcat_name[1] == 'schools')
     { $height = 'height: 60px;'; $scroll = 78;}
 
@@ -72,10 +74,11 @@
             {
                 if ($title[$tr][0] != '')
                 {
+
                     if (isset ($_POST['add_in_vision_submit_'.$tr]))
                     { $DB->update($podcat_name[1]."_vision`","".$_POST['add_in_vision_text_'.$tr],"+","`id_tr` = '".$title[$tr][0]."'"); }
 
-                    ?><tr style='<?php echo $height ?>' id = '<?php echo $tr ?>'><?php
+                    ?><tr class = '<?php echo $ready ?>' style='<?php echo $height ?>' id = '<?php echo $tr ?>'><?php
                     for ($td = 1; $td <= ($max_td + 3); $td++)
                     {
                         // ↓ Скроллинг при нажатии кнопки редактирования ↓
