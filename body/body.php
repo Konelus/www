@@ -5,6 +5,7 @@
 
     require_once($_SERVER['DOCUMENT_ROOT']."/body/query.php");
     require_once($_SERVER['DOCUMENT_ROOT']."/body/pre_table/pre_table_query.php");
+         //require($_SERVER['DOCUMENT_ROOT']."/body/sys/temporary_form.php");
 
 
 
@@ -39,49 +40,54 @@
 
     <input type = 'hidden' name = 'ver' value = '<?php echo $ver; ?>'>
 
-<div class = 'container-fluid' style = 'margin-top: -30px;'>
-    <div class = 'row'>
-        <div class = 'col-lg-12' style = 'padding-left: 0px; padding-right: 0px;'>
+    <div class = 'container-fluid' style = 'margin-top: -30px;'>
+        <div class = 'row'>
+            <div class = 'col-lg-12' style = 'padding-left: 0px; padding-right: 0px;'>
 
-                <table class = 'table table-condensed table-striped main_table' border = 1>
+                    <table class = 'table table-condensed table-striped main_table' border = 1>
 
-                    <!-- ↓ Заголовок таблицы ↓ -->
-                    <thead><?php require("pre_table/tables_title.php"); ?></thead>
+                        <!-- ↓ Заголовок таблицы ↓ -->
+                        <thead><?php require("pre_table/tables_title.php"); ?></thead>
 
-                    <!-- ↑ Заголовок таблицы ↑ -->
+                        <!-- ↑ Заголовок таблицы ↑ -->
 
-                    <input type = 'hidden' name = 'hidden_sort_1'> <!-- Название столбца SQL -->
-                    <input type = 'hidden' name = 'hidden_sort_2'> <!-- Тип сортировки -->
-                    <input type = 'hidden' name = 'hidden_sort_3'> <!-- Номер столбца -->
-                    <input type = 'hidden' name = 'hidden_sort_4' value = '<?php echo $lim ?>'> <!--  -->
-
-
-                    <?php
-                    if (!isset ($_POST['edit_true_'.$tr]))
-                    {
-                        require($_SERVER['DOCUMENT_ROOT'] . "/body/sort.php");
-                        require($_SERVER['DOCUMENT_ROOT'] . "/body/data.php");
-                    }
-                    ?>
+                        <input type = 'hidden' name = 'hidden_sort_1'> <!-- Название столбца SQL -->
+                        <input type = 'hidden' name = 'hidden_sort_2'> <!-- Тип сортировки -->
+                        <input type = 'hidden' name = 'hidden_sort_3'> <!-- Номер столбца -->
+                        <input type = 'hidden' name = 'hidden_sort_4' value = '<?php echo $lim ?>'> <!--  -->
 
 
+                        <?php
+                        if (!isset ($_POST['edit_true_'.$tr]))
+                        {
+                            require($_SERVER['DOCUMENT_ROOT'] . "/body/sort.php");
+                            require($_SERVER['DOCUMENT_ROOT'] . "/body/data.php");
+                        }
+                        ?>
 
-                    <!-- ↓ Форма добавления строки ↓ -->
-                    <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/add_tr.php'); ?>
-                    <!-- ↑ Форма добавления строки ↑ -->
 
 
-                    <!-- ↓ Таблица ↓ -->
-                    <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/table/table.php'); ?>
-                    <!-- ↑ Таблица ↑ -->
+                        <!-- ↓ Форма добавления строки ↓ -->
+                        <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/add_tr.php'); ?>
+                        <!-- ↑ Форма добавления строки ↑ -->
 
-                </table>
 
+                        <!-- ↓ Таблица ↓ -->
+                        <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/table/table.php'); ?>
+                        <!-- ↑ Таблица ↑ -->
+
+                    </table>
+
+            </div>
         </div>
     </div>
-</div>
-    <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'>
-        Показано записей: <?php echo $tr_count.' ('.$max_count.')' ?>
-    </div>
+
+    <?php
+        if (($caption != '') && ($_POST['inversion'] == false))
+        { ?><div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?php echo 'Показано записей: '.($tr - 1).' ('.$max_count.')' ?></div><?php }
+        else if (($caption != '') && ($_POST['inversion'] == true))
+        { ?><div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?php echo 'Показано записей: '.($tr - 3).' ('.($max_count - 2).')' ?></div><?php }
+        else { ?><div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?php echo 'Показано записей: '.($tr - 3).' ('.($max_count - 2).')' ?></div><?php }
+    ?>
 
 </form>

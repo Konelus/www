@@ -1,8 +1,6 @@
 <?php
     require_once("sys/query.php");
     $log = explode('@', $_COOKIE["user"]);
-
-
 ?>
 
 
@@ -42,6 +40,7 @@
         </div>
     </div>
 </div>
+
 <?php
     if ($_COOKIE['user'] == 'admin') { require_once($_SERVER['DOCUMENT_ROOT']."/home/admin.php"); }
     else if ($_COOKIE['user'] != 'admin') { require_once($_SERVER['DOCUMENT_ROOT']."/home/user.php"); }

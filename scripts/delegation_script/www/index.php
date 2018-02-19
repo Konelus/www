@@ -1,15 +1,5 @@
 <?php
-    $link = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-    if ($descriptor)
-    { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
-
-    $localhost = "localhost";
-    $user = "root";
-    $password = $link;
-    $db = "rtk_01";
-    $mysqli = new mysqli($localhost, $user, $password, $db);
-    mysqli_set_charset($mysqli, 'utf8');
+    require_once  ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
 
     $count = -1;
     $SQL_QUERY_select_old = $mysqli->query("SELECT `id_obekta_skup` FROM `vibory`");
@@ -44,7 +34,10 @@
             while ($new_count <= 10)
             {
                 if ($old_vib[$old_count][0] == $_POST['text_'.$new_count])
-                { echo $_POST['text_'.$new_count].' - OK!<br>'; $SQL_QUERY_update = $mysqli->query("UPDATE `vibory` SET `kanal_propisan_rcuss` = '".$_POST['family']."' WHERE `id_obekta_skup` = ".$_POST['text_'.$new_count]." "); break; }
+                {
+                    echo $_POST['text_'.$new_count].' - OK!<br>';
+                    $DB->update("vibory","kanal_propisan_rcuss","".$_POST['family'],"`id_obekta_skup` = '".$_POST['text_'.$new_count]."' ");
+                }
                 $new_count++;
             }
             $new_count = 1;

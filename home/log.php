@@ -25,16 +25,11 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
     {
         while ($row = mysqli_fetch_array($SQL_log_query))
         {
-            $login = $row[1];
-            $SQL_fio = $mysqli->query("select `fio` from `users` where `login` = '".$login."' ");
-            if ($SQL_fio != null)
-            { while ($row_100 = mysqli_fetch_array($SQL_fio)) { $log_info[$log_count][1] = $row_100[0]; } }
-
+            $log_info[$log_count][1] = $row[1];
             $log_info[$log_count][2] = $row[2];
             $log_info[$log_count][3] = $row[3];
             $log_info[$log_count][4] = $row[4];
             $log_info[$log_count][5] = $row[5];
-
 
             $id = $row[6];
             $SQL_QUERY = $mysqli->query("SELECT `id_obekta_skup` FROM `".$log_info[$log_count][5]."` WHERE `id` = '".$id."' ");
@@ -43,12 +38,13 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
                 while ($row_100 = mysqli_fetch_array($SQL_QUERY))
                 { $log_info[$log_count][6] = $row_100[0]; }
             }
-
+            else { $log_info[$log_count][6] = $row[6]; }
 
             $tr = $row[7];
-            $SQL_fio = $mysqli->query("select `name` from `".$log_info[$log_count][5]."_table` where `sql_name` = '".$tr."' ");
-            if ($SQL_fio != null)
-            { while ($row_100 = mysqli_fetch_array($SQL_fio)) { $log_info[$log_count][7] = $row_100[0]; } }
+            $SQL_name = $mysqli->query("select `name` from `".$log_info[$log_count][5]."_table` where `sql_name` = '".$tr."' ");
+            if ($SQL_name != null)
+            { while ($row_100 = mysqli_fetch_array($SQL_name)) { $log_info[$log_count][7] = $row_100[0]; } }
+            else { $log_info[$log_count][7] = $row[7]; }
 
             $log_info[$log_count][8] = $row[8];
             $log_info[$log_count][9] = $row[9];
@@ -78,10 +74,8 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
             <!-- ↓ Форма установки лимита ↓ -->
             <form method="post">
                 <div class='col-lg-1' style = 'margin-top: 5px;'>
-                    <?php if ($_COOKIE['user'] == 'admin') { ?>
-                        <input type='text' value = '<?php echo ($lim - 2) ?>' style = 'width: 70%; float: left; color: black; margin-top: 4px; border: black;' autocomplete='off' name='lim_text'>
-                        <input class = 'table_small_add_btn' type='submit' value='!' name='lim_btn' style = 'color: white; background: black; border: grey; margin-left: 5px; width: 20%; float: left; margin-top: 4px; border: solid 1px grey;'>
-                    <?php } ?>
+                    <input type='text' value = '<?php echo ($lim - 2) ?>' style = 'width: 70%; float: left; color: black; margin-top: 4px; border: black;' autocomplete='off' name='lim_text'>
+                    <input class = 'table_small_add_btn' type='submit' value='!' name='lim_btn' style = 'color: white; background: black; border: grey; margin-left: 5px; width: 20%; float: left; margin-top: 4px; border: solid 1px grey;'>
                 </div>
             </form>
             <!-- ↑ Форма установки лимита ↑ -->

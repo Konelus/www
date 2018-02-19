@@ -1,6 +1,8 @@
-<!DOCTYPE html>
-
 <?php
+
+    header("Cache-Control: no-store, no-cache, must-revalidate");
+    header("Expires: " . date("r"));
+
     /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
     $link = '';
     $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
@@ -19,6 +21,7 @@
     $podcat_name = explode('?', $cat_name);
 
     require_once($_SERVER['DOCUMENT_ROOT']."/body/sys/translit.php");
+    require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
 
 
     // ↓ Получение группы пользователя ↓
@@ -40,19 +43,25 @@
     { $ver = $row[0]; }
 
     if ($_COOKIE['user'] == 'admin')
-    { $lim = 27; }
-    else { $lim = 50002; }
+    { $lim = ' LIMIT 50002'; }
+    else { $lim = ' LIMIT 50002'; }
 
     $SQL_QUERY_ver = $mysqli->query("select `ver` from `ver` ");
     while ($row = mysqli_fetch_row($SQL_QUERY_ver))
     { $ver = $row[0]; }
 
+    if ($podcat_name[1] == 'vibory') { $page_title = 'Выборы'; }
+    else if ($podcat_name[1] == 'schools') { $page_title = 'Школы'; }
+    else { $page_title = 'Test'; }
 
 ?>
 
+
+<!DOCTYPE html>
+
 <html lang="ru">
     <head>
-        <title>TEST</title>
+        <title><?php echo $page_title ?></title>
         <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -89,7 +98,7 @@
                 {
                     if ($podcat_name[1] == '') {require_once("home/home.php");}
                     else if ($podcat_name[1] == 'vibory') { require_once("body/body.php"); }
-                    else if ($podcat_name[1] == 'schools') {require_once("body/body.php"); }
+                    else if ($podcat_name[1] == 'schools') { require_once("body/body.php"); }
                     else {require_once("home/home.php");}
                 }
 

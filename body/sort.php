@@ -5,7 +5,6 @@
     $c = 1;
     $button_count = 1;
 
-
     $qq01 = $mysqli->query("select * from `".$podcat_name[1]."_table`");
     while ($row = mysqli_fetch_row($qq01))
     {
@@ -14,28 +13,23 @@
         $str[$c] = str_replace('.', '', $str1[$c]);
         $sql[$c] = $row[2];
 
+
         if (isset($_POST[$str[$c].'_asc']))
         {
-            $lim = $_POST['hidden_sort_4'];
             ?><script>
                 $('input[name = "hidden_sort_1"]').val("<?php echo $row[2] ?>");
                 $('input[name = "hidden_sort_2"]').val("ASC");
                 $('input[name = "hidden_sort_3"]').val("<?php echo $c ?>");
-                $('input[name = "hidden_sort_4"]').val("<?php echo $lim ?>");
-                $('input[name = "lim_text"]').val("<?php echo $lim - 2 ?>");
             </script><?php
             $class_count = $c;
             $sort = 'ORDER BY `'.$row[2].'` ASC';
         }
         if (isset($_POST[$str[$c].'_desc']))
         {
-            $lim = $_POST['hidden_sort_4'];
             ?><script>
                 $('input[name = "hidden_sort_1"]').val("<?php echo $row[2] ?>");
                 $('input[name = "hidden_sort_2"]').val("DESC");
                 $('input[name = "hidden_sort_3"]').val("<?php echo $c ?>");
-                $('input[name = "hidden_sort_4"]').val("<?php echo $lim ?>");
-                $('input[name = "lim_text"]').val("<?php echo $lim - 2 ?>");
             </script><?php
             $sort = 'ORDER BY `'.$row[2].'` DESC';
             $class_count = $c;
@@ -87,8 +81,6 @@
                 $('input[name = "hidden_sort_1"]').val("<?php echo $hid_1 ?>");
                 $('input[name = "hidden_sort_2"]').val("<?php echo $hid_2 ?>");
                 $('input[name = "hidden_sort_3"]').val("<?php echo $hid_3 ?>");
-                $('input[name = "hidden_sort_4"]').val("<?php echo $lim ?>");
-                $('input[name = "lim_text"]').val("<?php echo $lim - 2 ?>");
                 $('input[name = "hidden_sort_5"]').val("<?php echo $searched_td ?>");
                 $('input[name = "hidden_sort_6"]').val("<?php echo trim($caption) ?>");
                 $('input[name = "caption"]').val("<?php echo trim($caption) ?>");
@@ -96,6 +88,8 @@
 
             if (($hid_1 != '') || ($hid_2 != ''))
             { $sort = 'ORDER BY `'.$hid_1.'` '.$hid_2.' '; }
+            if ($lim != '')
+            { $lim = ' LIMIT'.$lim; }
         }
         $button_count++;
     }

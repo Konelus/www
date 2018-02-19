@@ -1,7 +1,9 @@
 <?php
+
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
+
     if (isset ($_POST['clone']))
     {
-        //$q = $mysqli->query("DELETE FROM `vibory_sys`");
         $SQL_QUERY_select_table1 = $mysqli->query("SELECT * FROM `vibory_sys`");
         while ($query_array = mysqli_fetch_array($SQL_QUERY_select_table1))
         {
@@ -13,12 +15,10 @@
         while ($query_table_array = mysqli_fetch_row($SQL_QUERY_select_table2))
         {
             if ($sys_td[$query_table_array[0]][1] != $query_table_array[1])
-            { $SQL_QUERY_update_sys = $mysqli->query("UPDATE `vibory_sys` SET `id_obekta_skup` = '".$query_table_array[1]."' WHERE `id` = $query_table_array[0] "); }
+            { $DB->update("vibory_sys","id_obekta_skup","".$query_table_array[1],"`id` = '".$query_table_array[0]."'"); }
 
             if ($sys_td[$query_table_array[0]][2] != $query_table_array[2])
-            { $SQL_QUERY_update_sys = $mysqli->query("UPDATE `vibory_sys` SET `adres_uik_tik` = '".$query_table_array[2]."' WHERE `id` = $query_table_array[0] "); }
-
-            //$SQL_QUERY_update_sys = $mysqli->query("INSERT INTO `vibory_sys` values ('".$query_table_array[0]."', '".$query_table_array[1]."', '".$query_table_array[2]."', '".$query_table_array[39]."', '".$query_table_array[40]."') ");
+            { $DB->update("vibory_sys","adres_uik_tik","".$query_table_array[2],"`id` = '".$query_table_array[0]."'"); }
         }
         $text = 'Клонирование vibory завершено!';
     }

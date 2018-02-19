@@ -2,7 +2,9 @@
 
 <?php
 
-    $node = '10.234.255.42';
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
+    //$node = '10.234.255.41';
+    $node = '10.153.29.134';
 
     /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
     $link = '';
@@ -20,8 +22,9 @@
 
     $cat_name = end(explode("=", ('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])));
     $podcat_name = explode('?', $cat_name);
+    $get_name = explode('/',$podcat_name[1]);
 
-    $SQL_QUERY_monitoring = $mysqli->query("SELECT * FROM `vibory` WHERE `id` = ".$podcat_name[1]." ");
+    $SQL_QUERY_monitoring = $mysqli->query("SELECT * FROM `vibory` WHERE `id` = ".$get_name[1]." ");
     while ($row = mysqli_fetch_array($SQL_QUERY_monitoring))
     { $uik_monitoring = $row; }
 
@@ -40,6 +43,15 @@
         {
             $output_ping_gateway = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_shlyuza'].' ');
             if (strpos($output_ping_gateway, 'OK')) { $ping_gateway = 'success'; } else if (strpos($output_ping_gateway, 'CRITICAL')) { $ping_gateway = 'danger'; }
+
+
+            if (mb_strtolower("$uik_monitoring[hostgroups]","UTF-8") == 'да')
+            {
+                $output_ping_controller = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_adres_kontrollera'].' ');
+                if (strpos($output_ping_controller, 'OK')) { $ping_controller = 'success'; } else if (strpos($output_ping_controller, 'CRITICAL')) { $ping_controller = 'danger'; }
+            }
+
+
 
             $output_ping = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'].' ');
             if (strpos($output_ping, 'OK')) { $ping = 'success'; } else if (strpos($output_ping, 'CRITICAL')) { $ping = 'danger'; }
@@ -82,11 +94,6 @@
             if ($ping_cam_2 == 'success')
             { $output_ststus_cam_2 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_ipCAM_UTF8 -a '.$uik_monitoring['ip_adres_cam2'].' '); }
             else { $output_ststus_cam_2 = 'Устройство недоступно!'; $ststus_cam_2 = 'danger'; }
-
-
-            if ($current_var['uik'] == $uik_monitoring['naimenovanie_uik_tik'])
-            { $SQL_QUERY_del_monitoring = $mysqli->query("DELETE FROM `vibory_monitoring` WHERE `uik`='".$current_var['uik']."'"); }
-            $SQL_QUERY_insert_monitoring = $mysqli->query('INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("d.m.y").'", "'.date("H:i:s").'") ');
         }
         else
         {
@@ -103,6 +110,8 @@
             $output_ststus_cam_1 = $current_var['status_cam1'];
             $output_ping_cam_2 = $current_var['ping_cam_2'];
             $output_ststus_cam_2 = $current_var['status_cam2'];
+            $output_ping_controller = $current_var['controller'];
+            $alarm = $current_var['alarm'];
             $load_time = "<tr><td colspan = '3' style = 'text-align: center;'>Данные актуальны на ".$current_var['time']."</td></tr>";
         }
 
@@ -130,6 +139,8 @@
         if (strpos($output_error_8, 'OK')) { $error_8 = 'success'; }
         else if (strpos($output_error_8, 'CRITICAL ') || strpos($output_error_8, 'недоступно')) { $error_8 = 'danger'; }
         else if (strpos($output_error_8, 'WARNING')) { $error_8 = 'warning'; }
+
+        if (strpos($output_ping_controller, 'OK')) { $ping_controller = 'success'; } else if (strpos($output_ping_controller, 'CRITICAL')) { $ping_controller = 'danger'; }
 
         if (($port_status_1 == 'success') && ($error_1 == 'success') && ($port_status_2 == 'success') && ($error_2 == 'success') && ($port_status_8 == 'success') && ($error_8 == 'success'))
         { $commutator = 'success'; } else { $commutator = 'danger'; }
@@ -160,6 +171,34 @@
         $ready_ex = explode(' ', $ready);
         if (($ready_ex[0] == 'монтаж') && (($ready_ex[1] == 'не'))) { $ready_class = 'danger'; }
         else if (($ready_ex[0] != 'монтаж') && (($ready_ex[0] != 'не'))) { $ready_class = 'success'; }
+
+
+
+        if (((($time_1[1] - $time_2[1]) >= 1) || ($time_1[0] > $time_2[0])) || (date("d.m.y") != $current_var['date']))
+        {
+            if (($commutator == 'success') && ($cam1 == 'success') && ($cam2 == 'success'))
+            {
+                //$ready = 'success';
+                //$DB->select("alarm","{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                if ($current_var['alarm'] != '')
+                { $DB->delete("{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'"); }
+                $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "success"');
+            }
+
+            else if (($commutator != 'success') || ($cam1 != 'success') || ($cam2 != 'success'))
+            {
+                //$ready = 'danger';
+                //$DB->select("alarm","{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                if (($current_var['alarm'] != '') || ($current_var['alarm'] == 'success'))
+                {
+                    $DB->delete("{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                    $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.$current_var['alarm'].'"');
+                }
+                else { $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.date("d.m.y H:i:s").'"'); }
+            }
+        }
+
+
 
     }
 ?>
@@ -248,7 +287,12 @@
             </tr>
             <tr class = '<?php echo $ststus_cam_2 ?>' style = 'border: solid 1px lightgrey;'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Status</td>
-                <td class = '".$ststus_cam_2."'><?php echo $output_ststus_cam_2 ?></td>
+                <td><?php echo $output_ststus_cam_2 ?></td>
+            </tr>
+            <tr class = '<?php echo $ping_controller ?>' style = 'border: solid 1px lightgrey;'>
+                <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Контроллер<br><?php echo $uik_monitoring['ip_adres_kontrollera'] ?></td>
+                <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
+                <td><?php echo $output_ping_controller ?></td>
             </tr>
             <?php echo $load_time; ?>
 

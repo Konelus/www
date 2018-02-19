@@ -30,17 +30,16 @@
     <?php if ($_COOKIE['user'] == 'admin') { ?>
 
         <div style = 'float: right;'>
-            <div style = 'float: left;  margin-right: 10px;' class = 'second_bar_div'>
+            <div style = 'float: left;  margin-right: 2px;' class = 'second_bar_div'>
                 <div style = 'width: 100px; border: solid 1px gold;'>
                     <input name = 'break' class = 'exit_btn' type = 'submit' value = '<?php echo $value ?>'>
                 </div>
             </div>
 
-
-            <div style = 'float: left; width: 150px;'>
-                <input type='text' class = 'table_add_new_td_btn' value = '<?php echo ($lim - 2) ?>' style = 'width: 90px; float: left;' autocomplete='off' name='lim_text'>
-                <input class = 'table_small_add_btn' type='submit' value='limit' name='lim_btn' style = 'width: 50px; float: left; height: 28px; border: solid 1px grey;'>
-            </div>
+<!--            <div style = 'float: left; width: 150px;'>-->
+<!--                <input type='text' class = 'table_add_new_td_btn' value = '--><?php //echo ($lim - 2) ?><!--' style = 'width: 90px; float: left;' autocomplete='off' name='lim_text'>-->
+<!--                <input class = 'table_small_add_btn' type='submit' value='limit' name='lim_btn' style = 'width: 50px; float: left; height: 28px; border: solid 1px grey;'>-->
+<!--            </div>-->
         </div>
     <?php } ?>
 </div>

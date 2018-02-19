@@ -1,7 +1,30 @@
 <?php
 
+//    $varrr = 'edit_true_231';
+//    if (strpos('edit_true_231', 'edit_'))
+//    { echo 'cerrrrrf'; }
+
+
+//    $post = array_keys($_POST);
+//    //print_r($post);
+//    foreach ($post as $key)
+//    {
+//
+//
+//
+//        //echo $val.'<br>';
+//        //if (strpos("$key", 'ver'))
+//        //{ echo $key.'!!'; }
+//        //else { echo "$key<br>"; }
+//    }
+
+
+    $tr_count = 2;
+
     if ($podcat_name[1] == 'vibory')
     { $height = 'height: 100px;'; $scroll = 111; }
+
+
     else if ($podcat_name[1] == 'schools')
     { $height = 'height: 60px;'; $scroll = 78;}
 
@@ -29,7 +52,7 @@
     $bool_chb = false;
     $bool_edit = false;
     $td_td = 1;
-    $tr_count = 0;
+    //$tr_count = 0;
     $bool_query = 0;
     $tr_vision_count = 2;
 
@@ -72,22 +95,29 @@
             {
                 if ($title[$tr][0] != '')
                 {
+
+                    $tr_count++;
+
                     if (isset ($_POST['add_in_vision_submit_'.$tr]))
-                    {
-                        $SQL_QUERY_add_in_vision = $mysqli->query("UPDATE `".$podcat_name[1]."_vision` SET `".$_POST['add_in_vision_text_'.$tr]."` = '+' WHERE `id_tr` = '".$title[$tr][0]."' ");
-                        //echo "<br><br>UPDATE `".$podcat_name[1]."_vision` SET `".$_POST['add_in_vision_text_'.$tr]."` = '+' WHERE `id_tr` = '".$title[$tr][0]."' ";
-                    }
+                    { $DB->update($podcat_name[1]."_vision`","".$_POST['add_in_vision_text_'.$tr],"+","`id_tr` = '".$title[$tr][0]."'"); }
+
+                    $ready_date = '';
+                    $DB->select("alarm",$podcat_name[1]."_monitoring","`uik` = '".$title[$tr][3]."'");
+                    $alarm_query = $DB->sql_query_select;
+                    while ($row = mysqli_fetch_row($alarm_query))
+                    { $ready_date = $row[0]; }
+
 
                     ?><tr style='<?php echo $height ?>' id = '<?php echo $tr ?>'><?php
                     for ($td = 1; $td <= ($max_td + 3); $td++)
                     {
-                        //echo $td.' / ';
+
                         // ↓ Скроллинг при нажатии кнопки редактирования ↓
                         if (isset ($_POST['edit_' . ($tr + $searched_tr)]))
                         {
                             $bool_var_2 = 1; ?>
                             <script>var current_tr = 0, this_tr = '';
-                                this_tr = <?php echo json_encode($tr); ?>;
+                                this_tr = <?php echo json_encode($tr_count); ?>;
                                 current_tr = (parseInt(this_tr - 5) * <?php echo $scroll ?>);
                                 window.onload = function(){ window.scrollTo( 0, current_tr ); }
                             </script><?php
@@ -97,10 +127,6 @@
                         }
                         // ↑ Скроллинг при нажатии кнопки редактирования ↑
 
-
-                        // ↓ Отправка запроса при нажатии на "бегунок" ↓
-                        require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/checkbox_query.php');
-                        // ↑ Отправка запроса при нажатии на "бегунок" ↑
 
 
         /*  ↓ - - - - - - - - - - ↓ Сохранение отредактированной строки ↓ - - - - - - - - - - */
@@ -116,7 +142,7 @@
                             {
                                 $bool_var_2 = 0; ?>
                                 <script>var current_tr = 0, this_tr = '';
-                                    this_tr = <?php echo json_encode($tr); ?>;
+                                    this_tr = <?php echo json_encode($tr_count); ?>;
                                     current_tr = (parseInt(this_tr - 5) * <?php echo $scroll ?>);
                                     window.onload = function(){ window.scrollTo( 0, current_tr ); }
                                 </script><?php
@@ -143,6 +169,8 @@
                         if ($td <= $max_td + $additional_td)
                         {
 
+
+
                             if ($new_td[$td_td] == $class_count)
                             { $class_color = 'table_head_bg2'; }
                             else if ((isset ($_POST['search_btn']) || ($_POST['hidden_sort_5'] != '')))
@@ -158,6 +186,31 @@
                                 else { $class_color = ''; }
                             }
                             else { $class_color = ''; }
+
+
+
+
+
+
+                            if (($title[$tr][18] != 'монтаж не произведён') && ($class_color == ''))
+                            {
+                                if (($ready_date != 'success') && ($ready_date != ''))
+                                {
+                                    $alarm_date = explode(".","{$ready_date}");
+                                    $today = date("d");
+                                    if ($today == $alarm_date[0]) { $ready = 'warning'; }
+                                    else if ($today > $alarm_date[0]) { $ready = 'danger'; }
+                                }
+                                else if (($ready_date == 'success') && ($ready_date != '')) { $ready = 'success'; }
+                                else { $ready = ''; }
+                            }
+                            else if (($title[$tr][18] != 'монтаж не произведён') || ($class_color == ''))
+                            { $ready = ''; }
+
+
+
+
+
 
                             // ↓ Для админа ↓
                             if ($_COOKIE['user'] == 'admin')
@@ -192,7 +245,7 @@
         /*  ↑ - - - - - - - - - - ↑ Формирование кнопок edit и del ↑ - - - - - - - - - - */
 
                     }
-                    $tr_count++;
+                    //$tr_count++;
                     $bool_query = 0;
                     $bool_var_2 = 0;
                     $td_td = 1;
