@@ -145,27 +145,34 @@ if ($SQL_QUERY_select_data != null)
                     if (strpos($output_ping_gateway, 'OK')) { $ping_gateway = 'success'; } else if (strpos($output_ping_gateway, 'CRITICAL')) { $ping_gateway = 'danger'; }
                     else if (strpos($output_ping_gateway, 'WARNING')) { $ping_gateway = 'warning'; }
 
-                    if (strpos($output_port_status_1, '=1')) { $port_status_1 = 'success'; }
+                    if      (strpos($output_port_status_1, '=1')) { $port_status_1 = 'success'; }
                     else if (strpos($output_port_status_1, '=2') || strpos($output_port_status_1, 'недоступно')) { $port_status_1 = 'danger'; }
                     else if (strpos($output_port_status_1, 'WARNING')) { $port_status_1 = 'warning'; }
-                    if (strpos($output_error_1, 'OK')) { $error_1 = 'success'; }
+
+                    if      (strpos($output_error_1, 'OK')) { $error_1 = 'success'; }
                     else if (strpos($output_error_1, 'CRITICAL') || strpos($output_error_1, 'недоступно')) { $error_1 = 'danger'; }
                     else if (strpos($output_error_1, 'WARNING')) { $error_1 = 'warning'; }
-                    if (strpos($output_port_status_2, '=1')) { $port_status_2 = 'success'; }
+
+                    if      (strpos($output_port_status_2, '=1')) { $port_status_2 = 'success'; }
                     else if (strpos($output_port_status_2, '=2') || strpos($output_port_status_2, 'недоступно')) { $port_status_2 = 'danger'; }
                     else if (strpos($output_port_status_2, 'WARNING')) { $port_status_2 = 'warning'; }
-                    if (strpos($output_error_2, 'OK')) { $error_2 = 'success'; }
+
+                    if      (strpos($output_error_2, 'OK')) { $error_2 = 'success'; }
                     else if (strpos($output_error_2, 'CRITICAL ') || strpos($output_error_2, 'недоступно')) { $error_2 = 'danger'; }
                     else if (strpos($output_error_2, 'WARNING')) { $error_2 = 'warning'; }
-                    if (strpos($output_port_status_8, 'OK')) { $port_status_8 = 'success'; }
+
+                    if      (strpos($output_port_status_8, 'OK')) { $port_status_8 = 'success'; }
                     else if (strpos($output_port_status_8, 'CRITICAL ') || strpos($output_port_status_8, 'недоступно')) { $port_status_8 = 'danger'; }
                     else if (strpos($output_port_status_8, 'WARNING')) { $port_status_8 = 'warning'; }
-                    if (strpos($output_error_8, 'OK')) { $error_8 = 'success'; }
+
+                    if      (strpos($output_error_8, 'OK')) { $error_8 = 'success'; }
                     else if (strpos($output_error_8, 'CRITICAL ') || strpos($output_error_8, 'недоступно')) { $error_8 = 'danger'; }
                     else if (strpos($output_error_8, 'WARNING')) { $error_8 = 'warning'; }
 
                     if (($port_status_1 == 'success') && ($error_1 == 'success') && ($port_status_2 == 'success') && ($error_2 == 'success') && ($port_status_8 == 'success') && ($error_8 == 'success'))
-                    { $commutator = 'success'; } else { $commutator = 'danger'; }
+                    { $commutator = 'success'; }
+                    else //if (($port_status_1 != 'success') || ($error_1 != 'success') || ($port_status_2 != 'success') || ($error_2 != 'success') || ($port_status_8 != 'success') || ($error_8 != 'success'))
+                    { $commutator = 'danger'; }
 
                     if (strpos($output_ping_cam_1, 'OK')) { $ping_cam_1 = 'success'; }
                     else if (strpos($output_ping_cam_1, 'CRITICAL') || strpos($output_ping_cam_1, 'недоступно')) { $ping_cam_1 = 'danger'; }
@@ -214,10 +221,13 @@ if ($SQL_QUERY_select_data != null)
                     {
                         //$ready = 'danger';
                         //$DB->select("alarm","{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
-                        if (($current_var['alarm'] != '') || ($current_var['alarm'] == 'success'))
+                        if ($current_var['alarm'] != '')
                         {
                             $DB->delete("{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
-                            $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.$current_var['alarm'].'"');
+                            if  ($current_var['alarm'] != 'success')
+                            { $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.$current_var['alarm'].'"'); }
+                            else if  ($current_var['alarm'] == 'success')
+                            { $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.date("d.m.y H:i:s").'"'); }
                         }
                         else { $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.date("d.m.y H:i:s").'"'); }
                     }
