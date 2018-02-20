@@ -1,17 +1,19 @@
 <?php
-    // Добавление строки
-    // Вывод строк
-    // Вывод столбцов
 
+    $status_warning = $status_danger = $status_success = $status_empty = 0;
     require_once($_SERVER['DOCUMENT_ROOT']."/body/query.php");
     require_once($_SERVER['DOCUMENT_ROOT']."/body/pre_table/pre_table_query.php");
-         //require($_SERVER['DOCUMENT_ROOT']."/body/sys/temporary_form.php");
-
 
 
     $group_query_1 = $mysqli->query("select `table_group` from `users` where `login` = '".$_COOKIE['user']."' ");
     while ($row = mysqli_fetch_row($group_query_1))
     { $users_group = $row[0]; $count++; }
+
+    //if (isset ($_POST['success_btn'])) {}
+    //else if (isset ($_POST['warning_btn'])) {}
+    //else if (isset ($_POST['danger_btn'])) {}
+    //else if (isset ($_POST['empty_btn'])) {}
+
 
 ?>
 
@@ -83,11 +85,13 @@
     </div>
 
     <?php
+        if ($podcat_name[1] == 'vibory')
+        { $status = "<input type = 'submit' name = 'success_btn' class = 'monitoring_btn' style = 'margin-left: 4px; background: forestgreen; width: 44px;  ' value = '{$status_success}'><input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '{$status_warning}'><input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '{$status_danger}'><input type = 'submit' name = 'empty_btn'   class = 'monitoring_btn' style = 'background: white;' value = '{$status_empty}'>"; }
         if (($caption != '') && ($_POST['inversion'] == false))
-        { ?><div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?php echo 'Показано записей: '.($tr - 1).' ('.$max_count.')' ?></div><?php }
+        { ?><div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?php echo "Показано записей: ".($tr - 1)." ({$max_count}) {$status}" ?></div><?php }
         else if (($caption != '') && ($_POST['inversion'] == true))
-        { ?><div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?php echo 'Показано записей: '.($tr - 3).' ('.($max_count - 2).')' ?></div><?php }
-        else { ?><div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?php echo 'Показано записей: '.($tr - 3).' ('.($max_count - 2).')' ?></div><?php }
+        { ?><div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?php echo 'Показано записей: '.($tr - 3).' ('.($max_count - 2).')'.$status ?></div><?php }
+        else { ?><div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?php echo 'Показано записей: '.($tr - 3).' ('.($max_count - 2).')'.$status ?></div><?php }
     ?>
 
 </form>

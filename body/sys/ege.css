@@ -12,7 +12,7 @@
 .table_add_href:active { color: white; }
 .table_add_href:visited { color: white; }
 
-.table_head_bg { background: #b9def0; cursor: default; }
+.table_head_bg { background: #dbcad9; cursor: default; }
 .table_head_bg2 { background: #faf2cc; cursor: default; }
 .table_bg_search { background: #f2dede; cursor: default; }
 
@@ -42,3 +42,5 @@
 .table_input_padding { padding-left: 0; padding-right: 0; }
 
 .table_head_submit_bg { font-width: bold; color: white; background: #5cb85c; margin-top: -2px; padding-bottom: 2px; width: 40px; margin-left: 2px; margin-right: 2px; border: solid 1px black; }
+
+.monitoring_btn { border: 0; color: black; width: 40px; }
