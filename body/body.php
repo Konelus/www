@@ -39,8 +39,8 @@
 
 
 <form method = "post" id = 'form'>
-    <input type = 'hidden' name = 'hidden_sort_5'> <!--  -->
-    <input type = 'hidden' name = 'hidden_sort_6' > <!--  -->
+    <input type = 'hidden' name = 'hidden_sort_5' placeholder = 'hidden_sort_5'> <!--  -->
+    <input type = 'hidden' name = 'hidden_sort_6' placeholder = 'hidden_sort_6' > <!--  -->
     <!-- ↓ Шапка таблицы ↓ -->
     <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/tables_head.php'); ?>
     <!-- ↑ Шапка таблицы ↑ -->
@@ -55,13 +55,12 @@
 
                         <!-- ↓ Заголовок таблицы ↓ -->
                         <thead><?php require("pre_table/tables_title.php"); ?></thead>
-
                         <!-- ↑ Заголовок таблицы ↑ -->
 
-                        <input type = 'hidden' name = 'hidden_sort_1'> <!-- Название столбца SQL -->
-                        <input type = 'hidden' name = 'hidden_sort_2'> <!-- Тип сортировки -->
-                        <input type = 'hidden' name = 'hidden_sort_3'> <!-- Номер столбца -->
-                        <input type = 'hidden' name = 'hidden_sort_4' value = '<?= $lim ?>'> <!--  -->
+                        <input type = 'hidden' name = 'hidden_sort_1' placeholder = 'hidden_sort_1'> <!-- Название столбца SQL -->
+                        <input type = 'hidden' name = 'hidden_sort_2' placeholder = 'hidden_sort_2'> <!-- Тип сортировки -->
+                        <input type = 'hidden' name = 'hidden_sort_3' placeholder = 'hidden_sort_3'> <!-- Номер столбца -->
+                        <input type = 'hidden' name = 'hidden_sort_4' placeholder = 'hidden_sort_4' value = '<?= $lim ?>'> <!--  -->
 
 
                         <?php
@@ -103,7 +102,7 @@
             <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?= 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')'.$status_count ?></div>
         <?php }
         else { ?>
-            <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?= 'Показано записей: '.($tr_count).' ('.($max_count - 2).')'.$status_count ?></div>
+            <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?= 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')'.$status_count ?></div>
         <?php }
     ?>
 

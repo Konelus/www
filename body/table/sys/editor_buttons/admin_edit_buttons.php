@@ -6,7 +6,7 @@
     { ?>
         <td class='table_head_sys'>
             <div style = 'margin-top: 33px;'>
-                <a href='/body/sys/del.php?<?= $podcat_name[1] ?>/<?= $title[$tr][0] ?>'>
+                <a href='/body/sys/del.php?<?= "{$podcat_name[1]}/{$title[$tr][0]}" ?>'>
                     <div style='border: solid 1px black;' class="btn btn-danger"><span style='color: black; ' class="glyphicon glyphicon glyphicon-remove"></span></div>
                 </a>
             </div>

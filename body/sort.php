@@ -1,9 +1,7 @@
 <?php
-    $sql = '';
-    $sort = '';
-    $sql_text = '';
+    $sql = $sort = $sql_text = '';
     $c = 1;
-    $button_count = 1;
+    $button_count = 0;
 
     $qq01 = $mysqli->query("select * from `".$podcat_name[1]."_table`");
     while ($row = mysqli_fetch_row($qq01))
