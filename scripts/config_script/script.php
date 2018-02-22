@@ -218,102 +218,102 @@ define host{
     $str_2 = 'define hostgroup{
     hostgroup_name 00_vib_allPrin;
     hostgroup_members '.$host_gr_1.','.$host_gr_2.','.$host_gr_3.','.$host_gr_4.','.$host_gr_5.','.$host_gr_6.','.$host_gr_7.','.$host_gr_8.','.$host_gr_9.','. $host_gr_10.','.$host_gr_11.','.$host_gr_12.','.$host_gr_13.','.$host_gr_14.','.$host_gr_15.','.$host_gr_16.';
-    alias '.$vibory_var[$count]['naimenovanie_uik_tik'].' '.$vibory_var[$count]['adres_uik_tik'].';
+    alias Объекты принятые в эксплуатации;
 }
         
         define hostgroup{
 hostgroup_name '.$host_gr_1.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности Азовского МЦТЭТ;
 members '.$host_1.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_2.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности  Каменск-Шахтинского МЦТЭТ;
 members '.$host_2.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_3.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности Новочеркаского МЦТЭТ;
 members '.$host_3.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_4.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности Ростовского ГЦТЭТ;
 members '.$host_4.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_5.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности Таганрогского МЦТЭТ;
 members '.$host_5.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_6.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности 6;
 members '.$host_6.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_7.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности 7;
 members '.$host_7.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_8.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности 8;
 members '.$host_8.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_9.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности 9;
 members '.$host_9.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_10.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности 10;
 members '.$host_10.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_11.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности 11;
 members '.$host_11.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_12.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности 12;
 members '.$host_12.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_13.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности 13;
 members '.$host_13.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_14.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности АИСиС -Регион;
 members '.$host_14.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_15.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности АРК Инжиниринг;
 members '.$host_15.';
 }
 
         define hostgroup{
 hostgroup_name '.$host_gr_16.';
-alias Объекты принятые в эксплуатации в зоне ответственности;
+alias Объекты принятые в эксплуатации в зоне ответственности ДОНСВЯЗЬ;
 members '.$host_16.';
 }
 

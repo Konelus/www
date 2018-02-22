@@ -1,9 +1,9 @@
 <?php
-    //$kostil = 'vibory';
+    //$selected_table_name = 'vibory';
 
 /* - - - - - - - - - - ↓ Получение названий столбцов таблицы ↓ - - - - - - - - - - */
     $table_count = 0;
-    $table_query = $mysqli->query("select `name` from `".$kostil."_table`");
+    $table_query = $mysqli->query("select `name` from `".$selected_table_name."_table`");
     if ($table_query != null)
     {
         while ($row = mysqli_fetch_row($table_query))
@@ -15,7 +15,7 @@
 
 /* - - - - - - - - - - ↓ Получение sql-названий столбцов таблицы ↓ - - - - - - - - - - */
     $table_count_sql = 0;
-    $table_query_2 = $mysqli->query("select `sql_name` from `".$kostil."_table`");
+    $table_query_2 = $mysqli->query("select `sql_name` from `".$selected_table_name."_table`");
     if ($table_query_2 != null)
     {
         while ($row = mysqli_fetch_row($table_query_2))
@@ -25,30 +25,34 @@
 
 
 /* - - - - - - - - - - ↓ Получение числа столбцов таблицы ↓ - - - - - - - - - - */
-    //$table_query_1 = $mysqli->query("select `name` from `".$kostil."_table`");
+    //$table_query_1 = $mysqli->query("select `name` from `".$selected_table_name."_table`");
     //if ($table_query_1 != null) { $max_td_count = mysqli_num_rows($table_query_1); }
 /* - - - - - - - - - - ↑ Получение числа столбцов таблицы ↑ - - - - - - - - - - */
 
 
 /* - - - - - - - - - - ↓ Изменение видимости столбцов для пользователя ↓ - - - - - - - - - - */
-    $str = "null, '".$_POST['gr_name']."'";
-    $str_edit = "null, '".$_POST['gr_name']."_edit'";
+    $str = "null, '".$_POST['group']."'";
+    $str_edit = "null, '".$_POST['group']."_edit'";
     $group_perm_isset = 'false';
     $group_perm_edit_isset = 'false';
 
+
+
     if (isset($_POST['confirm']))
     {
+
         // ↓ Проверка на существование правила ↓
         $check_count = 0;
-        $check_query = $mysqli->query("select `".$kostil."_group` from `".$kostil."_permission` ");
+        $check_query = $mysqli->query("select `".$selected_table_name."_group` from `".$selected_table_name."_permission` ");
         if ($check_query != null)
         {
             while ($row = mysqli_fetch_row($check_query))
             {
                 $check[$check_count] = $row[0];
-                if ($check[$check_count] == $_POST['gr_name'])
+                if ($check[$check_count] == $_POST['group'])
                 { $group_perm_isset = 'true'; }
-                if ($check[$check_count] == $_POST['gr_name'].'_edit')
+
+                if ($check[$check_count] == $_POST['group'].'_edit')
                 { $group_perm_edit_isset = 'true'; }
                 $check_count++;
             }
@@ -66,22 +70,22 @@
 
 
         // ↓ Отправка запроса ↓
-        if ($_POST['gr_name'] != '')
+        if ($_POST['group'] != '')
         {
             if ($group_perm_isset == 'false')
-            {$strSQL1 = $mysqli->query("INSERT INTO `" . $kostil . "_permission`  VALUES ($str) "); }
+            { $DB->insert($selected_table_name . "_permission","".$str); }
             else if ($group_perm_isset == 'true')
             {
                 for ($td_count = 0; $td_count <= $max_td_count - 1; $td_count++)
-                { $SQL_update_00 = $mysqli->query("UPDATE `" . $kostil . "_permission` SET " . $table_sql[$td_count] . " = '" . $_POST['textBox' . $td_count] . "'  WHERE " . $kostil . "_group = '" . $_POST['gr_name'] . "' "); }
+                { $DB->update($selected_table_name."_permission","".$table_sql[$td_count],"". $_POST['textBox' . $td_count],"`".$selected_table_name."_group` = '" . $_POST['group'] . "'"); }
             }
 
             if ($group_perm_edit_isset == 'false')
-            {$strSQL1 = $mysqli->query("INSERT INTO `" . $kostil . "_permission`  VALUES ($str_edit) "); }
+            { $DB->insert($selected_table_name . "_permission","".$str_edit); }
             else if ($group_perm_edit_isset == 'true')
             {
                 for ($td_count = 0; $td_count <= $max_td_count - 1; $td_count++)
-                { $SQL_update_00 = $mysqli->query("UPDATE `" . $kostil . "_permission` SET " . $table_sql[$td_count] . " = '" . $_POST['edit_listBox' . $td_count] . "'  WHERE " . $kostil . "_group = '" . $_POST['gr_name'] . "_edit' "); }
+                { $DB->update($selected_table_name . "_permission","".$table_sql[$td_count],"".$_POST['edit_listBox'.$td_count],"`".$selected_table_name."_group` = '".$_POST['group']."_edit'"); }
             }
         }
         // ↑ Формирование запроса ↑
@@ -102,20 +106,20 @@
 
         if (isset($_POST['confirm']))
         {
-            $group_name = $_POST['gr_name'];
-            ?> <script>$(document).ready(function () { $('input[name = "gr_name"]').val("<?php echo $group_name ?>"); }); </script><?php
-            $group_name = $_POST['gr_name'];
-            $permissions_query = $mysqli->query("select * from `" . $kostil . "_permission` where `" . $kostil . "_group` = '" . $_POST['gr_name'] . "' ");
-            $permissions_edit_query = $mysqli->query("select * from `" . $kostil . "_permission` where `" . $kostil . "_group` = '" . $_POST['gr_name'] . "_edit' ");
+            $group_name = $_POST['group'];
+            ?> <script>$(document).ready(function () { $('input[name = "group"]').val("<?= $group_name ?>"); }); </script><?php
+            $group_name = $_POST['group'];
+            $permissions_query = $mysqli->query("select * from `" . $selected_table_name . "_permission` where `" . $selected_table_name . "_group` = '" . $_POST['group'] . "' ");
+            $permissions_edit_query = $mysqli->query("select * from `" . $selected_table_name . "_permission` where `" . $selected_table_name . "_group` = '" . $_POST['group'] . "_edit' ");
         }
         else
         {
             if ($_POST['group_for_edit'] == '')
-            { $group_name = $_POST['gr_name']; }
+            { $group_name = $_POST['group']; }
             else { $group_name = $_POST['group_for_edit']; }
-            ?> <script>$(document).ready(function () { $('input[name = "gr_name"]').val("<?php echo $group_name ?>"); }); </script><?php
-            $permissions_query = $mysqli->query("select * from `" . $kostil . "_permission` where `" . $kostil . "_group` = '" . $_POST['group_for_edit'] . "' ");
-            $permissions_edit_query = $mysqli->query("select * from `" . $kostil . "_permission` where `" . $kostil . "_group` = '" . $_POST['group_for_edit'] . "_edit' ");
+            ?> <script>$(document).ready(function () { $('input[name = "group"]').val("<?= $group_name ?>"); }); </script><?php
+            $permissions_query = $mysqli->query("select * from `" . $selected_table_name . "_permission` where `" . $selected_table_name . "_group` = '" . $_POST['group_for_edit'] . "' ");
+            $permissions_edit_query = $mysqli->query("select * from `" . $selected_table_name . "_permission` where `" . $selected_table_name . "_group` = '" . $_POST['group_for_edit'] . "_edit' ");
         }
         if ($permissions_query != null)
         {
@@ -155,7 +159,7 @@
     // ↓ Добавление пользователя ↓
     if (isset ($_POST['add_user']))
     {
-        $strSQL1 = $mysqli->query("INSERT INTO `users` (id, login, password, region, table_group, fio, position, phone, mail) VALUES (null, '".$_POST['login']."','".$_POST['password']."', '', '', '".$_POST['fio']."','".$_POST['position']."', '".$_POST['phone']."','".$_POST['mail']."')");
+        $DB->insert("users","null, '".$_POST['login']."','".$_POST['password']."', '', '', '".$_POST['fio']."','".$_POST['position']."', '".$_POST['phone']."','".$_POST['mail']."'");
         header ("Location: /");
     }
     // ↑ Добавление пользователя ↑
@@ -164,7 +168,7 @@
     // ↓ Удаление пользователя ↓
     if (isset ($_POST['del_user']))
     {
-        $strSQL1 = $mysqli->query("DELETE FROM `users` WHERE login = '".$_POST['del_user_name']."'");
+        $DB->delete("users","`login` = '".$_POST['del_user_name']."'");
         header ("Location: /");
     }
     // ↑ Удаление пользователя ↑
@@ -176,7 +180,7 @@
     // ↓ Изменение группы пользователя ↓
     if (isset ($_POST['edit_users_group']))
     {
-        $strSQL1 = $mysqli->query("UPDATE `users` SET `table_group` = '".$_POST['selected_group']."' WHERE login = '".$_POST['selected_user']."' ");
+        $DB->update("users","table_group","".$_POST['selected_group'],"`login` = '".$_POST['selected_user']."'");
         header ("Location: /");
     }
     // ↑ Изменение группы пользователя ↑

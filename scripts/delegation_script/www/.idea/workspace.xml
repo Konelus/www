@@ -14,21 +14,22 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="867">
-              <caret line="51" column="9" lean-forward="true" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+            <state relative-caret-position="482">
+              <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#form#0;n#body#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#input#0;n#div#0;n#form#0;n#body#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#1;n#form#0;n#body#0;n#!!top" expanded="true" />
-                <marker date="1517811310682" expanded="true" signature="475:512" ph="SELECT `id_o... vibory" />
-                <marker date="1517811310682" expanded="true" signature="882:895" ph="..." />
-                <marker date="1517811310682" expanded="true" signature="913:937" ph="..." />
-                <marker date="1517811310682" expanded="true" signature="1692:1738" ph="UPDATE `vibory`... " />
-                <marker date="1517811310682" expanded="true" signature="1692:1759" ph="UPDATE `vibory`... " />
-                <marker date="1517811310682" expanded="true" signature="1692:1765" ph="UPDATE `vibory`... " />
-                <marker date="1517811310682" expanded="true" signature="1692:1766" ph="UPDATE `vibory`... " />
-                <marker date="1517811310682" expanded="true" signature="1692:1784" ph="UPDATE `vibory`... " />
-                <marker date="1517811310682" expanded="true" signature="1692:1785" ph="UPDATE `vibory`... " />
+                <marker date="1517810954435" expanded="true" signature="475:512" ph="SELECT `id_o... vibory" />
+                <marker date="1517810954435" expanded="true" signature="684:726" ph="SELECT `id_o... vibory_temp" />
+                <marker date="1517810954435" expanded="true" signature="1100:1113" ph="..." />
+                <marker date="1517810954435" expanded="true" signature="1131:1155" ph="..." />
+                <marker date="1517810954435" expanded="true" signature="1961:2007" ph="UPDATE `vibory`... " />
+                <marker date="1517810954435" expanded="true" signature="1961:2028" ph="UPDATE `vibory`... " />
+                <marker date="1517810954435" expanded="true" signature="1961:2034" ph="UPDATE `vibory`... " />
+                <marker date="1517810954435" expanded="true" signature="1961:2035" ph="UPDATE `vibory`... " />
+                <marker date="1517810954435" expanded="true" signature="1961:2053" ph="UPDATE `vibory`... " />
+                <marker date="1517810954435" expanded="true" signature="1961:2054" ph="UPDATE `vibory`... " />
               </folding>
             </state>
           </provider>
@@ -50,7 +51,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="840" />
@@ -118,15 +119,15 @@
       <updated>1517400089470</updated>
       <workItem from="1517400090881" duration="1868000" />
       <workItem from="1517458760924" duration="3298000" />
-      <workItem from="1517808817405" duration="2497000" />
+      <workItem from="1517808817405" duration="2209000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7663000" />
+    <option name="totallyTimeSpent" value="7375000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10607676" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -168,15 +169,16 @@
             <element signature="n#style#0;n#div#0;n#form#0;n#body#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#0;n#form#0;n#body#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#form#0;n#body#0;n#!!top" expanded="true" />
-            <marker date="1517811310682" expanded="true" signature="475:512" ph="SELECT `id_o... vibory" />
-            <marker date="1517811310682" expanded="true" signature="882:895" ph="..." />
-            <marker date="1517811310682" expanded="true" signature="913:937" ph="..." />
-            <marker date="1517811310682" expanded="true" signature="1692:1738" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1759" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1765" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1766" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1784" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1785" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="475:512" ph="SELECT `id_o... vibory" />
+            <marker date="1517810954435" expanded="true" signature="684:726" ph="SELECT `id_o... vibory_temp" />
+            <marker date="1517810954435" expanded="true" signature="1100:1113" ph="..." />
+            <marker date="1517810954435" expanded="true" signature="1131:1155" ph="..." />
+            <marker date="1517810954435" expanded="true" signature="1961:2007" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2028" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2034" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2035" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2053" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2054" ph="UPDATE `vibory`... " />
           </folding>
         </state>
       </provider>
@@ -189,36 +191,38 @@
             <element signature="n#style#0;n#div#0;n#form#0;n#body#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#0;n#form#0;n#body#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#form#0;n#body#0;n#!!top" expanded="true" />
-            <marker date="1517811310682" expanded="true" signature="475:512" ph="SELECT `id_o... vibory" />
-            <marker date="1517811310682" expanded="true" signature="882:895" ph="..." />
-            <marker date="1517811310682" expanded="true" signature="913:937" ph="..." />
-            <marker date="1517811310682" expanded="true" signature="1692:1738" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1759" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1765" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1766" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1784" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1785" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="475:512" ph="SELECT `id_o... vibory" />
+            <marker date="1517810954435" expanded="true" signature="684:726" ph="SELECT `id_o... vibory_temp" />
+            <marker date="1517810954435" expanded="true" signature="1100:1113" ph="..." />
+            <marker date="1517810954435" expanded="true" signature="1131:1155" ph="..." />
+            <marker date="1517810954435" expanded="true" signature="1961:2007" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2028" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2034" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2035" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2053" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2054" ph="UPDATE `vibory`... " />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="867">
-          <caret line="51" column="9" lean-forward="true" selection-start-line="51" selection-start-column="9" selection-end-line="51" selection-end-column="9" />
+        <state relative-caret-position="482">
+          <caret line="38" column="36" lean-forward="false" selection-start-line="38" selection-start-column="36" selection-end-line="38" selection-end-column="36" />
           <folding>
             <element signature="n#style#0;n#div#0;n#form#0;n#body#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#div#0;n#form#0;n#body#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#1;n#form#0;n#body#0;n#!!top" expanded="true" />
-            <marker date="1517811310682" expanded="true" signature="475:512" ph="SELECT `id_o... vibory" />
-            <marker date="1517811310682" expanded="true" signature="882:895" ph="..." />
-            <marker date="1517811310682" expanded="true" signature="913:937" ph="..." />
-            <marker date="1517811310682" expanded="true" signature="1692:1738" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1759" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1765" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1766" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1784" ph="UPDATE `vibory`... " />
-            <marker date="1517811310682" expanded="true" signature="1692:1785" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="475:512" ph="SELECT `id_o... vibory" />
+            <marker date="1517810954435" expanded="true" signature="684:726" ph="SELECT `id_o... vibory_temp" />
+            <marker date="1517810954435" expanded="true" signature="1100:1113" ph="..." />
+            <marker date="1517810954435" expanded="true" signature="1131:1155" ph="..." />
+            <marker date="1517810954435" expanded="true" signature="1961:2007" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2028" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2034" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2035" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2053" ph="UPDATE `vibory`... " />
+            <marker date="1517810954435" expanded="true" signature="1961:2054" ph="UPDATE `vibory`... " />
           </folding>
         </state>
       </provider>

@@ -20,33 +20,28 @@
 
 
 
-    $td_td = 1;
-    $count = 0;
-    $SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` ");
-    if ($SQL_QUERY_select_data != null)
-    {
-        while ($row = mysqli_fetch_row($SQL_QUERY_select_data))
-        {
-            for ($i = 0; $i <= count($row); $i++) { $title[$count][$i] = $row[$i]; }
-            $tr_new_count[$count] = $row[0];
-            $count++;
-        }
-    }
-
-    //while ($td_count <= mysqli_num_fields($SQL_QUERY_select_data))
-    //{
-
-    //}
-
     $SQL_select_td_name = $mysqli->query("SELECT * FROM `".$podcat_name[1]."_table`");
     while ($row = mysqli_fetch_row($SQL_select_td_name))
     {
         $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\n', ' ')");
         $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\r', ' ')");
-        //echo "<br>"."UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\n', ' ')";
-
+        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\;', '')");
+        //echo "UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, ';', ' ')";
     }
 
+
+$td_td = 1;
+$count = 0;
+$SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` ");
+if ($SQL_QUERY_select_data != null)
+{
+    while ($row = mysqli_fetch_row($SQL_QUERY_select_data))
+    {
+        for ($i = 0; $i <= count($row); $i++) { $title[$count][$i] = $row[$i]; }
+        $tr_new_count[$count] = $row[0];
+        $count++;
+    }
+}
 
 
     $max_count = mysqli_num_rows($SQL_QUERY_select_data);
@@ -82,11 +77,11 @@
         if ($csv_var != '')
         { $csv_var = $csv_var.iconv("UTF-8", "windows-1251", "\n"); }
 
-        if ($_COOKIE['user'] != 'admin')
-        {
-            $SQL_QUERY_tr_vision = $mysqli->query("select `id_tr` from `" . $podcat_name[1] . "_vision` where `".$_COOKIE['user']."` = '+' ");
-            { if ($SQL_QUERY_tr_vision != null) { while ($row = mysqli_fetch_array($SQL_QUERY_tr_vision))  { $tr_vision[$row[0]] = $row[0]; } } }
-        }
+//        if ($_COOKIE['user'] != 'admin')
+//        {
+//            $SQL_QUERY_tr_vision = $mysqli->query("select `id_tr` from `" . $podcat_name[1] . "_vision` where `".$_COOKIE['user']."` = '+' ");
+//            { if ($SQL_QUERY_tr_vision != null) { while ($row = mysqli_fetch_array($SQL_QUERY_tr_vision))  { $tr_vision[$row[0]] = $row[0]; } } }
+//        }
 
         //if ((($tr_vision[$title[$tr][0]]) == ($title[$tr][0])) || ($_COOKIE['user'] == 'admin'))
         //{
@@ -103,9 +98,9 @@
     }
 
 
-    $file = $_SERVER['DOCUMENT_ROOT'].'/temp/'.$podcat_name[1].".csv";
+    $file = $_SERVER['DOCUMENT_ROOT'].'/temp3721/'.$podcat_name[1].".csv";
     unlink($file);
-    $fd = fopen($file, 'w') or die($_SERVER['DOCUMENT_ROOT'].'/temp/'.$podcat_name[1].".csv");
+    $fd = fopen($file, 'w') or die($_SERVER['DOCUMENT_ROOT'].'/temp3721/'.$podcat_name[1].".csv");
     fwrite($fd, $csv_var);
     fclose($fd);
 ?>
@@ -117,5 +112,5 @@
     <title>Выгрузка CSV</title>
 </head>
 <body>
-    <div style = 'text-align: center;'>Выгрузка успешно сформирована.</div><div style = 'text-align: center;'>Нажмите на <a style = 'color: red;' href = '/temp/<?php echo $podcat_name[1].".csv" ?>'>ссылку</a>, чтобы скачать</div>
+    <div style = 'text-align: center;'>Выгрузка успешно сформирована.</div><div style = 'text-align: center;'>Нажмите на <a style = 'color: red;' href = '/temp3721/<?= $podcat_name[1].".csv" ?>'>ссылку</a>, чтобы скачать</div>
 </body>

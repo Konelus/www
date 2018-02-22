@@ -2,7 +2,9 @@
 
 <?php
 
-    $node = '10.234.255.42';
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
+    $node = '10.234.255.41';
+    //$node = '10.153.29.134';
 
     /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
     $link = '';
@@ -20,8 +22,9 @@
 
     $cat_name = end(explode("=", ('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])));
     $podcat_name = explode('?', $cat_name);
+    $get_name = explode('/',$podcat_name[1]);
 
-    $SQL_QUERY_monitoring = $mysqli->query("SELECT * FROM `vibory` WHERE `id` = ".$podcat_name[1]." ");
+    $SQL_QUERY_monitoring = $mysqli->query("SELECT * FROM `vibory` WHERE `id` = ".$get_name[1]." ");
     while ($row = mysqli_fetch_array($SQL_QUERY_monitoring))
     { $uik_monitoring = $row; }
 
@@ -40,6 +43,15 @@
         {
             $output_ping_gateway = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_shlyuza'].' ');
             if (strpos($output_ping_gateway, 'OK')) { $ping_gateway = 'success'; } else if (strpos($output_ping_gateway, 'CRITICAL')) { $ping_gateway = 'danger'; }
+
+
+            if (mb_strtolower("$uik_monitoring[hostgroups]","UTF-8") == 'да')
+            {
+                $output_ping_controller = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_adres_kontrollera'].' ');
+                if (strpos($output_ping_controller, 'OK')) { $ping_controller = 'success'; } else if (strpos($output_ping_controller, 'CRITICAL')) { $ping_controller = 'danger'; }
+            }
+
+
 
             $output_ping = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_pingOnline -a '.$uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'].' ');
             if (strpos($output_ping, 'OK')) { $ping = 'success'; } else if (strpos($output_ping, 'CRITICAL')) { $ping = 'danger'; }
@@ -82,11 +94,6 @@
             if ($ping_cam_2 == 'success')
             { $output_ststus_cam_2 = shell_exec($_SERVER['DOCUMENT_ROOT'].'/sys/check_nrpe -H '.$node.' -t 90 -c check_ipCAM_UTF8 -a '.$uik_monitoring['ip_adres_cam2'].' '); }
             else { $output_ststus_cam_2 = 'Устройство недоступно!'; $ststus_cam_2 = 'danger'; }
-
-
-            if ($current_var['uik'] == $uik_monitoring['naimenovanie_uik_tik'])
-            { $SQL_QUERY_del_monitoring = $mysqli->query("DELETE FROM `vibory_monitoring` WHERE `uik`='".$current_var['uik']."'"); }
-            $SQL_QUERY_insert_monitoring = $mysqli->query('INSERT INTO `vibory_monitoring` VALUES (null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.date("d.m.y").'", "'.date("H:i:s").'") ');
         }
         else
         {
@@ -103,6 +110,8 @@
             $output_ststus_cam_1 = $current_var['status_cam1'];
             $output_ping_cam_2 = $current_var['ping_cam_2'];
             $output_ststus_cam_2 = $current_var['status_cam2'];
+            $output_ping_controller = $current_var['controller'];
+            $alarm = $current_var['alarm'];
             $load_time = "<tr><td colspan = '3' style = 'text-align: center;'>Данные актуальны на ".$current_var['time']."</td></tr>";
         }
 
@@ -130,6 +139,8 @@
         if (strpos($output_error_8, 'OK')) { $error_8 = 'success'; }
         else if (strpos($output_error_8, 'CRITICAL ') || strpos($output_error_8, 'недоступно')) { $error_8 = 'danger'; }
         else if (strpos($output_error_8, 'WARNING')) { $error_8 = 'warning'; }
+
+        if (strpos($output_ping_controller, 'OK')) { $ping_controller = 'success'; } else if (strpos($output_ping_controller, 'CRITICAL')) { $ping_controller = 'danger'; }
 
         if (($port_status_1 == 'success') && ($error_1 == 'success') && ($port_status_2 == 'success') && ($error_2 == 'success') && ($port_status_8 == 'success') && ($error_8 == 'success'))
         { $commutator = 'success'; } else { $commutator = 'danger'; }
@@ -161,6 +172,36 @@
         if (($ready_ex[0] == 'монтаж') && (($ready_ex[1] == 'не'))) { $ready_class = 'danger'; }
         else if (($ready_ex[0] != 'монтаж') && (($ready_ex[0] != 'не'))) { $ready_class = 'success'; }
 
+
+
+        if (((($time_1[1] - $time_2[1]) >= 1) || ($time_1[0] > $time_2[0])) || (date("d.m.y") != $current_var['date']))
+        {
+            if (($commutator == 'success') && ($cam1 == 'success') && ($cam2 == 'success'))
+            {
+		//echo "{$commutator} --> {$cam1} --> {$cam2}";
+                //$ready = 'success';
+                //$DB->select("alarm","{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                if ($current_var['alarm'] != '')
+                { $DB->delete("{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'"); }
+                $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "success"');
+            }
+
+            else if (($commutator != 'success') || ($cam1 != 'success') || ($cam2 != 'success'))
+            {
+		//echo "{$commutator} --> {$cam1} --> {$cam2}";
+                //$ready = 'danger';
+                //$DB->select("alarm","{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                if ($current_var['alarm'] != '')
+                {
+                    $DB->delete("{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                    if  ($current_var['alarm'] != 'success')
+                    { $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.$current_var['alarm'].'"'); }
+                    else if  ($current_var['alarm'] == 'success')
+                    { $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.date("d.m.y H:i:s").'"'); }
+                }
+                else { $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.date("d.m.y H:i:s").'"'); }
+            }
+        }
     }
 ?>
 
@@ -168,7 +209,7 @@
 
 <html lang="ru">
     <head>
-        <title><?php echo $uik_monitoring['naimenovanie_uik_tik'] ?> (Мониторинг)</title>
+        <title><?= $uik_monitoring['naimenovanie_uik_tik'] ?> (Мониторинг)</title>
         <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -178,79 +219,84 @@
     </head>
 
     <body>
-        <div style = 'background: black; color: white; text-align: center; padding-top: 5px; font-size: 26px;'><?php echo $uik_monitoring['naimenovanie_uik_tik'] ?></div>
-        <div style = 'background: black; color: white; text-align: center; padding-bottom: 5px; font-size: 22px;'><?php echo $uik_monitoring['adres_uik_tik'] ?></div>
-        <div style = 'background: black; color: white; text-align: center; padding-bottom: 5px; font-size: 22px;'><?php echo 'Network: '.$uik_monitoring['vydelennaya_set'] ?></div>
+        <div style = 'background: black; color: white; text-align: center; padding-top: 5px; font-size: 26px;'><?= $uik_monitoring['naimenovanie_uik_tik'] ?></div>
+        <div style = 'background: black; color: white; text-align: center; padding-bottom: 5px; font-size: 22px;'><?= $uik_monitoring['adres_uik_tik'] ?></div>
+        <div style = 'background: black; color: white; text-align: center; padding-bottom: 5px; font-size: 22px;'><?= 'Network: '.$uik_monitoring['vydelennaya_set'] ?></div>
         <div style = 'background: black; color: white; text-align: center; padding-bottom: 5px; font-size: 16px;'>
-            <?php echo $uik_master ?>
+            <?= $uik_master ?>
         </div>
         <div style = 'background: black; color: white; text-align: center; padding-bottom: 5px; font-size: 16px;'>
-            <?php echo $uik_ex_master ?>
+            <?= $uik_ex_master ?>
         </div>
 
         <table class = 'table'>
-            <tr class = '<?php echo $ready_class ?>'>
+            <tr class = '<?= $ready_class ?>'>
                 <td colspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey; text-align: center; font-weight: bold; border-bottom: solid 2px black;'>Готовность объекта</td>
-                <td style = 'border-bottom: solid 2px black;'><?php echo $ready ?></td>
+                <td style = 'border-bottom: solid 2px black;'><?= $ready ?></td>
             </tr>
-            <tr class = '<?php echo $ping_gateway ?>'>
-                <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Шлюз<br><?php echo $uik_monitoring['ip_shlyuza'] ?></td>
+            <tr class = '<?= $ping_gateway ?>'>
+                <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Шлюз<br><?= $uik_monitoring['ip_shlyuza'] ?></td>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
-                <td><?php echo $output_ping_gateway ?></td>
+                <td><?= $output_ping_gateway ?></td>
             </tr>
             <tr>
-                <td class = '<?php echo $commutator ?>' rowspan = '8' style = 'width: 200px; border-right: solid 1px lightgrey;'>Коммутатор<br><?php echo $uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'] ?></td>
-                <td class = '<?php echo $ping ?>' style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
-                <td class = '<?php echo $ping ?>'><?php echo $output_ping ?></td>
+                <td class = '<?= $commutator ?>' rowspan = '8' style = 'width: 200px; border-right: solid 1px lightgrey;'>Коммутатор<br><?= $uik_monitoring['ip_adres_kommutatora_v_shkafu_uik_tik'] ?></td>
+                <td class = '<?= $ping ?>' style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
+                <td class = '<?= $ping ?>'><?= $output_ping ?></td>
             </tr>
-            <tr class = '<?php echo $snmp ?>'>
+            <tr class = '<?= $snmp ?>'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>SNMP</td>
-                <td><?php echo $output_snmp ?></td>
+                <td><?= $output_snmp ?></td>
             </tr>
-            <tr class = '<?php echo $port_status_1 ?>'>
+            <tr class = '<?= $port_status_1 ?>'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Port 1 - status UP/DOWN</td>
-                <td><?php echo $output_port_status_1 ?></td>
+                <td><?= $output_port_status_1 ?></td>
             </tr>
-            <tr class = '<?php echo $error_1 ?>' style = 'border-bottom: solid 1px lightgrey;'>
+            <tr class = '<?= $error_1 ?>' style = 'border-bottom: solid 1px lightgrey;'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Port 1 - Error</td>
-                <td><?php echo $output_error_1 ?></td>
+                <td><?= $output_error_1 ?></td>
             </tr>
-            <tr class = '<?php echo $port_status_2 ?>'>
+            <tr class = '<?= $port_status_2 ?>'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Port 2 - status UP/DOWN</td>
-                <td><?php echo $output_port_status_2 ?></td>
+                <td><?= $output_port_status_2 ?></td>
             </tr>
-            <tr class = '<?php echo $error_2 ?>'>
+            <tr class = '<?= $error_2 ?>'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Port 2 - Error</td>
-                <td><?php echo $output_error_2 ?></td>
+                <td><?= $output_error_2 ?></td>
             </tr>
-            <tr class = '<?php echo $port_status_8 ?>'>
+            <tr class = '<?= $port_status_8 ?>'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Port 8 - status UP/DOWN</td>
-                <td><?php echo $output_port_status_8 ?></td>
+                <td><?= $output_port_status_8 ?></td>
             </tr>
-            <tr class = '<?php echo $error_8 ?>'>
+            <tr class = '<?= $error_8 ?>'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Port 8 - Error</td>
-                <td><?php echo $output_error_8 ?></td>
+                <td><?= $output_error_8 ?></td>
             </tr>
 
             <tr>
-                <td class = '<?php echo $cam1 ?>' rowspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey;'>Камера 1<br><?php echo 'RID: '.$uik_monitoring['rid_obekta'].'<br>'.$uik_monitoring['ip_adres_cam1'] ?></td>
-                <td class = '<?php echo $ping_cam_1 ?>' style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
-                <td class = '<?php echo $ping_cam_1 ?>' ><?php echo $output_ping_cam_1 ?></td>
+                <td class = '<?= $cam1 ?>' rowspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey;'>Камера 1<br><?= 'RID: '.$uik_monitoring['rid_obekta'].'<br>'.$uik_monitoring['ip_adres_cam1'] ?></td>
+                <td class = '<?= $ping_cam_1 ?>' style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
+                <td class = '<?= $ping_cam_1 ?>' ><?= $output_ping_cam_1 ?></td>
             </tr>
-            <tr class = '<?php echo $ststus_cam_1 ?>' style = 'border-bottom: solid 1px lightgrey;'>
+            <tr class = '<?= $ststus_cam_1 ?>' style = 'border-bottom: solid 1px lightgrey;'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Status</td>
-                <td><?php echo $output_ststus_cam_1 ?></td>
+                <td><?= $output_ststus_cam_1 ?></td>
             </tr>
             <tr>
-                <td  class = '<?php echo $cam2 ?>' rowspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey;'>Камера 2<br><?php echo 'RID: '.$uik_monitoring['rid_obekta'].'<br>'.$uik_monitoring['ip_adres_cam2'] ?></td>
-                <td class = '<?php echo $ping_cam_2 ?>' style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
-                <td class = '<?php echo $ping_cam_2 ?>'><?php echo $output_ping_cam_2 ?></td>
+                <td  class = '<?= $cam2 ?>' rowspan = '2' style = 'width: 200px; border-right: solid 1px lightgrey;'>Камера 2<br><?= 'RID: '.$uik_monitoring['rid_obekta'].'<br>'.$uik_monitoring['ip_adres_cam2'] ?></td>
+                <td class = '<?= $ping_cam_2 ?>' style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
+                <td class = '<?= $ping_cam_2 ?>'><?= $output_ping_cam_2 ?></td>
             </tr>
-            <tr class = '<?php echo $ststus_cam_2 ?>' style = 'border: solid 1px lightgrey;'>
+            <tr class = '<?= $ststus_cam_2 ?>' style = 'border: solid 1px lightgrey;'>
                 <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Status</td>
-                <td class = '".$ststus_cam_2."'><?php echo $output_ststus_cam_2 ?></td>
+                <td><?= $output_ststus_cam_2 ?></td>
             </tr>
-            <?php echo $load_time; ?>
+            <tr class = '<?= $ping_controller ?>' style = 'border: solid 1px lightgrey;'>
+                <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Контроллер<br><?= $uik_monitoring['ip_adres_kontrollera'] ?></td>
+                <td style = 'width: 200px; border-right: solid 1px lightgrey;'>Ping</td>
+                <td><?= $output_ping_controller ?></td>
+            </tr>
+            <?= $load_time; ?>
 
         </table>
         <form method = "post">

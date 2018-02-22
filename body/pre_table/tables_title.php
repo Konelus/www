@@ -9,7 +9,7 @@
     <script>
         var max_td_count = '';
         var title_tr_count = 1;
-        max_td_count = <?php echo json_encode($table_count); ?>;
+        max_td_count = <?= json_encode($table_count); ?>;
     </script>
 
     <script>document.write("<tr>");</script>
@@ -20,12 +20,12 @@
      ?>
 
         <script>
-            table_count = 0 + <?php echo $bag_2 ?>;
+            table_count = 0 + <?= $bag_2 ?>;
             if (title_tr_count === 1)
             {
-                while (table_count <= (max_td_count + 1 + <?php echo $bag_2 ?>))
+                while (table_count <= (max_td_count + 1 + <?= $bag_2 ?>))
                 {
-                    if (table_count <= max_td_count - 1 + <?php echo $bag_2 ?>)
+                    if (table_count <= max_td_count - 1 + <?= $bag_2 ?>)
                     {
                         if (table_count == 0) { document.write("" +
                             "<td style = 'width: 150px; background: gold;' class = 'table_head_bg'><div style = 'width: 150px; margin-top: 10px; font-size: 14px;'>Добавление пользователей</div></td>" +
@@ -37,8 +37,8 @@
                             "</div>" + table_mass[table_count] + "</td>"
                         );
                     }
-                    else if (table_count === max_td_count + <?php echo $bag_2 ?>) { document.write("<td class = 'table_head_sys'>edit</td>"); }
-                    else if (table_count === (max_td_count + 1 + <?php echo $bag_2 ?>)) { document.write("<td class = 'table_head_sys'>del</td>"); }
+                    else if (table_count === max_td_count + <?= $bag_2 ?>) { document.write("<td class = 'table_head_sys'>edit</td>"); }
+                    else if (table_count === (max_td_count + 1 + <?= $bag_2 ?>)) { document.write("<td class = 'table_head_sys'>del</td>"); }
                     table_count++;
                 }
             }

@@ -1,17 +1,26 @@
 <script>
-    var all_users = <?php echo json_encode($all_users); ?>;
-    var users_permission = <?php echo json_encode($users_permission); ?>;
-    var all_users_group = <?php echo json_encode($all_users_group); ?>;
-    var all_group = <?php echo json_encode($all_group); ?>;
+    var all_users = <?= json_encode($all_users); ?>;
+    var users_permission = <?= json_encode($users_permission); ?>;
+    var all_users_group = <?= json_encode($all_users_group); ?>;
+    var all_group = <?= json_encode($all_group); ?>;
 
-    var all_users_count = <?php echo json_encode($all_user_count); ?>;
-    var users_permission_count = <?php echo json_encode($ege_user_count); ?>;
-    var all_user_group_count = <?php echo json_encode($all_user_group_count); ?>;
-    var all_group_count = <?php echo json_encode($all_group_count); ?>;
+    var all_users_count = <?= json_encode($all_user_count); ?>;
+    var users_permission_count = <?= json_encode($ege_user_count); ?>;
+    var all_user_group_count = <?= json_encode($all_user_group_count); ?>;
+    var all_group_count = <?= json_encode($all_group_count); ?>;
 </script>
 
 <?php
+    $table_count = 0;
+    $SQL_QUERY_select_table = $mysqli->query("SELECT * FROM  `tables_namespace` WHERE `released` = '+' ");
+    while ($row = mysqli_fetch_row($SQL_QUERY_select_table))
+    {
+        $table_name[$table_count] = $row[1];
+        $table_description[$table_count] = $row[2];
+        $table_count++;
+    }
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
+
 ?>
 
 <script src="/home/sys/users.js"></script>
@@ -104,7 +113,12 @@
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Таблицы</td>
-                                <td><select name = 'selected_table' class = 'form-control select_cursor'><option>vibory</option><option>schools</option></select></td>
+                                <td><select name = 'selected_table' class = 'form-control select_cursor'>
+                                        <?php
+                                            foreach ($table_name_array as $key => $table_name)
+                                            { echo "<option>{$table_name[0]}</option>"; }
+                                        ?>
+                                    </select></td>
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Права</td>
@@ -124,7 +138,12 @@
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Таблицы</td>
-                                <td><select name = 'selected_del_table' class = 'form-control select_cursor'><option>vibory</option><option>schools</option></select></td>
+                                <td><select name = 'selected_del_table' class = 'form-control select_cursor'>
+                                    <?php
+                                        foreach ($table_name_array as $key => $table_name)
+                                        { echo "<option>{$table_name[0]}</option>"; }
+                                    ?>
+                                    </select></td>
                             </tr>
                             <tr><td colspan = '2'><input name = 'group_to_table_del' value = 'Изменить' class = 'btn button' type = 'submit'></td></tr>
                         </table>
@@ -161,7 +180,7 @@
                     ?>
                 </div>
             </div>
-            <div style = 'text-align: center; font-weight: bold; color: lightgreen; width: 100%;'><?php echo $text ?></div>
+            <div style = 'text-align: center; font-weight: bold; color: lightgreen; width: 100%;'><?= $text ?></div>
         </div>
         <div class = 'col-lg-4'></div>
     </div>
