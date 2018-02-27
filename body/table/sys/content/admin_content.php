@@ -29,7 +29,9 @@ else if ($td > 1) { ?>
     // ↓ Создание textarea ↓
 
     else if ($bool_var_2 == 1)
-    { ?><textarea
+    { ?>
+        <div style = 'height: 100px; background: black; color: white; margin-bottom: 2px;'><?= $title_array[$td - 2][1] ?></div>
+        <textarea
             name = 'editBox_<?= $tr . "_" . ($td - 1) ?>'
             style = 'height: 100px; padding: 0; font-size: 10px; text-align: center; border: solid 1px black; width: 100%;'
             class = 'form-control <?= $ready ?>'

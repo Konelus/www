@@ -1,23 +1,10 @@
 <?php
 
 
-//    $varrr = 'edit_true_231';
-//    if (strpos('edit_true_231', 'edit_'))
-//    { echo 'cerrrrrf'; }
-
-
-//    $post = array_keys($_POST);
-//    //print_r($post);
-//    foreach ($post as $key)
-//    {
-//
-//
-//
-//        //echo $val.'<br>';
-//        //if (strpos("$key", 'ver'))
-//        //{ echo $key.'!!'; }
-//        //else { echo "$key<br>"; }
-//    }
+$SQL_QUERY_select_monitoring = $mysqli->query("SELECT * FROM `vibory_monitoring` WHERE `uik` = '".$uik_monitoring['naimenovanie_uik_tik']."' ");
+while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var = $row; }
+    //foreach ($_REQUEST as )
+    //{  }
 
 
     $tr_count = 2;
@@ -36,7 +23,7 @@
     // ↓ Readonle для textarea ↓
     if ($_COOKIE['user'] != 'admin')
     {
-        $permissions_edit_query = $mysqli->query("select * from `" . $podcat_name[1] . "_permission` where `" . $podcat_name[1] . "_group` = '" . $current_users_group[0] . "_edit' ");
+        $permissions_edit_query = $mysqli->query("select * from `{$podcat_name[1]}_permission` where `{$podcat_name[1]}_group` = '{$current_users_group[0]}_edit' ");
         $permission_edit = mysqli_fetch_row($permissions_edit_query);
 
         for ($td_0 = 1; $td_0 <= $max_td_count + 2; $td_0++)
@@ -61,17 +48,15 @@
 
     if ($_COOKIE['user'] != 'admin')
     {
-        $SQL_QUERY_tr_vision = $mysqli->query("select `id_tr` from `" . $podcat_name[1] . "_vision` where `".$_COOKIE['user']."` = '+' ");
+        $DB->select("id_tr","{$podcat_name[1]}_vision","`{$_COOKIE['user']}` = '+'");
         {
-            if ($SQL_QUERY_tr_vision != null)
-            { while ($row = mysqli_fetch_array($SQL_QUERY_tr_vision))  { $tr_vision[$row[0]] = $row[0]; } }
+            if ($DB->sql_query_select != null)
+            { while ($row = mysqli_fetch_array($DB->sql_query_select))  { $tr_vision[$row[0]] = $row[0]; } }
         }
-        //echo "select `id_tr` from `" . $podcat_name[1] . "_vision` where `".$_COOKIE['user']."` = '+' ";
-
     }
 
     $vision_permission_count = 0;
-    $SQL_QUERY_vision_login = $mysqli->query("SHOW COLUMNS FROM `".$podcat_name[1]."_vision`");
+    $SQL_QUERY_vision_login = $mysqli->query("SHOW COLUMNS FROM `{$podcat_name[1]}_vision`");
     if ($SQL_QUERY_vision_login != null) {
         {
             while ($row = mysqli_fetch_array($SQL_QUERY_vision_login)) {
@@ -84,7 +69,10 @@
     if ($_COOKIE['user'] == 'admin') { $additional_td = 1; }
     else { $additional_td = 0; }
 
-
+    //$DB->select("*","{$substring}_table","");
+    $SQL_QUERY_title = $mysqli->query("SELECT * FROM `{$substring}_table`");
+    while ($row = mysqli_fetch_row($SQL_QUERY_title))
+    { $title_array[] = $row; }
 
 
 
@@ -93,43 +81,36 @@
         for ($tr = 0; $tr <= $max_count; $tr++)
         {
 
-
-            //if (($title[$tr][18] != 'монтаж не произведён') && ($class_color == ''))
-            //{
-
-
-
             if ((($tr_vision[$title[$tr][0]]) == ($title[$tr][0])) || ($_COOKIE['user'] == 'admin'))
             {
-                if (($ready_date != 'success') && ($ready_date != ''))
-                {
-                    $alarm_date = explode(".","{$ready_date}");
-                    $pre_alarm_time = explode(" ","{$ready_date}");
-                    $alarm_time = explode(":","{$pre_alarm_time[1]}");
-                    $today = date("d");
-                    $now_time = date("H");
-                    if (($today == $alarm_date[0]) || (($today == ($alarm_date[0] + 1)) && ($now_time < $alarm_time[0]))) { $status_warning++; }
-                    else { $status_danger++; }
-                }
-                else if (($ready_date == 'success') && ($ready_date != '')) { $status_success++; }
-                //else { $status_empty++; }
-                //}
-                //else if (($title[$tr][18] != 'монтаж не произведён') || ($class_color == ''))
+
+                $time_1 = explode(':', date("H:i:s"));
+                $time_2 = explode(':', $current_var['time']);
+                $ex_alarm = explode(" ","{$current_var['alarm']}");
+                $current_date = explode(".","$ex_alarm[0]");
+                $current_time = explode(":","$ex_alarm[1]");
+
+                if ($title[$tr][40] == 'success')
+                { $status_success++; }
+                else if ($title[$tr][40] == 'warning')
+                { $status_warning++; }
+                else if ($title[$tr][40] == 'danger')
+                { $status_danger++; }
+
                 if (($title[$tr][18] == 'монтаж не произведён'))
                 { $status_empty++; }
 
                 if ($title[$tr][0] != '')
                 {
-
                     $tr_count++;
 
-                    if (isset ($_POST['add_in_vision_submit_'.$tr]))
-                    { $DB->update($podcat_name[1]."_vision`","".$_POST['add_in_vision_text_'.$tr],"+","`id_tr` = '".$title[$tr][0]."'"); }
+                    if (isset ($_POST["add_in_vision_submit_{$tr}"]))
+                    { $DB->update("{$podcat_name[1]}_vision`","{$_POST["add_in_vision_text_{$tr}"]}","+","`id_tr` = '{$title[$tr][0]}'"); }
 
                     if ($_SERVER['QUERY_STRING'] == 'vibory')
                     {
                         $ready_date = '';
-                        $DB->select("alarm",$podcat_name[1]."_monitoring","`uik` = '".$title[$tr][3]."'");
+                        $DB->select("alarm","{$podcat_name[1]}_monitoring","`uik` = '{$title[$tr][3]}'");
                         $alarm_query = $DB->sql_query_select;
                         if ($alarm_query != null)
                         { while ($row = mysqli_fetch_row($alarm_query)) { $ready_date = $row[0]; } }
@@ -149,8 +130,6 @@
                                 current_tr = (parseInt(this_tr - 5) * <?= $scroll ?>);
                                 window.onload = function(){ window.scrollTo( 0, current_tr ); }
                             </script><?php
-//                            $searched_td = $_POST['hidden_sort_5'];
-//                            $caption = $_POST['hidden_sort_6'];
 
                         }
                         // ↑ Скроллинг при нажатии кнопки редактирования ↑
@@ -185,8 +164,8 @@
 
 
                             // ↓ Обновление данных в таблице ↓
-                            require($_SERVER['DOCUMENT_ROOT'] . "/body/sort.php");
-                            require($_SERVER['DOCUMENT_ROOT'] . "/body/data.php");
+                            require($_SERVER['DOCUMENT_ROOT'].'/body/sort.php');
+                            require($_SERVER['DOCUMENT_ROOT'].'/body/data.php');
                              // ↑ Обновление данных в таблице ↑
                         }
         /*  ↑ - - - - - - - - - - ↑ Сохранение отредактированной строки ↑ - - - - - - - - - - */
@@ -203,9 +182,9 @@
                             else if ((isset ($_POST['search_btn']) || ($_POST['hidden_sort_5'] != '')))
                             {
                                 if (isset ($_POST['search_btn']))
-                                { $SQL_QUERY_select_searched_id = $mysqli->query("SELECT `id` FROM `".$podcat_name[1]."_table` where `name` = '".$_POST['selected_td']."' "); }
+                                { $SQL_QUERY_select_searched_id = $mysqli->query("SELECT `id` FROM `{$podcat_name[1]}_table` where `name` = '{$_POST['selected_td']}' "); }
                                 else if ($_POST['hidden_sort_5'] != '')
-                                { $SQL_QUERY_select_searched_id = $mysqli->query("SELECT `id` FROM `".$podcat_name[1]."_table` where `sql_name` = '".$_POST['hidden_sort_5']."' "); }
+                                { $SQL_QUERY_select_searched_id = $mysqli->query("SELECT `id` FROM `{$podcat_name[1]}_table` where `sql_name` = '{$_POST['hidden_sort_5']}' "); }
                                 while ($row = mysqli_fetch_row($SQL_QUERY_select_searched_id))
                                 { $td_title_count = $row[0]; }
                                 if ($new_td[$td_td] == $td_title_count)
@@ -216,20 +195,7 @@
 
 
                             if (($title[$tr][18] != 'монтаж не произведён') && ($class_color == ''))
-                            {
-                                if (($ready_date != 'success') && ($ready_date != ''))
-                                {
-                                    $alarm_date = explode(".","{$ready_date}");
-                            	    $pre_alarm_time = explode(" ","{$ready_date}");
-                                    $alarm_time = explode(":","{$pre_alarm_time[1]}");
-                                    $today = date("d");
-                                    $now_time = date("H");
-                                    if (($today == $alarm_date[0]) || (($today == ($alarm_date[0] + 1)) && ($now_time < $alarm_time[0]))) {  $ready = 'warning'; }
-                                    else { $ready = 'danger'; }
-                                }
-                                else if (($ready_date == 'success') && ($ready_date != '')) { $ready = 'success'; }
-                                else { $ready = ''; }
-                            }
+                            { $ready = $title[$tr][40]; }
                             else if (($title[$tr][18] != 'монтаж не произведён') || ($class_color == '')) { $ready = ''; }
                             if ($class_color != '') { $ready = ''; }
 

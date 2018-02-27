@@ -13,7 +13,9 @@
 
     // ↓ Создание textarea для обычного пользователя ↓
     else if ($bool_var_2 == 1)
-    { ?><textarea <?= $ro[$new_td[$td_td]] ?>
+    { ?>
+        <div style = 'height: 100px; background: black; color: white; margin-bottom: 2px;'><?= $title_array[$td - 1][1] ?></div>
+        <textarea <?= $ro[$new_td[$td_td]] ?>
             name = 'editBox_<?= $tr . "_" . $new_td[$td_td] ?>'
             style = 'height: 100px; padding: 0; font-size: 10px; text-align: center; border: solid 1px black; width: 100%;'
             class = 'form-control <?= $ready ?>'

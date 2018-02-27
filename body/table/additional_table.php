@@ -3,8 +3,9 @@
 <?php
 
     require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
-    $node = '10.234.255.41';
+    //$node = '10.234.255.41';
     //$node = '10.153.29.134';
+    $node = '127.0.0.1';
 
     /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
     $link = '';
@@ -178,9 +179,6 @@
         {
             if (($commutator == 'success') && ($cam1 == 'success') && ($cam2 == 'success'))
             {
-		//echo "{$commutator} --> {$cam1} --> {$cam2}";
-                //$ready = 'success';
-                //$DB->select("alarm","{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
                 if ($current_var['alarm'] != '')
                 { $DB->delete("{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'"); }
                 $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "success"');
@@ -189,28 +187,31 @@
 
             else if (($commutator != 'success') || ($cam1 != 'success') || ($cam2 != 'success'))
             {
-		//echo "{$commutator} --> {$cam1} --> {$cam2}";
-                //$ready = 'danger';
-                //$DB->select("alarm","{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                $ex_alarm = explode(" ","{$current_var['alarm']}");
+                $current_date = explode(".","$ex_alarm[0]");
+                $current_time = explode(":","$ex_alarm[1]");
+
                 if ($current_var['alarm'] != '')
                 {
                     $DB->delete("{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
                     if  ($current_var['alarm'] != 'success')
                     {
                         $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.$current_var['alarm'].'"');
-                        $DB->update("{$get_name[0]}","contact_groups","danger","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                        //echo "if (((".date("d")." == ".($current_date[0] + 1).") && (".date("H")." > ".(int)$current_time[0].")) || (".date("d")." > {$current_date[0]}))";
+                        if (((date("d") == ($current_date[0] + 1)) && (date("H") > (int)$current_time[0])) || (date("d") > $current_date[0]))
+                        { $DB->update("{$get_name[0]}","contact_groups","danger","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'"); }
+                        else { $DB->update("{$get_name[0]}","contact_groups","warning","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'"); }
                     }
                     else if  ($current_var['alarm'] == 'success')
                     {
                         $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.date("d.m.y H:i:s").'"');
-                        $DB->update("{$get_name[0]}","contact_groups","danger","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                        $DB->update("{$get_name[0]}","contact_groups","warning","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
                     }
                 }
                 else
                 {
                     $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.date("d.m.y H:i:s").'"');
-                    $DB->update("{$get_name[0]}","contact_groups","danger","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
-
+                    $DB->update("{$get_name[0]}","contact_groups","warning","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
                 }
             }
         }

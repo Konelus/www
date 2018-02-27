@@ -2,9 +2,8 @@
     $sort = '';
     $sql_text = '';
     $c = 1;
-?>
 
-<?php $status = $current_users_access[$podcat_name[1].'_status']; ?>
+    $status = $current_users_access[$podcat_name[1].'_status']; ?>
 
     <script>
         var max_td_count = '';
@@ -43,7 +42,7 @@
                 }
             }
         </script>
-    <?php } else if (($_COOKIE['user'] != 'admin') && ($status == 'user')) { ?>
+    <?php } else if (($_COOKIE['user'] != 'admin') && ($status == 'user')) {  ?>
         <script>
             table_count = 1;
             while (table_count <= (max_td_count + 1))

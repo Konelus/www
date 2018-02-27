@@ -33,7 +33,10 @@
 
         $SQL_QUERY_select_group_users = $mysqli->query("SELECT `login` FROM `users` WHERE `table_group` = '{$_POST['selected_group']}' ");
         while ($row = mysqli_fetch_row($SQL_QUERY_select_group_users))
-        { $SQL_QUERY_add_vision_users = $mysqli->query("ALTER TABLE `{$_POST['selected_table']}_vision` ADD `{$row[0]}` TEXT CHARACTER SET utf8 NOT NULL"); }
+        {
+            $DB->alter_add("{$_POST['selected_table']}_vision","{$row[0]}","TEXT CHARACTER SET utf8 NOT NULL");
+            $DB->update("{$_POST['selected_table']}_vision","{$row[0]}","+","");
+        }
 
 
         $SQL_QUERY_select_permission = $mysqli->query("SELECT * FROM `{$_POST['selected_table']}_permission` WHERE `{$_POST['selected_table']}_group` = '{$_POST['selected_group']}'");

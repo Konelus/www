@@ -127,8 +127,6 @@
             $permission_edit = mysqli_fetch_array($permissions_edit_query);
         }
     }
-
-
     // ↑ Получение информации о правах пользователя ↑
 
 
@@ -180,7 +178,18 @@
     // ↓ Изменение группы пользователя ↓
     if (isset ($_POST['edit_users_group']))
     {
-        $DB->update("users","table_group","".$_POST['selected_group'],"`login` = '".$_POST['selected_user']."'");
+        $DB->update("users","table_group","{$_POST['selected_group']}","`login` = '{$_POST['selected_user']}'");
+        $DB->select("*","group_namespace","`name` = '{$_POST['selected_group']}'");
+        while ($array = mysqli_fetch_array($DB->sql_query_select)) { $group_array = $array; }
+        foreach ($group_array as $key => $val)
+        {
+            if (($val == '+') && ($key === (string)$key))
+            {
+                $DB->alter_add("{$key}_vision","{$_POST['selected_user']}","TEXT CHARACTER SET utf8 NOT NULL");
+                $DB->update("{$key}_vision","{$_POST['selected_user']}","+","");
+            }
+        }
+
         header ("Location: /");
     }
     // ↑ Изменение группы пользователя ↑
@@ -198,7 +207,7 @@
 
     // ↓ Отправка письма ↓
     if (isset ($_POST['send_mail']))
-    { mail("rtk.tech.mail@yandex.ru", "".$_COOKIE['user'], "".$_POST['mail_text']); }
+    { mail("rtk.tech.mail@yandex.ru", "{$_COOKIE['user']}", "{$_POST['mail_text']}"); }
     // ↑ Отправка письма ↑
 
 

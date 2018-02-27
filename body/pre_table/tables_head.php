@@ -1,6 +1,9 @@
 <?php
     $status = '';
     $descriptor_r = fopen($_SERVER['DOCUMENT_ROOT'].'/status.txt', 'r');
+
+
+
     if ($descriptor_r)
     {
         while (($string = fgets($descriptor_r)) !== false)

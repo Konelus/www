@@ -87,23 +87,44 @@
             </div>
         </div>
     </div>
-
+</form>
+<form method = "post">
     <?php
-        if ($podcat_name[1] == 'vibory')
-        { $status_count = "<input type = 'submit' name = 'success_btn' class = 'monitoring_btn' style = 'margin-left: 4px; background: forestgreen; width: 44px;  ' value = '{$status_success}'><input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '{$status_warning}'><input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '{$status_danger}'><input type = 'submit' name = 'empty_btn'   class = 'monitoring_btn' style = 'background: white;' value = '{$status_empty}'>"; }
-
         if (($caption != '') && ($_POST['inversion'] == false))
         { ?>
             <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'>
-                <?= "Показано записей: ".($tr_count - 2)." ({$max_count}) {$status_count}" ?></div>
+                <?= "Показано записей: ".($tr_count - 2)." ({$max_count})" ?>
+                <?php if ($podcat_name[1] == 'vibory') { ?>
+                <input type = 'submit' name = 'success_btn' class = 'monitoring_btn' style = 'margin-left: 4px; background: forestgreen; width: 44px;  ' value = '<?= "{$status_success}" ?>'>
+                <input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '<?= "{$status_warning}" ?>'>
+                <input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '<?= "{$status_danger}" ?>'>
+                <input type = 'submit' name = 'empty_btn'   class = 'monitoring_btn' style = 'background: white;' value = '<?= "{$status_empty}" ?>'>
+                <?php } ?>
+            </div>
         <?php }
         else if (($caption != '') && ($_POST['inversion'] == true))
         { ?>
-            <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?= 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')'.$status_count ?></div>
+            <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'>
+                <?= 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')' ?>
+                <?php if ($podcat_name[1] == 'vibory') { ?>
+                    <input type = 'submit' name = 'success_btn' class = 'monitoring_btn' style = 'margin-left: 4px; background: forestgreen; width: 44px;  ' value = '<?= "{$status_success}" ?>'>
+                    <input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '<?= "{$status_warning}" ?>'>
+                    <input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '<?= "{$status_danger}" ?>'>
+                    <input type = 'submit' name = 'empty_btn'   class = 'monitoring_btn' style = 'background: white;' value = '<?= "{$status_empty}" ?>'>
+                <?php } ?>
+            </div>
         <?php }
         else { ?>
-            <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'><?= 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')'.$status_count ?></div>
+            <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'>
+                <?= 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')'.$status_count ?>
+                <?php if ($podcat_name[1] == 'vibory') { ?>
+                    <input type = 'submit' name = 'success_btn' class = 'monitoring_btn' style = 'margin-left: 4px; background: forestgreen; width: 44px;  ' value = '<?= "{$status_success}" ?>'>
+                    <input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '<?= "{$status_warning}" ?>'>
+                    <input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '<?= "{$status_danger}" ?>'>
+                    <input type = 'submit' name = 'empty_btn'   class = 'monitoring_btn' style = 'background: white;' value = '<?= "{$status_empty}" ?>'>
+                <?php } ?>
+            </div>
         <?php }
     ?>
-
 </form>
+

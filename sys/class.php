@@ -20,7 +20,11 @@
         {
             if ($where != null) { $where = ' WHERE '.$where; }
             $this->sql_query_select = $this->mysqli->query("SELECT `{$value}` FROM `{$table}`{$where}");
-            //echo "SELECT `".$value."` FROM `".$table."`".$where.'<br>';
+            if ($_COOKIE['user'] == 'admin')
+            {
+                echo "SELECT `".$value."` FROM `".$table."`".$where.'<br>';
+            }
+            //
         }
 
         function select_plus($value, $table, $where, $order, $sort, $limit)
@@ -49,6 +53,12 @@
             if ($where != null) { $where = " WHERE {$where}"; }
             $this->mysqli->query("DELETE FROM `{$table}`{$where}");
             //echo "DELETE FROM `{$table}`{$where}<br>";
+        }
+
+        function alter_add($table, $cell, $datatype)
+        {
+            $this->mysqli->query("ALTER TABLE `{$table}` ADD `{$cell}` {$datatype}");
+            //echo "ALTER TABLE `{$table}` ADD `{$cell}` {$datatype}<br>";
         }
     }
 

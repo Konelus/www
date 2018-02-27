@@ -20,7 +20,7 @@
     if ($get_name[0] == 'vibory')
     {
 
-        $SQL_QUERY_select_data = $mysqli->query("select * from `".$get_name[0]."` ");
+        $SQL_QUERY_select_data = $mysqli->query("select * from `{$get_name[0]}` ");
         if ($SQL_QUERY_select_data != null)
         { $max_count = mysqli_num_rows($SQL_QUERY_select_data); }
 
@@ -56,8 +56,9 @@ if ($SQL_QUERY_select_data != null)
 
 
 
-        while (true)
-        {
+        //while (true)
+        //{
+        echo '--> '.date("H:i:s").'<br>';
             for ($tr = 2; $tr <= $max_count; $tr++)
             {
                 if ($title[$tr][18] != 'монтаж не произведён')
@@ -66,8 +67,9 @@ if ($SQL_QUERY_select_data != null)
 
 
                     //echo $title[$tr][18].' --> '.$tr.'<br>';
-                    $node = '10.234.255.42';
+                    //$node = '10.234.255.42';
                     //$node = '10.153.29.134';
+                    $node = '127.0.0.1';
 
                     $SQL_QUERY_monitoring = $mysqli->query("SELECT * FROM `vibory` WHERE `id` = '".$title[$tr][0]."' ");
                     while ($row = mysqli_fetch_array($SQL_QUERY_monitoring)) { $uik_monitoring = $row; }
@@ -214,15 +216,19 @@ if ($SQL_QUERY_select_data != null)
 
                     else if (($commutator != 'success') || ($cam1 != 'success') || ($cam2 != 'success'))
                     {
-                        //$ready = 'danger';
-                        //$DB->select("alarm","{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                        $ex_alarm = explode(" ","{$current_var['alarm']}");
+                        $current_date = explode(".","$ex_alarm[0]");
+                        $current_time = explode(":","$ex_alarm[1]");
+
                         if ($current_var['alarm'] != '')
                         {
                             $DB->delete("{$get_name[0]}_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
                             if  ($current_var['alarm'] != 'success')
                             {
                                 $DB->insert("{$get_name[0]}_monitoring",'null, "'.$uik_monitoring['naimenovanie_uik_tik'].'", "'.$output_ping_gateway.'", "'.$output_ping.'", "'.$output_snmp.'", "'.$output_port_status_1.'", "'.$output_error_1.'", "'.$output_port_status_2.'", "'.$output_error_2.'", "'.$output_port_status_8.'", "'.$output_error_8.'", "'.$output_ping_cam_1.'", "'.$output_ststus_cam_1.'", "'.$output_ping_cam_2.'", "'.$output_ststus_cam_2.'", "'.$output_ping_controller.'", "'.date("d.m.y").'", "'.date("H:i:s").'", "'.$current_var['alarm'].'"');
-                                $DB->update("{$get_name[0]}","contact_groups","danger","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+                                if (((date("d") == ($current_date[0] + 1)) && (date("H") > (int)$current_time[0])) || (date("d") > $current_date[0]))
+                                { $DB->update("{$get_name[0]}","contact_groups","danger","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'"); }
+                                else { $DB->update("{$get_name[0]}","contact_groups","warning","`naimenovanie_uik_tik` = '{$uik_monitoring['naimenovanie_uik_tik']}'"); }
 
                             }
                             else if  ($current_var['alarm'] == 'success')
@@ -246,6 +252,7 @@ if ($SQL_QUERY_select_data != null)
                 }
                 //else { $ready = ''; }
             }
-        }
+        //}
+        echo '--> '.date("H:i:s").'<br>';
     }
 ?>

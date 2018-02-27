@@ -19,7 +19,7 @@
         $table_description[$table_count] = $row[2];
         $table_count++;
     }
-    require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
+
 
 ?>
 
