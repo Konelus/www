@@ -38,6 +38,7 @@
                     }
                     else if (table_count === max_td_count + <?= $bag_2 ?>) { document.write("<td class = 'table_head_sys'>edit</td>"); }
                     else if (table_count === (max_td_count + 1 + <?= $bag_2 ?>)) { document.write("<td class = 'table_head_sys'>del</td>"); }
+                    else if (table_count === (max_td_count + 2 + <?= $bag_2 ?>)) { document.write("<td class = 'table_head_sys'>load</td>"); }
                     table_count++;
                 }
             }

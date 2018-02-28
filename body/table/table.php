@@ -1,13 +1,11 @@
 <?php
 
-
-$SQL_QUERY_select_monitoring = $mysqli->query("SELECT * FROM `vibory_monitoring` WHERE `uik` = '".$uik_monitoring['naimenovanie_uik_tik']."' ");
-while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var = $row; }
-    //foreach ($_REQUEST as )
-    //{  }
+    $SQL_QUERY_select_monitoring = $mysqli->query("SELECT * FROM `vibory_monitoring` WHERE `uik` = '".$uik_monitoring['naimenovanie_uik_tik']."' ");
+    while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var = $row; }
 
 
     $tr_count = 2;
+
 
     if ($podcat_name[1] == 'vibory')
     { $height = 'height: 100px;'; $scroll = 111; }
@@ -20,10 +18,10 @@ while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var =
     else if ($_COOKIE['user'] != 'admin') { $max_td = $max_td_count_1; }
 
 
-    // ↓ Readonle для textarea ↓
+    // ↓ Readonly для textarea ↓
     if ($_COOKIE['user'] != 'admin')
     {
-        $permissions_edit_query = $mysqli->query("select * from `{$podcat_name[1]}_permission` where `{$podcat_name[1]}_group` = '{$current_users_group[0]}_edit' ");
+        //$permissions_edit_query = $mysqli->query("select * from `{$podcat_name[1]}_permission` where `{$podcat_name[1]}_group` = '{$current_users_group[0]}_edit' ");
         $permission_edit = mysqli_fetch_row($permissions_edit_query);
 
         for ($td_0 = 1; $td_0 <= $max_td_count + 2; $td_0++)
@@ -35,12 +33,10 @@ while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var =
             }
         }
     }
-    // ↑ Readonle для textarea ↑
+    // ↑ Readonly для textarea ↑
 
-    $bool_chb = false;
     $bool_edit = false;
     $td_td = 1;
-    //$tr_count = 0;
     $bool_query = 0;
     $tr_vision_count = 2;
 
@@ -55,26 +51,43 @@ while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var =
         }
     }
 
-    $vision_permission_count = 0;
+
     $SQL_QUERY_vision_login = $mysqli->query("SHOW COLUMNS FROM `{$podcat_name[1]}_vision`");
     if ($SQL_QUERY_vision_login != null) {
         {
-            while ($row = mysqli_fetch_array($SQL_QUERY_vision_login)) {
-                $vision_login[$vision_permission_count] = $row[0];
-                $vision_permission_count++;
-            }
+            while ($row = mysqli_fetch_array($SQL_QUERY_vision_login))
+            { $vision_login[] = $row[0]; }
         }
     }
 
     if ($_COOKIE['user'] == 'admin') { $additional_td = 1; }
     else { $additional_td = 0; }
 
-    //$DB->select("*","{$substring}_table","");
-    $SQL_QUERY_title = $mysqli->query("SELECT * FROM `{$substring}_table`");
-    while ($row = mysqli_fetch_row($SQL_QUERY_title))
-    { $title_array[] = $row; }
+
+//    $DB->select("table_group","users","`login` = '{$_COOKIE['user']}'");
+//    $user_group = mysqli_fetch_row($DB->sql_query_select);
+//
+//    $DB->select("*","{$substring}_permission","`{$substring}_group` = '{$user_group[0]}'");
+//    while ($array = mysqli_fetch_array($DB->sql_query_select))
+//    { $user_permission = $array; }
+//
+//
+//        foreach ($user_permission as $key => $value)
+//        {
+//            if (($value == '+') && (!is_numeric($key)))
+//            {
+//                $DB->select("name","{$substring}_table","`sql_name` = '{$key}'");
+//                $title_array[] = mysqli_fetch_row($DB->sql_query_select);
+//            }
+//        }
+//
+//        if ($_COOKIE['user'] == 'alex')
+//        {
+//            //print_r($title_array);
+//        }
 
 
+//var_dump($_REQUEST);
 
     if ($max_count >= 1)
     {

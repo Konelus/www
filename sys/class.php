@@ -1,4 +1,5 @@
 <?php
+
     class DB
     {
         public $sql_query_select;
@@ -16,14 +17,15 @@
 
         }
 
-        function select($value, $table, $where)
+        function select($value, $table, $where = 0)
         {
             if ($where != null) { $where = ' WHERE '.$where; }
-            $this->sql_query_select = $this->mysqli->query("SELECT `{$value}` FROM `{$table}`{$where}");
-            if ($_COOKIE['user'] == 'admin')
-            {
-                echo "SELECT `".$value."` FROM `".$table."`".$where.'<br>';
-            }
+            if ($value != '*') { $value = "`{$value}`"; }
+            $this->sql_query_select = $this->mysqli->query("SELECT {$value} FROM `{$table}`{$where}");
+            //if ($_COOKIE['user'] == 'admin')
+            //{
+            //echo "SELECT ".$value." FROM `".$table."`".$where.'<br>';
+            //}
             //
         }
 
