@@ -1,9 +1,8 @@
 <?php
     $sql = $sort = $sql_text = '';
     $c = 1;
-    $button_count = 0;
 
-    $qq01 = $mysqli->query("select * from `".$podcat_name[1]."_table`");
+    $qq01 = $mysqli->query("select * from `{$substring}_table`");
     while ($row = mysqli_fetch_row($qq01))
     {
         $sql_text[$c] = $row[1];
@@ -12,60 +11,37 @@
         $sql[$c] = $row[2];
 
 
-        if (isset($_POST[$str[$c].'_asc']))
+        if ((isset($_POST[$str[$c].'_asc'])) || (isset($_POST[$str[$c].'_desc'])))
         {
             ?><script>
                 $('input[name = "hidden_sort_1"]').val("<?= $row[2] ?>");
-                $('input[name = "hidden_sort_2"]').val("ASC");
                 $('input[name = "hidden_sort_3"]').val("<?= $c ?>");
-            </script><?php
+             </script><?php
             $class_count = $c;
-            $sort = 'ORDER BY `'.$row[2].'` ASC';
-        }
-        if (isset($_POST[$str[$c].'_desc']))
-        {
-            ?><script>
-                $('input[name = "hidden_sort_1"]').val("<?= $row[2] ?>");
-                $('input[name = "hidden_sort_2"]').val("DESC");
-                $('input[name = "hidden_sort_3"]').val("<?= $c ?>");
-            </script><?php
-            $sort = 'ORDER BY `'.$row[2].'` DESC';
-            $class_count = $c;
-        }
 
+            if (isset($_POST[$str[$c].'_asc']))
+            { ?><script>$('input[name = "hidden_sort_2"]').val("ASC");</script><?php $sort = "ORDER BY `{$row[2]}` ASC"; }
+            if (isset($_POST[$str[$c].'_desc']))
+            { ?><script>$('input[name = "hidden_sort_2"]').val("DESC");</script><?php $sort = "ORDER BY `{$row[2]}` DESC"; }
+        }
         $c++;
     }
 
 
-    //$hid = '';
-    //$sort = '';
-    //$sql_text = '';
-    //$c = 1;
-    //$qq01 = $mysqli->query("select * from `".$podcat_name[1]."_table`");
-    //while ($row = mysqli_fetch_row($qq01))
-    //{
-    //    $sql_text[$c] = $row[1];
-    //    $str1[$c] = str_replace(' ', '_', $sql_text[$c]);
-    //    $str[$c] = str_replace('.', '', $str1[$c]);
-    //    $c++;
-    //}
-
-
-
     if ((isset ($_POST['search_btn'])))
     {
-        $qq01 = $mysqli->query("select sql_name from `".$podcat_name[1]."_table` where `name` = '".$_POST['selected_td']."' ");
+        $qq01 = $mysqli->query("select sql_name from `{$substring}_table` where `name` = '{$_POST['selected_td']}' ");
         while ($row = mysqli_fetch_row($qq01))
         { $sql_td = $row[0]; }
-        $qq = $mysqli->query("select * from `".$podcat_name[1]."` where `".$sql_td."` LIKE '%".$_POST['caption']."%' ");
+        $qq = $mysqli->query("select * from `{$substring}` where `{$sql_td}` LIKE '%{$_POST['caption']}%' ");
         $count++;
         $max_count = mysqli_num_rows($qq) + 1;
     }
 
 
-    while ($button_count <= $max_count)
+    for ($button_count = 0; $button_count <= $max_count; $button_count++)
     {
-        if ((isset($_POST['edit_'.$button_count])) || (isset($_POST['edit_true_'.$button_count])))
+        if ((isset($_POST["edit_{$button_count}"])) || (isset($_POST["edit_true_{$button_count}"])))
         {
             $hid_1 = $_POST['hidden_sort_1'];
             $hid_2 = $_POST['hidden_sort_2'];
@@ -85,11 +61,10 @@
             </script><?php
 
             if (($hid_1 != '') || ($hid_2 != ''))
-            { $sort = 'ORDER BY `'.$hid_1.'` '.$hid_2.' '; }
+            { $sort = "ORDER BY `{$hid_1}` {$hid_2}"; }
             if ($lim != '')
-            { $lim = ' LIMIT'.$lim; }
+            { $lim = " LIMIT {$lim}"; }
         }
-        $button_count++;
     }
 
 

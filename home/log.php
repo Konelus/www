@@ -41,9 +41,10 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
             else { $log_info[$log_count][6] = $row[6]; }
 
             $tr = $row[7];
-            $SQL_name = $mysqli->query("select `name` from `".$log_info[$log_count][5]."_table` where `sql_name` = '".$tr."' ");
-            if ($SQL_name != null)
-            { while ($row_100 = mysqli_fetch_array($SQL_name)) { $log_info[$log_count][7] = $row_100[0]; } }
+
+            column_name("{$log_info[$log_count][5]}","`sql_name` = '{$tr}'");
+            if ($DB->sql_query_select != null)
+            { while ($row_100 = mysqli_fetch_array($DB->sql_query_select)) { $log_info[$log_count][7] = $row_100[0]; } }
             else { $log_info[$log_count][7] = $row[7]; }
 
             $log_info[$log_count][8] = $row[8];

@@ -10,9 +10,11 @@
     /* - - - - - - - - - - ↑ Подключение к БД ↑ - - - - - - - - - - */
 
     require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
 
 
-    $table_count = 0;
+
+$table_count = 0;
     $SQL_QUERY_select_table = $mysqli->query("SELECT * FROM  `tables_namespace` WHERE `released` = '+' ");
     while ($row = mysqli_fetch_row($SQL_QUERY_select_table))
     {
@@ -83,6 +85,7 @@
     if ((isset ($_POST['select_table'])) && ($_POST['selected_table'] != ''))
     {
         $selected_table_description = $_POST['selected_table'];
+
         $SQL_QUERY_select_table_name = $mysqli->query("SELECT `name` FROM `tables_namespace` WHERE `description` = '".$selected_table_description."' ");
         while ($row = mysqli_fetch_row($SQL_QUERY_select_table_name))
         { $selected_table_name = $row[0]; }

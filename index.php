@@ -26,25 +26,28 @@
 
     require_once($_SERVER['DOCUMENT_ROOT']."/body/sys/translit.php");
     require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
 
 
     // ↓ Получение группы пользователя ↓
-    $SQL_QUERY_current_group = $mysqli->query("select `table_group` from `users` where `login` = '".$_COOKIE['user']."' ");
-    while ($row = mysqli_fetch_row($SQL_QUERY_current_group))
-    { $current_users_group[0] = $row[0]; }
+    user_group("{$_COOKIE['user']}");
+    while ($row = mysqli_fetch_row($DB->sql_query_select))
+    { $current_users_group = $row[0]; }
+    //$current_users_group[0] = $users_group_result;
     // ↑ Получение группы пользователя ↑
+
 
     // ↓ Получение группы пользователя ↓
-    //$perm_count = 1;
-    $SQL_QUERY_tables_access = $mysqli->query("select * from `group_namespace` where `name` = '".$current_users_group[0]."' ");
-    while ($row = mysqli_fetch_array($SQL_QUERY_tables_access))
-    { $current_users_access = $row; $perm_count++; }
+    user_table("{$current_users_group[0]}");
+    while ($array = mysqli_fetch_array($DB->sql_query_select))
+    { $current_users_access = $array; $perm_count++; }
     // ↑ Получение группы пользователя ↑
 
 
-    $SQL_QUERY_ver = $mysqli->query("select `ver` from `ver` ");
-    while ($row = mysqli_fetch_row($SQL_QUERY_ver))
-    { $ver = $row[0]; }
+
+    ver();
+    //$ver = mysqli_fetch_row($DB->sql_query_select);
+    //$ver = $ver[0];
 
     if ($_SERVER['QUERY_STRING'] != '')
     {

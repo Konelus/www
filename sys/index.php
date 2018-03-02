@@ -1,4 +1,5 @@
 <?php
+
     $link = '';
     $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
     if ($descriptor)

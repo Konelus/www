@@ -21,8 +21,8 @@
     // ↓ Readonly для textarea ↓
     if ($_COOKIE['user'] != 'admin')
     {
-        //$permissions_edit_query = $mysqli->query("select * from `{$podcat_name[1]}_permission` where `{$podcat_name[1]}_group` = '{$current_users_group[0]}_edit' ");
-        $permission_edit = mysqli_fetch_row($permissions_edit_query);
+        permission("{$substring}", "{$current_users_group[0]}_edit");
+        $permission_edit = mysqli_fetch_row($DB->sql_query_select);
 
         for ($td_0 = 1; $td_0 <= $max_td_count + 2; $td_0++)
         {
@@ -172,7 +172,6 @@
 
                             // ↓ Редактирование строки ↓
                             require_once ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/tr_edit.php');
-
                             // ↑ Редактирование строки ↑
 
 

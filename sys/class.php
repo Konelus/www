@@ -6,7 +6,7 @@
         public $sql_query_select_plus;
         public $mysqli;
 
-        function mysqli()
+        public function mysqli()
         {
             $link = '';
             $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
@@ -14,55 +14,43 @@
             $mysqli = new mysqli("localhost", "root", "".$link, "rtk_01");
             $this->mysqli = $mysqli;
             mysqli_set_charset($mysqli, 'utf8');
-
         }
 
-        function select($value, $table, $where = 0)
-        {
-            if ($where != null) { $where = ' WHERE '.$where; }
-            if ($value != '*') { $value = "`{$value}`"; }
-            $this->sql_query_select = $this->mysqli->query("SELECT {$value} FROM `{$table}`{$where}");
-            //if ($_COOKIE['user'] == 'admin')
-            //{
-            //echo "SELECT ".$value." FROM `".$table."`".$where.'<br>';
-            //}
-            //
-        }
-
-        function select_plus($value, $table, $where, $order, $sort, $limit)
+        public function select($value, $table, $where = '', $sort = '', $order = '', $limit = '')
         {
             if ($where != null) { $where = " WHERE {$where}"; }
             if ($order != null) { $order = " ORDER BY `{$order}`"; }
             if ($limit != null) { $limit = " LIMIT {$limit}"; }
-            $this->sql_query_select_plus = $this->mysqli->query("SELECT `{$value}` FROM `{$table}`{$where}{$order}{$sort}{$limit}");
+            $this->sql_query_select = $this->mysqli->query("SELECT `{$value}` FROM `{$table}`{$where}{$order}{$sort}{$limit}");
         }
 
-        function insert($table, $values)
+        public function insert($table, $values)
         {
             $this->mysqli->query("INSERT INTO `{$table}` VALUES ({$values})");
             //echo "INSERT INTO `{$table}` VALUES ({$values})<br>";
         }
 
-        function update($table, $cell, $value, $where)
+        public function update($table, $cell, $value, $where = '')
         {
             if ($where != null) { $where = " WHERE {$where}"; }
             $this->mysqli->query("UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}");
             //echo "UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}<br>";
         }
 
-        function delete($table, $where)
+        public function delete($table, $where = '')
         {
             if ($where != null) { $where = " WHERE {$where}"; }
             $this->mysqli->query("DELETE FROM `{$table}`{$where}");
             //echo "DELETE FROM `{$table}`{$where}<br>";
         }
 
-        function alter_add($table, $cell, $datatype)
+        public function alter_add($table, $cell, $datatype = '')
         {
             $this->mysqli->query("ALTER TABLE `{$table}` ADD `{$cell}` {$datatype}");
             //echo "ALTER TABLE `{$table}` ADD `{$cell}` {$datatype}<br>";
         }
     }
+
 
     $DB = new DB;
     $DB->mysqli();

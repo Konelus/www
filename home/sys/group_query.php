@@ -3,11 +3,11 @@
 /* - - - - - - - - - - ↓ Добавление группы ↓ - - - - - - - - - - */
     if (isset ($_POST['add_group']))
     {
-        $SQL_QUERY_add_to_table_select = $mysqli->query("SELECT * FROM `group_namespace` ");
         $sql_str = "null, '".$_POST['group_name']."'";
-        for ($count = 1; $count <= ((mysqli_num_fields($SQL_QUERY_add_to_table_select) - 2 )); $count++)
-        { $sql_str = $sql_str.", ''"; }
-        $DB->insert("group_namespace","".$sql_str);
+        user_table();
+        for ($count = 1; $count <= ((mysqli_num_fields($DB->sql_query_select) - 2 )); $count++)
+        { $sql_str .= ", ''"; }
+        $DB->insert("group_namespace","{$sql_str}");
         header ("Location: /");
     }
 /* - - - - - - - - - - ↑ Добавление группы ↑ - - - - - - - - - - */

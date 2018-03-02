@@ -1,5 +1,5 @@
 <?php
-    if ($searched_tr == 0) { $searched_tr++; }
+    if ($tr == 0) { $searched_tr = 1; }
     if ($podcat_name[1] != 'vibory') { $kostil_3 = 1; } else { $kostil_3 = 0; }
 
 

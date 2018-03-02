@@ -3,7 +3,6 @@
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
     $log = explode('@', $_COOKIE["user"]);
 
-
 ?>
 
 

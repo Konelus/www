@@ -26,44 +26,26 @@
         }
         else if ($status == 'disable')
         {
-            $descriptor_w = fopen($_SERVER['DOCUMENT_ROOT'] . '/status.txt', 'w+');
+            $descriptor_w = fopen($_SERVER['DOCUMENT_ROOT'].'/status.txt', 'w+');
             fwrite($descriptor_w, 'enable');
             fclose($descriptor_w);
 
-            $SQL_QUERY_ver = $mysqli->query("select `ver` from `ver` ");
-            while ($row = mysqli_fetch_row($SQL_QUERY_ver))
-            { $ver = $row[0]; }
-            $ver_update = explode('.', $ver);
-            $DB->update("ver","ver","".$ver_update[0].'.'.$ver_update[1].'.'.($ver_update[2] + 1),"");
+            ver();
+            $DB->update("ver","ver","".$current_ver[0].'.'.$current_ver[1].'.'.($current_ver[2] + 1));
         }
         echo "<script>window.location.href = window.location.href;</script>";
     }
 
     // ↓ Список таблиц ↓
-    $tables_count = 1;
-    $MYSQL_QUERY_tables = $mysqli->query("SELECT `description` FROM `tables_namespace` WHERE `name` = '".$podcat_name[1]."' ");
-    while ($row = mysqli_fetch_row($MYSQL_QUERY_tables))
+    $DB->select("description","tables_namespace","`name` = '{$substring}'");
+    while ($row = mysqli_fetch_row($DB->sql_query_select))
     { $table_name = $row[0]; }
     // ↑ Список таблиц ↑
 
     if (isset ($_POST['search_btn']))
-    {
-        $SQL_QUERY_sql_name = $mysqli->query("select `sql_name` from `".$podcat_name[1]."_table` where `name` = '".$_POST['selected_td']."' ");
-        if ($SQL_QUERY_sql_name != null)
-        {
-            while ($row = mysqli_fetch_row($SQL_QUERY_sql_name))
-            { $searched_td = $row[0]; }
-        }
-        $row_count = 0;
+    { sql_name("{$substring}","{$_POST['selected_td']}"); $searched_td = $result; }
 
-        //$max_count = $max_count_searched;
-
-    //}
-        //echo "select * from `".$podcat_name[1]."` where `".$searched_td ."` =  '".$_POST['caption']."' ".$sort." ";
-    }
     $qqzz = $mysqli->query("select * from `".$podcat_name[1]."` ");
-    //echo "select * from `".$podcat_name[1]."` ";
-    //echo "select * from `".$podcat_name[1]."` where `".$searched_td."` =  '".$_POST['caption']."' ";
     $max_count_title = mysqli_num_rows($qqzz);
 
     if (($_COOKIE['user'] == 'admin') || ($current_users_access[$podcat_name[1].'_status'] == 'superuser'))

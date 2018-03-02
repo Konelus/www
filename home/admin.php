@@ -82,7 +82,8 @@
                         <table class = 'table'>
                             <tr><td class = 'users_main_td' colspan = '2'>Удаление группы</td><tr>
                             <tr><td class = 'users_td_label'>Название</td>
-                                <td class = 'users_td_text_align'><select name = 'del_group_name' class = 'form-control select_cursor'><script>groups();</script></select></td></tr>
+                                <td class = 'users_td_text_align'><select name = 'del_group_name' class = 'form-control select_cursor'>
+                                        <?php foreach ($all_group as $key => $val) { echo "<option>$val</option>"; } ?></select></td></tr>
                             <tr><td colspan = '2'><input name = 'del_group' value = 'Удалить' class = 'btn button' type = 'submit'></td></tr>
                         </table>
                     </form>
@@ -97,7 +98,7 @@
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Группа</td>
-                                <td><select name = 'selected_group' class = 'form-control select_cursor'><script>groups();</script></select></td>
+                                <td><select name = 'selected_group' class = 'form-control select_cursor'><?php foreach ($all_group as $key => $val) { echo "<option>$val</option>"; } ?></select></td>
                             </tr>
                             <tr><td colspan = '2'><input name = 'edit_users_group' value = 'Изменить' class = 'btn button' type = 'submit'></td></tr>
                         </table>
@@ -109,7 +110,7 @@
                             <tr><td class = 'users_main_td' colspan = '2'>Привязка группы к таблице</td>
                             <tr>
                                 <td class = 'users_td_label'>Группа</td>
-                                <td><select name = 'selected_group' class = 'form-control select_cursor'><script>groups();</script></select></td>
+                                <td><select name = 'selected_group' class = 'form-control select_cursor'><?php foreach ($all_group as $key => $val) { echo "<option>$val</option>"; } ?></select></td>
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Таблицы</td>
@@ -134,7 +135,7 @@
                             <tr><td class = 'users_main_td' colspan = '2'>Отвязка группы от таблицы</td>
                             <tr>
                                 <td class = 'users_td_label'>Группа</td>
-                                <td><select name = 'selected_del_group' class = 'form-control select_cursor'><script>groups();</script></select></td>
+                                <td><select name = 'selected_del_group' class = 'form-control select_cursor'><?php foreach ($all_group as $key => $val) { echo "<option>$val</option>"; } ?></select></td>
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Таблицы</td>
