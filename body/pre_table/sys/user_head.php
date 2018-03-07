@@ -21,11 +21,11 @@
 
 <!-- ↑ Форма поиска записей в таблице ↑ -->
 <div class = 'col-lg-6 col-md-4 col-sm-3 table_title_div'>
-<?php $status = $current_users_access[$podcat_name[1].'_status'];
+<?php $status = $current_users_access[$substring.'_status'];
 if (($_COOKIE['user'] == 'admin') || ($_COOKIE['user'] == 'Aleksandr.Kvasha@south.rt.ru') || ($_COOKIE['user'] == 'Vlasov@south.rt.ru') ||
     ($_COOKIE['user'] == 'A.Pisarenko@south.rt.ru') || ($_COOKIE['user'] == 'Denis.Osadchiy@south.rt.ru') || ($status == 'superuser')) { ?>
-    <a target = '_blank' style = 'color: white; border: 0; background: black;' href = '/body/sys/csv.php/?<?= $podcat_name[1] ?>'><?= $table_name." (".($max_count_title - 2).")"; ?></a>
-<?php } else {  echo $table_name." (".($max_count_title - 2).")"; } ?>
+    <a target = '_blank' style = 'color: white; border: 0; background: black;' href = '/body/sys/csv.php/?<?= $substring ?>'><?= $page_title." (".($max_count - 2).")"; ?></a>
+<?php } else {  echo $page_title." (".($max_count - 2).")"; } ?>
 </div>
 
 <!-- ↓ Кнопки home и exit ↓ -->

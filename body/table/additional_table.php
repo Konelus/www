@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <?php
-
+    $substring = $_SERVER['QUERY_STRING'];
     require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
     //$node = '10.234.255.41';
     //$node = '10.153.29.134';
@@ -23,7 +23,7 @@
 
     $cat_name = end(explode("=", ('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])));
     $podcat_name = explode('?', $cat_name);
-    $get_name = explode('/',$podcat_name[1]);
+    $get_name = explode('/',$substring);
 
     $SQL_QUERY_monitoring = $mysqli->query("SELECT * FROM `vibory` WHERE `id` = ".$get_name[1]." ");
     while ($row = mysqli_fetch_array($SQL_QUERY_monitoring))

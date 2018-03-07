@@ -1,17 +1,17 @@
 <?php
 
-    $SQL_QUERY_select_monitoring = $mysqli->query("SELECT * FROM `vibory_monitoring` WHERE `uik` = '".$uik_monitoring['naimenovanie_uik_tik']."' ");
-    while ($row = mysqli_fetch_array($SQL_QUERY_select_monitoring)) { $current_var = $row; }
+    $DB->select("*","vibory_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
+    while ($row = mysqli_fetch_array($DB->sql_query_select)) { $current_var = $row; }
 
 
     $tr_count = 2;
 
 
-    if ($podcat_name[1] == 'vibory')
+    if ($substring == 'vibory')
     { $height = 'height: 100px;'; $scroll = 111; }
 
 
-    else if ($podcat_name[1] == 'schools')
+    else if ($substring == 'schools')
     { $height = 'height: 60px;'; $scroll = 78;}
 
     if ($_COOKIE['user'] == 'admin') { $max_td = $max_td_count; }
@@ -21,7 +21,7 @@
     // ↓ Readonly для textarea ↓
     if ($_COOKIE['user'] != 'admin')
     {
-        permission("{$substring}", "{$current_users_group[0]}_edit");
+        permission("{$substring}", "{$current_users_group}_edit");
         $permission_edit = mysqli_fetch_row($DB->sql_query_select);
 
         for ($td_0 = 1; $td_0 <= $max_td_count + 2; $td_0++)
@@ -44,7 +44,7 @@
 
     if ($_COOKIE['user'] != 'admin')
     {
-        $DB->select("id_tr","{$podcat_name[1]}_vision","`{$_COOKIE['user']}` = '+'");
+        $DB->select("id_tr","{$substring}_vision","`{$_COOKIE['user']}` = '+'");
         {
             if ($DB->sql_query_select != null)
             { while ($row = mysqli_fetch_array($DB->sql_query_select))  { $tr_vision[$row[0]] = $row[0]; } }
@@ -52,10 +52,10 @@
     }
 
 
-    $SQL_QUERY_vision_login = $mysqli->query("SHOW COLUMNS FROM `{$podcat_name[1]}_vision`");
-    if ($SQL_QUERY_vision_login != null) {
+    $DB->show("{$substring}_vision");
+    if ($DB->sql_query_show != null) {
         {
-            while ($row = mysqli_fetch_array($SQL_QUERY_vision_login))
+            while ($row = mysqli_fetch_array($DB->sql_query_show))
             { $vision_login[] = $row[0]; }
         }
     }
@@ -118,12 +118,12 @@
                     $tr_count++;
 
                     if (isset ($_POST["add_in_vision_submit_{$tr}"]))
-                    { $DB->update("{$podcat_name[1]}_vision`","{$_POST["add_in_vision_text_{$tr}"]}","+","`id_tr` = '{$title[$tr][0]}'"); }
+                    { $DB->update("{$substring}_vision`","{$_POST["add_in_vision_text_{$tr}"]}","+","`id_tr` = '{$title[$tr][0]}'"); }
 
                     if ($_SERVER['QUERY_STRING'] == 'vibory')
                     {
                         $ready_date = '';
-                        $DB->select("alarm","{$podcat_name[1]}_monitoring","`uik` = '{$title[$tr][3]}'");
+                        $DB->select("alarm","{$substring}_monitoring","`uik` = '{$title[$tr][3]}'");
                         $alarm_query = $DB->sql_query_select;
                         if ($alarm_query != null)
                         { while ($row = mysqli_fetch_row($alarm_query)) { $ready_date = $row[0]; } }
@@ -131,7 +131,7 @@
 
 
                     ?><tr style='<?= $height ?>' id = '<?= $tr ?>'><?php
-                    for ($td = 1; $td <= ($max_td + 3); $td++)
+                    for ($td = 1; $td <= ($max_td + 4); $td++)
                     {
 
                         // ↓ Скроллинг при нажатии кнопки редактирования ↓
@@ -193,12 +193,16 @@
                             { $class_color = 'table_head_bg2'; }
                             else if ((isset ($_POST['search_btn']) || ($_POST['hidden_sort_5'] != '')))
                             {
-                                if (isset ($_POST['search_btn']))
-                                { $SQL_QUERY_select_searched_id = $mysqli->query("SELECT `id` FROM `{$podcat_name[1]}_table` where `name` = '{$_POST['selected_td']}' "); }
-                                else if ($_POST['hidden_sort_5'] != '')
-                                { $SQL_QUERY_select_searched_id = $mysqli->query("SELECT `id` FROM `{$podcat_name[1]}_table` where `sql_name` = '{$_POST['hidden_sort_5']}' "); }
-                                while ($row = mysqli_fetch_row($SQL_QUERY_select_searched_id))
-                                { $td_title_count = $row[0]; }
+                                //if (isset ($_POST['search_btn']))
+                                //{
+                                    //$DB->select("id","{$substring}_table","`name` = '{$_POST['selected_td']}'");
+                                //}
+                                //else if ($_POST['hidden_sort_5'] != '')
+                                //{
+                                    //$DB->select("id","{$substring}_table","sql_name` = '{$_POST['hidden_sort_5']}'");
+                                //}
+                                //while ($row = mysqli_fetch_row($DB->sql_query_select))
+                                //{ $td_title_count = $row[0]; }
                                 if ($new_td[$td_td] == $td_title_count)
                                 { $class_color = 'table_bg_search'; }
                                 else { $class_color = ''; }
@@ -238,12 +242,12 @@
 
 
                         // ↓ Для суперюзера ↓
-                        else if ((($_COOKIE['user'] != 'admin') && ($current_users_access[$podcat_name[1].'_status'] == 'superuser'))) { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/superuser_edit_buttons.php'); }
+                        else if ((($_COOKIE['user'] != 'admin') && ($current_users_access[$substring.'_status'] == 'superuser'))) { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/superuser_edit_buttons.php'); }
                         // ↑ Для суперюзера ↑
 
 
                         // ↓ Для юзера ↓
-                        else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$podcat_name[1].'_status'] == 'user'))  { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/user_edit_buttons.php'); }
+                        else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$substring.'_status'] == 'user'))  { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/user_edit_buttons.php'); }
                         // ↑ Для рюзера ↑
 
         /*  ↑ - - - - - - - - - - ↑ Формирование кнопок edit и del ↑ - - - - - - - - - - */

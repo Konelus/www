@@ -17,7 +17,7 @@ else if ($td > 1) { ?>
     if ($bool_var_2 == 0)
     {
         if ($title[$tr][$new_td[$td_td]] == 'Online Test')
-        { $parsed_title = "<a target = '_blank' href = '/body/table/additional_table.php/?{$podcat_name[1]}/{$title[$tr][0]}'>{$title[$tr][$new_td[$td_td]]}</a>"; }
+        { $parsed_title = "<a target = '_blank' href = '/body/table/additional_table.php/?{$substring}/{$title[$tr][0]}'>{$title[$tr][$new_td[$td_td]]}</a>"; }
         else if ($title[$tr][$new_td[$td_td]] != 'Online Test')
         { $parsed_title = $title[$tr][$new_td[$td_td]]; }
         ?><div style = '<?= $height ?> max-height: 100px; overflow: hidden;'><?= $parsed_title; ?></div><?php

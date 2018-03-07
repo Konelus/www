@@ -1,5 +1,8 @@
 <?php
 
+    $mysqli = new mysqli("localhost", "root", "".$link, "rtk_01");
+    mysqli_set_charset($mysqli, 'utf8');
+
     $link = '';
     $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
     if ($descriptor)

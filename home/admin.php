@@ -5,22 +5,12 @@
     var all_group = <?= json_encode($all_group); ?>;
 
     var all_users_count = <?= json_encode($all_user_count); ?>;
-    var users_permission_count = <?= json_encode($ege_user_count); ?>;
-    var all_user_group_count = <?= json_encode($all_user_group_count); ?>;
-    var all_group_count = <?= json_encode($all_group_count); ?>;
+
 </script>
 
 <?php
-    $table_count = 0;
-    $SQL_QUERY_select_table = $mysqli->query("SELECT * FROM  `tables_namespace` WHERE `released` = '+' ");
-    while ($row = mysqli_fetch_row($SQL_QUERY_select_table))
-    {
-        $table_name[$table_count] = $row[1];
-        $table_description[$table_count] = $row[2];
-        $table_count++;
-    }
-
-
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/admin_sys.php');
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
 ?>
 
 <script src="/home/sys/users.js"></script>
@@ -57,7 +47,7 @@
                             <tbody>
                                 <tr><td class = 'users_main_td' colspan = '2'>Удаление пользователя</td><tr>
                                 <tr><td class = 'users_td_label'>Логин</td>
-                                    <td class = 'users_td_text_align'><select  name = 'del_user_name' class = 'form-control select_cursor'><script>users();</script></select></td></tr>
+                                    <td class = 'users_td_text_align'><select  name = 'del_user_name' class = 'form-control select_cursor'><?php foreach ($all_users as $key => $val) { if ($val != 'admin') { echo "<option>$val</option>"; } } ?></select></td></tr>
                                 <tr><td colspan = '2'><input name = 'del_user' value = 'Удалить' class = 'btn button' type = 'submit'></td></tr>
                             </tbody>
                         </table>
@@ -94,7 +84,7 @@
                             <tr><td class = 'users_main_td' colspan = '2'>Группы пользователей</td>
                             <tr>
                                 <td class = 'users_td_label'>Логин</td>
-                                <td><select name = 'selected_user' class = 'form-control select_cursor'><script>users();</script></select></td>
+                                <td><select name = 'selected_user' class = 'form-control select_cursor'><?php foreach ($all_users as $key => $val) { if ($val != 'admin') { echo "<option>$val</option>"; } } ?></select></td>
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Группа</td>
@@ -117,7 +107,7 @@
                                 <td><select name = 'selected_table' class = 'form-control select_cursor'>
                                         <?php
                                             foreach ($table_name_array as $key => $table_name)
-                                            { echo "<option>{$table_name[0]}</option>"; }
+                                            { echo "<option>{$table_name}</option>"; }
                                         ?>
                                     </select></td>
                             </tr>
@@ -142,7 +132,7 @@
                                 <td><select name = 'selected_del_table' class = 'form-control select_cursor'>
                                     <?php
                                         foreach ($table_name_array as $key => $table_name)
-                                        { echo "<option>{$table_name[0]}</option>"; }
+                                        { echo "<option>{$table_name}</option>"; }
                                     ?>
                                     </select></td>
                             </tr>

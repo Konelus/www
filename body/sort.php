@@ -2,8 +2,8 @@
     $sql = $sort = $sql_text = '';
     $c = 1;
 
-    $qq01 = $mysqli->query("select * from `{$substring}_table`");
-    while ($row = mysqli_fetch_row($qq01))
+    $DB->select("*","{$substring}_table");
+    while ($row = mysqli_fetch_row($DB->sql_query_select))
     {
         $sql_text[$c] = $row[1];
         $str1[$c] = str_replace(' ', '_', $sql_text[$c]);
@@ -28,14 +28,14 @@
     }
 
 
-    if ((isset ($_POST['search_btn'])))
+    if (((isset ($_POST['search_btn'])) && ($_POST['inversion'] == false)))
     {
-        $qq01 = $mysqli->query("select sql_name from `{$substring}_table` where `name` = '{$_POST['selected_td']}' ");
-        while ($row = mysqli_fetch_row($qq01))
+        $DB->select("sql_name","{$substring}_table","`name` = '{$_POST['selected_td']}'");
+        while ($row = mysqli_fetch_row($DB->sql_query_select))
         { $sql_td = $row[0]; }
-        $qq = $mysqli->query("select * from `{$substring}` where `{$sql_td}` LIKE '%{$_POST['caption']}%' ");
+        $DB->select("*","{$substring}","`{$sql_td}` LIKE '%{$_POST['caption']}%'");
         $count++;
-        $max_count = mysqli_num_rows($qq) + 1;
+        $max_count = mysqli_num_rows($DB->sql_query_select) + 1;
     }
 
 

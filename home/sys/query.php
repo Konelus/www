@@ -1,57 +1,43 @@
 <?php
     //$selected_table_name = 'vibory';
 
-/* - - - - - - - - - - ↓ Получение названий столбцов таблицы ↓ - - - - - - - - - - */
-    column_name("{$selected_table_name}_table");
-    if ($DB->sql_query_select != null)
-    {
-        while ($row = mysqli_fetch_row($DB->sql_query_select))
-        { $table[] = $row[0]; }
-        $max_td_count = mysqli_num_rows($DB->sql_query_select);
-    }
-/* - - - - - - - - - - ↑ Получение названий столбцов таблицы ↑ - - - - - - - - - - */
 
-
-/* - - - - - - - - - - ↓ Получение sql-названий столбцов таблицы ↓ - - - - - - - - - - */
-    sql_name("{$selected_table_name}","","2"); $table_sql = $result;
-/* - - - - - - - - - - ↑ Получение sql-названий столбцов таблицы ↑ - - - - - - - - - - */
 
 
 /* - - - - - - - - - - ↓ Изменение видимости столбцов для пользователя ↓ - - - - - - - - - - */
     $str = "null, '".$_POST['group']."'";
     $str_edit = "null, '".$_POST['group']."_edit'";
-    $group_perm_isset = 'false';
+    $group_perm_isset = false;
     $group_perm_edit_isset = 'false';
 
 
 
     if (isset($_POST['confirm']))
     {
-
         // ↓ Проверка на существование правила ↓
-        $check_count = 0;
-        $check_query = $mysqli->query("select `{$selected_table_name}_group` from `{$selected_table_name}_permission`");
-        if ($check_query != null)
+        $DB->select("{$selected_table_name}_group","{$selected_table_name}_permission");
+        if ($DB->sql_query_select != null)
         {
-            while ($row = mysqli_fetch_row($check_query))
-            {
-                $check[$check_count] = $row[0];
-                if ($check[$check_count] == $_POST['group'])
-                { $group_perm_isset = 'true'; }
+            while ($row = mysqli_fetch_row($DB->sql_query_select))
+            {$check[] = $row[0];}
 
-                if ($check[$check_count] == "{$_POST['group']}_edit")
+            foreach ($check as $key => $val)
+            {
+                if ($check[$key] == $_POST['group'])
+                { $group_perm_isset = true; }
+
+                if ($check[$key] == "{$_POST['group']}_edit")
                 { $group_perm_edit_isset = 'true'; }
-                $check_count++;
             }
         }
         // ↑ Проверка на существование правила ↑
 
 
         // ↓ Формирование запроса ↓
-        for ($str_count = 0; $str_count < $max_td_count; $str_count++)
+        for ($str_count = 0; $str_count < count($title_array); $str_count++)
         {
-            $str .= ", '{$_POST["textBox{$str_count}"]}'";
-            $str_edit .= ", '{$_POST["edit_listBox{$str_count}"]}'";
+            $str .= ", '{$_POST["listBox_{$str_count}"]}'";
+            $str_edit .= ", '{$_POST["edit_listBox_{$str_count}"]}'";
         }
         // ↑ Формирование запроса ↑
 
@@ -59,20 +45,23 @@
         // ↓ Отправка запроса ↓
         if ($_POST['group'] != '')
         {
-            if ($group_perm_isset == 'false')
+            $DB->select("sql_name","{$selected_table_name}_table");
+            while ($row = mysqli_fetch_row($DB->sql_query_select))
+            { $table_sql[] = $row[0]; }
+            if ($group_perm_isset == false)
             { $DB->insert("{$selected_table_name}_permission","{$str}"); }
-            else if ($group_perm_isset == 'true')
+            else if ($group_perm_isset == true)
             {
-                for ($td_count = 0; $td_count <= $max_td_count - 1; $td_count++)
-                { $DB->update("{$selected_table_name}_permission","{$table_sql[$td_count]}","". $_POST["textBox{$td_count}"],"`{$selected_table_name}_group` = '{$_POST['group']}'"); }
+                for ($td_count = 0; $td_count <= count($title_array) - 1; $td_count++)
+                { $DB->update("{$selected_table_name}_permission","{$table_sql[$td_count]}","{$_POST["listBox_{$td_count}"]}","`{$selected_table_name}_group` = '{$_POST['group']}'"); }
             }
 
             if ($group_perm_edit_isset == 'false')
             { $DB->insert("{$selected_table_name}_permission","{$str_edit}"); }
             else if ($group_perm_edit_isset == 'true')
             {
-                for ($td_count = 0; $td_count <= $max_td_count - 1; $td_count++)
-                { $DB->update("{$selected_table_name}_permission","{$table_sql[$td_count]}","{$_POST["edit_listBox{$td_count}"]}","`{$selected_table_name}_group` = '{$_POST['group']}_edit'"); }
+                for ($td_count = 0; $td_count <= count($title_array) - 1; $td_count++)
+                { $DB->update("{$selected_table_name}_permission","{$table_sql[$td_count]}","{$_POST["edit_listBox_{$td_count}"]}","`{$selected_table_name}_group` = '{$_POST['group']}_edit'"); }
             }
         }
         // ↑ Формирование запроса ↑
@@ -80,10 +69,9 @@
 /* - - - - - - - - - - ↑ Изменение видимости столбцов для пользователя ↑ - - - - - - - - - - */
 
 
-    $all_user_count = 0;
-    $ege_user_count = 0;
-    $all_user_group_count = 0;
-    $all_group_count = 0;
+
+
+
 
 
     // ↓ Получение информации о правах пользователя ↓
@@ -124,25 +112,13 @@
     // ↑ Получение информации о правах пользователя ↑
 
 
-    // ↓ Получение списка пользователей ↓
-    $users = $mysqli->query("select `login` from `users`");
-    while ($row = mysqli_fetch_row($users))
-    { $all_users[$all_user_count] = $row[0]; $all_user_count++; }
-    // ↑ Получение списка пользователей ↑
 
 
-    // ↓ Получение пользовательских групп ↓
-    $users_group = $mysqli->query("select `table_group` from `users`");
-    while ($row = mysqli_fetch_row($users_group))
-    { $all_users_group[$all_user_group_count] = $row[0]; $all_user_group_count++; }
-    // ↑ Получение пользовательских групп ↑
 
 
-    // ↓ Получение списка всех групп ↓
-    $DB->select("name","group_namespace");
-    while ($row = mysqli_fetch_row($DB->sql_query_select))
-    { $all_group[] = $row[0]; }
-    // ↑ Получение списка всех групп  ↑
+
+
+
 
 
 
@@ -167,24 +143,7 @@
 
 
 
-    // ↓ Изменение группы пользователя ↓
-    if (isset ($_POST['edit_users_group']))
-    {
-        $DB->update("users","table_group","{$_POST['selected_group']}","`login` = '{$_POST['selected_user']}'");
-        $DB->select("*","group_namespace","`name` = '{$_POST['selected_group']}'");
-        while ($array = mysqli_fetch_array($DB->sql_query_select)) { $group_array = $array; }
-        foreach ($group_array as $key => $val)
-        {
-            if (($val == '+') && ($key === (string)$key))
-            {
-                $DB->alter_add("{$key}_vision","{$_POST['selected_user']}","TEXT CHARACTER SET utf8 NOT NULL");
-                $DB->update("{$key}_vision","{$_POST['selected_user']}","+","");
-            }
-        }
 
-        header ("Location: /");
-    }
-    // ↑ Изменение группы пользователя ↑
 
 
 
@@ -201,15 +160,4 @@
     if (isset ($_POST['send_mail']))
     { mail("rtk.tech.mail@yandex.ru", "{$_COOKIE['user']}", "{$_POST['mail_text']}"); }
     // ↑ Отправка письма ↑
-
-
-    $mass_count = 1;
-    $MYSQL_QUERY_all_tables = $mysqli->query("select * from `tables_namespace`");
-    while ($row = mysqli_fetch_row($MYSQL_QUERY_all_tables))
-    {
-        $mass[$mass_count][1] = $row[1];
-        $mass[$mass_count][2] = $row[2];
-        $mass_count++;
-    }
-
 ?>

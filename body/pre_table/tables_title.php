@@ -3,8 +3,9 @@
     $sql_text = '';
     $c = 1;
 
-    $status = $current_users_access[$podcat_name[1].'_status']; ?>
+    $status = $current_users_access["{$substring}_status"];
 
+?>
     <script>
         var max_td_count = '';
         var title_tr_count = 1;
@@ -22,7 +23,7 @@
             table_count = 0 + <?= $bag_2 ?>;
             if (title_tr_count === 1)
             {
-                while (table_count <= (max_td_count + 1 + <?= $bag_2 ?>))
+                while (table_count <= (max_td_count + 2 + <?= $bag_2 ?>))
                 {
                     if (table_count <= max_td_count - 1 + <?= $bag_2 ?>)
                     {

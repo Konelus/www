@@ -37,20 +37,20 @@
     }
 
     // ↓ Список таблиц ↓
-    $DB->select("description","tables_namespace","`name` = '{$substring}'");
-    while ($row = mysqli_fetch_row($DB->sql_query_select))
-    { $table_name = $row[0]; }
+    //$DB->select("description","tables_namespace","`name` = '{$substring}'");
+    //while ($row = mysqli_fetch_row($DB->sql_query_select))
+    //{ $table_name = $row[0]; }
     // ↑ Список таблиц ↑
 
     if (isset ($_POST['search_btn']))
     { sql_name("{$substring}","{$_POST['selected_td']}"); $searched_td = $result; }
 
-    $qqzz = $mysqli->query("select * from `".$podcat_name[1]."` ");
-    $max_count_title = mysqli_num_rows($qqzz);
+    $DB->select("*","{$substring}");
+    $max_count = mysqli_num_rows($DB->sql_query_select);
 
-    if (($_COOKIE['user'] == 'admin') || ($current_users_access[$podcat_name[1].'_status'] == 'superuser'))
+    if (($_COOKIE['user'] == 'admin') || ($current_users_access["{$substring}_status"] == 'superuser'))
     { $margin = 'margin-bottom: 110px;'; }
-    else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$podcat_name[1].'_status'] != 'superuser'))
+    else if (($_COOKIE['user'] != 'admin') && ($current_users_access["{$substring}_status"] != 'superuser'))
     { $margin = 'margin-bottom: 70px;'; }
 
 
@@ -62,12 +62,12 @@
 
         <?php
         if ($_COOKIE['user'] != 'admin') { $bag_1 = 1; } else { $bag_1 = 0; }
-        if (($_COOKIE['user'] == 'admin') || ($current_users_access[$podcat_name[1].'_status'] == 'superuser'))
+        if (($_COOKIE['user'] == 'admin') || ($current_users_access[$substring.'_status'] == 'superuser'))
         {
             require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/user_head.php');
             require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/admin_head.php');
          }
-         else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$podcat_name[1].'_status'] != 'superuser'))
+         else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$substring.'_status'] != 'superuser'))
          { require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/user_head.php'); } ?>
         </div>
     </div>

@@ -8,12 +8,6 @@
     require_once($_SERVER['DOCUMENT_ROOT']."/body/pre_table/pre_table_query.php");
 
 
-    // ↓ Получение группы пользователя ↓
-    user_group("{$_COOKIE['user']}");
-    while ($row = mysqli_fetch_row($DB->sql_query_select))
-    { $users_group = $row[0]; $count++; }
-    //$users_group = $users_group_result;
-    // ↑ Получение группы пользователя ↑
 
 ?>
 
@@ -55,21 +49,24 @@
                         <input type = 'hidden' name = 'hidden_sort_1' placeholder = 'hidden_sort_1'> <!-- Название столбца SQL -->
                         <input type = 'hidden' name = 'hidden_sort_2' placeholder = 'hidden_sort_2'> <!-- Тип сортировки -->
                         <input type = 'hidden' name = 'hidden_sort_3' placeholder = 'hidden_sort_3'> <!-- Номер столбца -->
-                        <input type = 'hidden' name = 'hidden_sort_4' placeholder = 'hidden_sort_4' value = '<?= $lim ?>'> <!--  -->
+                        <input type = 'hidden' name = 'hidden_sort_4' placeholder = 'hidden_sort_4'> <!--  -->
 
 
                         <?php
                         if (!isset ($_POST['edit_true_'.$tr]))
                         {
-                            require($_SERVER['DOCUMENT_ROOT'] . "/body/sort.php");
-                            require($_SERVER['DOCUMENT_ROOT'] . "/body/data.php");
+                            require($_SERVER['DOCUMENT_ROOT'].'/body/sort.php');
+                            require($_SERVER['DOCUMENT_ROOT'].'/body/data.php');
                         }
                         ?>
 
 
 
                         <!-- ↓ Форма добавления строки ↓ -->
-                        <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/add_tr.php'); ?>
+                        <?php
+                            if (($_COOKIE['user'] == 'admin') || ($current_users_access[$substring.'_status'] == 'superuser'))
+                            { require_once($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/add_tr.php'); }
+                        ?>
                         <!-- ↑ Форма добавления строки ↑ -->
 
 
@@ -89,7 +86,7 @@
         { ?>
             <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'>
                 <?= "Показано записей: ".($tr_count - 2)." ({$max_count})" ?>
-                <?php if ($podcat_name[1] == 'vibory') { ?>
+                <?php if ($substring == 'vibory') { ?>
                 <input type = 'submit' name = 'success_btn' class = 'monitoring_btn' style = 'margin-left: 4px; background: forestgreen; width: 44px;  ' value = '<?= "{$status_success}" ?>'>
                 <input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '<?= "{$status_warning}" ?>'>
                 <input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '<?= "{$status_danger}" ?>'>
@@ -101,7 +98,7 @@
         { ?>
             <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'>
                 <?= 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')' ?>
-                <?php if ($podcat_name[1] == 'vibory') { ?>
+                <?php if ($substring == 'vibory') { ?>
                     <input type = 'submit' name = 'success_btn' class = 'monitoring_btn' style = 'margin-left: 4px; background: forestgreen; width: 44px;  ' value = '<?= "{$status_success}" ?>'>
                     <input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '<?= "{$status_warning}" ?>'>
                     <input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '<?= "{$status_danger}" ?>'>
@@ -112,7 +109,7 @@
         else { ?>
             <div style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px; background: black; color: white; text-align: center;'>
                 <?= 'Показано записей: '.$tr_count.' ('.($max_count - 2).')' ?>
-                <?php if ($podcat_name[1] == 'vibory') { ?>
+                <?php if ($substring == 'vibory') { ?>
                     <input type = 'submit' name = 'success_btn' class = 'monitoring_btn' style = 'margin-left: 4px; background: forestgreen; width: 44px;  ' value = '<?= "{$status_success}" ?>'>
                     <input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '<?= "{$status_warning}" ?>'>
                     <input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '<?= "{$status_danger}" ?>'>

@@ -4,7 +4,6 @@
 
     if (((!isset ($_POST['search_btn'])) && ($_POST['hidden_sort_5'] == '') && ($_POST['hidden_sort_6'] == '')))
     { selected_data("{$substring}","","{$sort}"); }
-
     else if (((isset ($_POST['search_btn']))) || (($_POST['hidden_sort_5'] != '') && ($_POST['hidden_sort_6'] != '')))
     {
         sql_name("{$substring}","{$_POST['selected_td']}"); $searched_td = $result;
@@ -32,7 +31,6 @@
         { selected_data("{$substring}","`{$searched_td}` !=  '".trim($caption)."'","{$sort}"); }
         else if (!isset ($_POST['inversion']))
         { selected_data("{$substring}","`{$searched_td}` LIKE  '%".trim($caption)."%'","{$sort}"); }
-
     }
 
 
@@ -52,12 +50,12 @@
     {
         while ($row = mysqli_fetch_row($SQL_QUERY_select_data))
         {
-            if (($podcat_name[1] == 'vibory') && (is_numeric($row[1])))
+            if (($substring == 'vibory') && (is_numeric($row[1])))
             {
                 for ($i = 0; $i <= count($row); $i++)
                 { $title[$count][$i] = $row[$i]; }
             }
-            else if ($podcat_name[1] != 'vibory')
+            else if ($substring != 'vibory')
             {
                 for ($i = 0; $i <= count($row); $i++)
                 { $title[$count][$i] = $row[$i]; }
@@ -66,4 +64,5 @@
             $count++;
         }
     }
+
 ?>

@@ -31,17 +31,19 @@
         $DB->update("group_namespace","{$_POST['selected_table']}","+","`name` = '{$_POST['selected_group']}'");
         $DB->update("group_namespace","{$_POST['selected_table']}_status","{$_POST['selected_type']}","`name` = '{$_POST['selected_group']}'");
 
-        $SQL_QUERY_select_group_users = $mysqli->query("SELECT `login` FROM `users` WHERE `table_group` = '{$_POST['selected_group']}' ");
-        while ($row = mysqli_fetch_row($SQL_QUERY_select_group_users))
+        $DB->select("login","users","`table_group` = '{$_POST['selected_group']}'");
+        while ($row = mysqli_fetch_row($DB->sql_query_select))
         {
             $DB->alter_add("{$_POST['selected_table']}_vision","{$row[0]}","TEXT CHARACTER SET utf8 NOT NULL");
             $DB->update("{$_POST['selected_table']}_vision","{$row[0]}","+","");
         }
 
 
-        $SQL_QUERY_select_permission = $mysqli->query("SELECT * FROM `{$_POST['selected_table']}_permission` WHERE `{$_POST['selected_table']}_group` = '{$_POST['selected_group']}'");
+        $DB->select("*","{$_POST['selected_table']}_permission","`{$_POST['selected_table']}_group` = '{$_POST['selected_group']}'");
+        $SQL_QUERY_select_permission = $DB->sql_query_select;
 
-        $SQL_QUERY_select_table_count = $mysqli->query("SELECT * FROM `{$_POST['selected_table']}_permission`");
+        $DB->select("*","{$_POST['selected_table']}_permission");
+        $SQL_QUERY_select_table_count = $DB->sql_query_select;
         $sql_str_1 = "null, '{$_POST['selected_group']}'";
         $sql_str_2 = "null, '{$_POST['selected_group']}_edit'";
         for ($count = 1; $count <= (mysqli_num_fields($SQL_QUERY_select_table_count) - 2); $count++)
@@ -73,9 +75,9 @@
         $DB->update("group_namespace","{$_POST['selected_del_table']}","","`name` = '{$_POST['selected_del_group']}'");
         $DB->update("group_namespace","{$_POST['selected_del_table']}_status`","","`name` = '{$_POST['selected_del_group']}'");
 
-        $SQL_QUERY_select_group_users = $mysqli->query("SELECT `login` FROM `users` WHERE `table_group` = '{$_POST['selected_del_group']}'");
-        while ($row = mysqli_fetch_row($SQL_QUERY_select_group_users))
-        { $SQL_QUERY_add_vision_users = $mysqli->query("ALTER TABLE `{$_POST['selected_del_table']}_vision` DROP `{$row[0]}`"); }
+        $DB->select("login","users","`table_group` = '{$_POST['selected_del_group']}'");
+        while ($row = mysqli_fetch_row($DB->sql_query_select))
+        { $DB->alter_drop("{$_POST['selected_del_table']}_vision","{$row[0]}"); }
 
         $DB->delete($_POST['selected_del_table']."_permission`","`{$_POST['selected_del_table']}_group` = '{$_POST['selected_del_group']}'");
         $DB->delete($_POST['selected_del_table']."_permission`","`{$_POST['selected_del_table']}_group` = '{$_POST['selected_del_group']}_edit'");

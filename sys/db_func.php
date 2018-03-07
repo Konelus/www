@@ -7,15 +7,6 @@
         $DB->select("*","{$table}_permission","`{$table}_group` = '{$group}'");
     }
 
-    function user_group($login = '')
-    {
-        global $DB;
-        if ($login != '') { $login = "`login` = '{$login}'"; }
-        $DB->select("table_group","users","{$login}");
-        global $users_group_result;
-        while ($row = mysqli_fetch_row($DB->sql_query_select))
-        { $users_group_result = $row[0]; }
-    }
 
     function user_table($user_group = '')
     {
@@ -34,11 +25,6 @@
         $current_ver = explode('.', "{$ver}");
     }
 
-    function column_name($table)
-    {
-        global $DB;
-        $DB->select("name","{$table}_table","");
-    }
 
     function sql_name($table, $name = '', $arr_count = 1)
     {
@@ -76,7 +62,14 @@
 
         $DB->select("*","{$table}","{$where}", "{$sort}");
         $SQL_QUERY_select_data = $DB->sql_query_select;
-        if ($SQL_QUERY_select_data != null)
-        { $max_count = mysqli_num_rows($SQL_QUERY_select_data); }
+        //if ($SQL_QUERY_select_data != null)
+        //{ $max_count = mysqli_num_rows($SQL_QUERY_select_data); }
+    }
+
+    function pre($array)
+    {
+        echo '<pre>';
+        print_r($array);
+        echo '</pre>';
     }
 ?>

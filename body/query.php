@@ -1,29 +1,17 @@
 <?php
-    $current_users_group = '';
+    //$current_users_group = '';
     $title1 = '';
     $table_count = 0;
     $table_count1 = 2;  // ← Счетчик шапки
 
 
-    // ↓ Получение числа строк ↓
-    $max_tr_query = $mysqli->query("select * from `".$podcat_name[1]."` ");
-    if ($max_tr_query != null)
-    { $max_count = mysqli_num_rows($max_tr_query); }
-    // ↑ Получение числа строк ↑
 
-
-    // ↓ Получение группы пользователя ↓
-    user_group("{$_COOKIE['user']}");
-    while ($row = mysqli_fetch_row($DB->sql_query_select))
-    { $current_users_group[0] = $row[0]; }
-    //$current_users_group[0] = $users_group_result;
-    // ↑ Получение группы пользователя ↑
 
 
     // ↓ Получение информации о правах пользователя ↓
     if ($_COOKIE['user'] != 'admin')
     {
-        permission("{$substring}", "{$current_users_group[0]}");
+        permission("{$substring}", "{$current_users_group}");
         if ($DB->sql_query_select != null)
         { $title1 = mysqli_fetch_array($DB->sql_query_select); }
     }
@@ -37,7 +25,7 @@
 
 
     // ↓ Получение списка отображаемых столбцах ↓
-    column_name("{$substring}");
+    $DB->select("name","{$substring}_table","");
     if ($DB->sql_query_select != null)
     {
         $max_td_count = mysqli_num_rows($DB->sql_query_select);
@@ -69,9 +57,9 @@
 
 
     // ↓ Получение доступных таблиц пользователя ↓
-    user_table("{$current_users_group[0]}");
-    while ($array = mysqli_fetch_array($DB->sql_query_select))
-    { $current_users_access = $array; }
+    //user_table("{$current_users_group}");
+    //while ($array = mysqli_fetch_array($DB->sql_query_select))
+    //{ $current_users_access = $array; }
     // ↑ Получение доступных таблиц пользователя ↑
 
 ?>

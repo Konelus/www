@@ -3,7 +3,7 @@
     class DB
     {
         public $sql_query_select;
-        public $sql_query_select_plus;
+        public $sql_query_show;
         public $mysqli;
 
         public function mysqli()
@@ -18,10 +18,12 @@
 
         public function select($value, $table, $where = '', $sort = '', $order = '', $limit = '')
         {
+            if ($value != '*') { $value = "`{$value}`"; }
             if ($where != null) { $where = " WHERE {$where}"; }
             if ($order != null) { $order = " ORDER BY `{$order}`"; }
             if ($limit != null) { $limit = " LIMIT {$limit}"; }
-            $this->sql_query_select = $this->mysqli->query("SELECT `{$value}` FROM `{$table}`{$where}{$order}{$sort}{$limit}");
+            $this->sql_query_select = $this->mysqli->query("SELECT {$value} FROM `{$table}`{$where}{$order}{$sort}{$limit}");
+            //echo "SELECT {$value} FROM `{$table}`{$where}{$order}{$sort}{$limit}<br>";
         }
 
         public function insert($table, $values)
@@ -48,6 +50,17 @@
         {
             $this->mysqli->query("ALTER TABLE `{$table}` ADD `{$cell}` {$datatype}");
             //echo "ALTER TABLE `{$table}` ADD `{$cell}` {$datatype}<br>";
+        }
+
+        public function alter_drop($table, $cell)
+        {
+            $this->mysqli->query("ALTER TABLE `{$table}` DROP `{$cell}`");
+            //echo "ALTER TABLE `{$table}` ADD `{$cell}`<br>";
+        }
+
+        public function show($table)
+        {
+            $this->sql_query_show = $this->mysqli->query("SHOW COLUMNS FROM `{$table}`");
         }
     }
 

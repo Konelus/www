@@ -7,12 +7,8 @@
     if ($descriptor)
     { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
 
-    $localhost = "localhost";
-    $user = "root";
-    $password = $link;
-    $db = "rtk_01";
-    $mysqli = new mysqli($localhost, $user, $password, $db);
-    mysqli_set_charset($mysqli, 'utf8');
+    require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
+require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
 /* - - - - - - - - - - ↑ Подключение к БД ↑ - - - - - - - - - - */
 
 $lim = 27;
@@ -20,10 +16,12 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
 
 
     $log_count = 0;
-    $SQL_log_query = $mysqli->query("select * from `log_info` ORDER BY `id` DESC  LIMIT  ".$lim." ");
-    if ($SQL_log_query != null)
+
+    $DB->select("*","log_info","","","id","{$lim}");
+    $select = $DB->sql_query_select;
+    if ($select != null)
     {
-        while ($row = mysqli_fetch_array($SQL_log_query))
+        while ($row = mysqli_fetch_array($select))
         {
             $log_info[$log_count][1] = $row[1];
             $log_info[$log_count][2] = $row[2];
@@ -32,17 +30,17 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
             $log_info[$log_count][5] = $row[5];
 
             $id = $row[6];
-            $SQL_QUERY = $mysqli->query("SELECT `id_obekta_skup` FROM `".$log_info[$log_count][5]."` WHERE `id` = '".$id."' ");
-            if ($SQL_QUERY != null)
+            $DB->select("id_obekta_skup","{$log_info[$log_count][5]}","`id` = '{$id}'");
+            if ($DB->sql_query_select != null)
             {
-                while ($row_100 = mysqli_fetch_array($SQL_QUERY))
+                while ($row_100 = mysqli_fetch_array($DB->sql_query_select))
                 { $log_info[$log_count][6] = $row_100[0]; }
             }
             else { $log_info[$log_count][6] = $row[6]; }
 
             $tr = $row[7];
 
-            column_name("{$log_info[$log_count][5]}","`sql_name` = '{$tr}'");
+            $DB->select("name","{$log_info[$log_count][5]}_table","`sql_name` = '{$tr}'");
             if ($DB->sql_query_select != null)
             { while ($row_100 = mysqli_fetch_array($DB->sql_query_select)) { $log_info[$log_count][7] = $row_100[0]; } }
             else { $log_info[$log_count][7] = $row[7]; }
@@ -51,7 +49,9 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
             $log_info[$log_count][9] = $row[9];
             $log_count++;
         }
+
     }
+
 
 
 

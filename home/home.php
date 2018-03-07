@@ -17,17 +17,17 @@
                 <div style = 'float: left; padding-top: 10px; margin-left: 10px;'><img style = 'height: 40px;' src = '/img/logo.png'></div>
                 <div style = 'float: left; padding-top: 24px; font-size: 17px; cursor: default;'><span style = 'color: white;'>ELASTIC<span style = 'color: #ffdf5e;'>2</span></span></div>
             </div>
-                <script>var header_lable = <?= json_encode($mass); ?>;</script>
+                <script>var header_lable = <?= json_encode($all_tables_array); ?>;</script>
             <div class = 'col-lg-7 col-md-7 col-sm-4'>
                 <div class="collapse navbar-collapse" id="navbar-main">
                     <ul class="nav navbar-nav" style = 'margin-top: 5px;'>
-                        <?php if (($current_users_access[$mass[1][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $mass[1][1] ?>' class = 'header_href_color'><?= $mass[1][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$mass[2][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $mass[2][1] ?>' class = 'header_href_color'><?= $mass[2][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$mass[3][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $mass[3][1] ?>' class = 'header_href_color'><?= $mass[3][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$mass[4][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $mass[4][1] ?>' class = 'header_href_color'><?= $mass[4][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$mass[5][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $mass[5][1] ?>' class = 'header_href_color'><?= $mass[5][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$mass[6][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $mass[6][1] ?>' class = 'header_href_color'><?= $mass[6][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$mass[7][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $mass[7][1] ?>' class = 'header_href_color'><?= $mass[7][2] ?></a></li><?php } ?>
+                        <?php if (($current_users_access[$all_tables_array[1][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[1][1] ?>' class = 'header_href_color'><?= $all_tables_array[1][2] ?></a></li><?php } ?>
+                        <?php if (($current_users_access[$all_tables_array[2][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[2][1] ?>' class = 'header_href_color'><?= $all_tables_array[2][2] ?></a></li><?php } ?>
+                        <?php if (($current_users_access[$all_tables_array[3][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[3][1] ?>' class = 'header_href_color'><?= $all_tables_array[3][2] ?></a></li><?php } ?>
+                        <?php if (($current_users_access[$all_tables_array[4][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[4][1] ?>' class = 'header_href_color'><?= $all_tables_array[4][2] ?></a></li><?php } ?>
+                        <?php if (($current_users_access[$all_tables_array[5][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[5][1] ?>' class = 'header_href_color'><?= $all_tables_array[5][2] ?></a></li><?php } ?>
+                        <?php if (($current_users_access[$all_tables_array[6][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[6][1] ?>' class = 'header_href_color'><?= $all_tables_array[6][2] ?></a></li><?php } ?>
+                        <?php if (($current_users_access[$all_tables_array[7][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[7][1] ?>' class = 'header_href_color'><?= $all_tables_array[7][2] ?></a></li><?php } ?>
                     </ul>
                 </div>
             </div>
