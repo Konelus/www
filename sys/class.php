@@ -61,6 +61,7 @@
         public function show($table)
         {
             $this->sql_query_show = $this->mysqli->query("SHOW COLUMNS FROM `{$table}`");
+            //echo "SHOW COLUMNS FROM `{$table}`<br>";
         }
     }
 

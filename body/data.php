@@ -53,7 +53,17 @@
             if (($substring == 'vibory') && (is_numeric($row[1])))
             {
                 for ($i = 0; $i <= count($row); $i++)
-                { $title[$count][$i] = $row[$i]; }
+                {
+                    if ($_COOKIE['user'] != 'admin')
+                    {
+                        $title[$count]['status'] = $row[40];
+                        foreach ($new_td as $key => $value)
+                        {
+                            if ($value == $i) { $title[$count][$i] = $row[$i]; }
+                        }
+                    }
+                    else if ($_COOKIE['user'] == 'admin') { $title[$count][$i] = $row[$i]; }
+                }
             }
             else if ($substring != 'vibory')
             {

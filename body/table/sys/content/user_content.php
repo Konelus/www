@@ -6,7 +6,7 @@
         { $parsed_title = "<a target = '_blank' href = '/body/table/additional_table.php/?{$substring}/{$title[$tr][0]}'>{$title[$tr][$new_td[$td_td]]}</a>"; }
         else if ($title[$tr][$new_td[$td_td]] != 'Online Test')
         { $parsed_title = $title[$tr][$new_td[$td_td]]; }
-        ?><div style = 'min-width: 150px; <?= $height ?> max-height: 100px; overflow: hidden;'><?= $parsed_title; ?></div><?php $td_td++;
+        ?><div style = 'min-width: 150px; <?= $height ?> max-height: 100px; overflow: hidden;'><?= $parsed_title ?></div><?php $td_td++;
     }
     // ↑ Заполнение таблицы данными ↑
 

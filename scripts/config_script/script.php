@@ -1,22 +1,8 @@
-<?php
-    $link = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-    if ($descriptor)
-    { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
-
-    $localhost = "localhost";
-    $user = "root";
-    $password = $link;
-    $db = "rtk_01";
-    $mysqli = new mysqli($localhost, $user, $password, $db);
-    mysqli_set_charset($mysqli, 'utf8');
-?>
-
-    <div style = 'margin-top: 10px; float: left; width: 45%; margin-right: 5%;'>
-        <form method = 'post'>
-            <input style = 'margin: auto; width: 100%; height: 40px; background: gold; border-radius: 5px; border: solid 1px black;' type = 'submit' name = 'create' value = 'Создать конфиги'>
-        </form>
-    </div>
+<div style = 'margin-top: 10px; float: left; width: 45%; margin-right: 5%;'>
+    <form method = 'post'>
+        <input style = 'margin: auto; width: 100%; height: 40px; background: gold; border-radius: 5px; border: solid 1px black;' type = 'submit' name = 'create' value = 'Создать конфиги'>
+    </form>
+</div>
 
 <?php
 if (isset ($_POST['create']))

@@ -3,28 +3,29 @@
     if (isset ($_POST['add']))
     {
         $str = "null";
-        for ($count; $count  < $max_td_count; $count++)
+        for ($count = 0; $count  < $max_td_count; $count++)
         { $str .= ", '{$_POST['textBox'.$count]}'"; }
 
         $DB->insert("{$substring}","{$str}");
 
         // ↓ Добавление видимости новой строки ↓
-        $SQL_QUERY_id = $mysqli->query("select * from `{$substring}` ORDER BY `id` ASC ");
-        while ($row = mysqli_fetch_row($SQL_QUERY_id)) { $id = $row[0]; }
+        $DB->select("*","{$substring}","","","id");
+        //$SQL_QUERY_id = $mysqli->query("select * from `{$substring}` ORDER BY `id` ASC ");
+        while ($row = mysqli_fetch_row($DB->sql_query_select)) { $id = $row[0]; }
 
-        $SQL_QUERY_td_count = $mysqli->query("SHOW COLUMNS FROM `{$substring}_vision`");
-        $td_count = mysqli_num_rows($SQL_QUERY_td_count);
-
+        $DB->show("{$substring}_vision");
+        //$SQL_QUERY_td_count = $mysqli->query("SHOW COLUMNS FROM `{$substring}_vision`");
+        $td_count = mysqli_num_rows($DB->sql_query_show) - 1;
         $str = "null, '{$id}'";
-        for ($count = 1; $count <= ($td_count - 2); $count++)
+        for ($count = 0; $count <= ($td_count - 2); $count++)
         { $str .= ", ''"; }
 
         $DB->insert("{$substring}_vision","{$str}");
 
         if ($_COOKIE['user'] != 'admin')
-        { $DB->update("{$substring}_vision`","{$_COOKIE['user']}","+","`id_tr` = '{$id}'"); }
+        { $DB->update("{$substring}_vision","{$_COOKIE['user']}","+","`id_tr` = '{$id}'"); }
         // ↑ Добавление видимости новой строки ↑
-        header ("Location: /?{$substring}");
+        //header ("Location: /?{$substring}");
     }
 /* - - - - - - - - - - ↑ Добавление строки ↑ - - - - - - - - - - */
 

@@ -2,6 +2,7 @@
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/query.php');
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
     $log = explode('@', $_COOKIE["user"]);
+    $log = $log[0];
 
 ?>
 
@@ -21,13 +22,20 @@
             <div class = 'col-lg-7 col-md-7 col-sm-4'>
                 <div class="collapse navbar-collapse" id="navbar-main">
                     <ul class="nav navbar-nav" style = 'margin-top: 5px;'>
-                        <?php if (($current_users_access[$all_tables_array[1][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[1][1] ?>' class = 'header_href_color'><?= $all_tables_array[1][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$all_tables_array[2][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[2][1] ?>' class = 'header_href_color'><?= $all_tables_array[2][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$all_tables_array[3][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[3][1] ?>' class = 'header_href_color'><?= $all_tables_array[3][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$all_tables_array[4][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[4][1] ?>' class = 'header_href_color'><?= $all_tables_array[4][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$all_tables_array[5][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[5][1] ?>' class = 'header_href_color'><?= $all_tables_array[5][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$all_tables_array[6][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[6][1] ?>' class = 'header_href_color'><?= $all_tables_array[6][2] ?></a></li><?php } ?>
-                        <?php if (($current_users_access[$all_tables_array[7][1]] == '+') || ($_COOKIE['user'] == 'admin')) { ?><li><a href = '/?<?= $all_tables_array[7][1] ?>' class = 'header_href_color'><?= $all_tables_array[7][2] ?></a></li><?php } ?>
+                        <?php
+                        if ($_COOKIE['user'] == 'admin')
+                        {
+                            foreach ($all_tables_array as $key => $value)
+                            { ?><li><a href = '<?php if ($value[3] == '+') { echo "/?{$value[1]}"; } ?>' class = 'header_href_color'><?= $value[2] ?></a></li><?php }
+                        }
+                        else if ($_COOKIE['user'] != 'admin')
+                        {
+                            foreach ($released_table as $key => $value)
+                            {
+                                if ($current_users_access[$value[1]] == '+') { ?><li><a href = '<?= "/?{$value[1]}" ?>' class = 'header_href_color'><?= $value[2] ?></a></li><?php }
+                            }
+                        }
+                        ?>
                     </ul>
                 </div>
             </div>
@@ -35,7 +43,7 @@
             <div class = 'col-lg-2 col-md-3 col-sm-4' style = 'text-align: center; margin-top: 8px; padding-right: 30px;'>
                 <div style = 'cursor: default;'>Вы авторизованы, как</div>
                 <div>
-                    <form method = "post"><span class = 'login_div' style = 'padding-left: 15px; cursor: default;'><?= $log[0] ?></span>
+                    <form method = "post"><span class = 'login_div' style = 'padding-left: 15px; cursor: default;'><?= $log ?></span>
                         <input name = 'exit' class = 'exit_button' type = 'submit' value = '(Выход)'>
                     </form>
                 </div>

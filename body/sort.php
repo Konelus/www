@@ -1,30 +1,45 @@
 <?php
-    $sql = $sort = $sql_text = '';
-    $c = 1;
+    $sort = $sql_text = '';
+    //$c = 1;
 
     $DB->select("*","{$substring}_table");
-    while ($row = mysqli_fetch_row($DB->sql_query_select))
+    if ($DB->sql_query_select != null)
     {
-        $sql_text[$c] = $row[1];
-        $str1[$c] = str_replace(' ', '_', $sql_text[$c]);
-        $str[$c] = str_replace('.', '', $str1[$c]);
-        $sql[$c] = $row[2];
-
-
-        if ((isset($_POST[$str[$c].'_asc'])) || (isset($_POST[$str[$c].'_desc'])))
+        $count = 1;
+        while ($row = mysqli_fetch_row($DB->sql_query_select))
         {
-            ?><script>
-                $('input[name = "hidden_sort_1"]').val("<?= $row[2] ?>");
-                $('input[name = "hidden_sort_3"]').val("<?= $c ?>");
-             </script><?php
-            $class_count = $c;
+            if (($title1[$count + 1] == '+') && ($_COOKIE['user'] != 'admin'))
+            {
+                $sql_text[$count] = $row[1];
+                $str1[$count] = str_replace(' ', '_', $sql_text[$count]);
+                $str[$count] = str_replace('.', '', $str1[$count]);
 
-            if (isset($_POST[$str[$c].'_asc']))
-            { ?><script>$('input[name = "hidden_sort_2"]').val("ASC");</script><?php $sort = "ORDER BY `{$row[2]}` ASC"; }
-            if (isset($_POST[$str[$c].'_desc']))
-            { ?><script>$('input[name = "hidden_sort_2"]').val("DESC");</script><?php $sort = "ORDER BY `{$row[2]}` DESC"; }
+            }
+            else if ($_COOKIE['user'] == 'admin')
+            {
+                $sql_text[$count] = $row[1];
+                $str1[$count] = str_replace(' ', '_', $sql_text[$count]);
+                $str[$count] = str_replace('.', '', $str1[$count]);
+
+            }
+
+
+            if ((isset($_POST[$str[$count].'_asc'])) || (isset($_POST[$str[$count].'_desc'])))
+            {
+                ?><script>
+                    $('input[name = "hidden_sort_1"]').val("<?= $row[2] ?>");
+                    $('input[name = "hidden_sort_3"]').val("<?= $count ?>");
+                 </script><?php
+                $class_count = $count;
+
+                if (isset($_POST[$str[$count].'_asc']))
+                { ?><script>$('input[name = "hidden_sort_2"]').val("ASC");</script><?php $sort = "ORDER BY `{$row[2]}` ASC"; }
+                if (isset($_POST[$str[$count].'_desc']))
+                { ?><script>$('input[name = "hidden_sort_2"]').val("DESC");</script><?php $sort = "ORDER BY `{$row[2]}` DESC"; }
+            }
+            $count++;
         }
-        $c++;
+        unset ($count,$sql_text,$str1);
     }
 
 
@@ -64,6 +79,8 @@
             { $sort = "ORDER BY `{$hid_1}` {$hid_2}"; }
             if ($lim != '')
             { $lim = " LIMIT {$lim}"; }
+            if (isset($_POST["edit_{$button_count}"])) { $bool_var_2 = 1; }
+            else if (isset($_POST["edit_true_{$button_count}"])) { $bool_var_2 = 0; }
         }
     }
 

@@ -10,9 +10,9 @@
 
 
     // ↓ Получение пользовательских групп ↓
-    $DB->select("table_group","users");
-    while ($row = mysqli_fetch_row($DB->sql_query_select))
-    { $all_users_group[] = $row[0]; }
+//    $DB->select("table_group","users");
+//    while ($row = mysqli_fetch_row($DB->sql_query_select))
+//    { $all_users_group[] = $row[0]; }
     // ↑ Получение пользовательских групп ↑
 
 
@@ -45,9 +45,9 @@ if (isset ($_POST['edit_users_group']))
     $DB->update("users","table_group","{$_POST['selected_group']}","`login` = '{$_POST['selected_user']}'");
     $DB->select("*","group_namespace","`name` = '{$_POST['selected_group']}'");
     while ($array = mysqli_fetch_array($DB->sql_query_select)) { $group_array = $array; }
-    foreach ($group_array as $key => $val)
+    foreach ($group_array as $key => $value)
     {
-        if (($val == '+') && ($key === (string)$key))
+        if (($value == '+') && ($key === (string)$key))
         {
             $DB->alter_add("{$key}_vision","{$_POST['selected_user']}","TEXT CHARACTER SET utf8 NOT NULL");
             $DB->update("{$key}_vision","{$_POST['selected_user']}","+","");

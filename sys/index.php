@@ -1,19 +1,6 @@
 <?php
 
-    $mysqli = new mysqli("localhost", "root", "".$link, "rtk_01");
-    mysqli_set_charset($mysqli, 'utf8');
-
-    $link = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-    if ($descriptor)
-    { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
-
-    $localhost = "localhost";
-    $user = "root";
-    $password = $link;
-    $db = "rtk_01";
-    $mysqli = new mysqli($localhost, $user, $password, $db);
-    mysqli_set_charset($mysqli, 'utf8');
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/use.php');
 
     $count = -1;
     $SQL_QUERY_select_old = $mysqli->query("SELECT `id_obekta_skup` FROM `vibory`");

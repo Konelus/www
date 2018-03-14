@@ -11,9 +11,9 @@
     // ↓ Получение информации о правах пользователя ↓
     if ($_COOKIE['user'] != 'admin')
     {
-        permission("{$substring}", "{$current_users_group}");
+        $DB->select("*","{$substring}_permission","`{$substring}_group` = '{$current_users_group}'");
         if ($DB->sql_query_select != null)
-        { $title1 = mysqli_fetch_array($DB->sql_query_select); }
+        { $title1 = mysqli_fetch_row($DB->sql_query_select); }
     }
     // ↑ Получение информации о правах пользователя ↑
 
@@ -52,7 +52,20 @@
 
 
     // ↓ Запись в переменные названий всех столбцов таблицы ↓
-    sql_name("{$substring}","","2"); $table_sql = $result;
+    $DB->select("sql_name","{$substring}_table");
+    if ($DB->sql_query_select != null)
+    {
+        $count = 0;
+        while ($row = mysqli_fetch_row($DB->sql_query_select))
+        {
+            if (($title1[$count + 2] == '+') && ($_COOKIE['user'] != 'admin'))
+            { $table_sql[$count] = $row[0]; }
+            else if ($_COOKIE['user'] == 'admin')
+            { $table_sql[] = $row[0]; }
+            $count++;
+        }
+        unset ($count);
+    }
     // ↑ Запись в переменные названий всех столбцов таблицы ↑
 
 

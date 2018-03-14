@@ -1,7 +1,6 @@
 <?php
     $sort = '';
     $sql_text = '';
-    $c = 1;
 
     $status = $current_users_access["{$substring}_status"];
 

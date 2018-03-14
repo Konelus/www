@@ -2,7 +2,7 @@
 
     require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
 
-    $substring = $_SERVER['QUERY_STRING'];
+    if ($_GET != null) { $substring = $_SERVER['QUERY_STRING']; }
 
     $podcat_name_2 = explode('/', $cat_name);
     $podcat_name_3 = explode('/', $substring);

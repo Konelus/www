@@ -1,9 +1,5 @@
 <?php
 
-    $DB->select("*","vibory_monitoring","`uik` = '{$uik_monitoring['naimenovanie_uik_tik']}'");
-    while ($row = mysqli_fetch_array($DB->sql_query_select)) { $current_var = $row; }
-
-
     $tr_count = 2;
 
 
@@ -52,13 +48,13 @@
     }
 
 
-    $DB->show("{$substring}_vision");
-    if ($DB->sql_query_show != null) {
-        {
-            while ($row = mysqli_fetch_array($DB->sql_query_show))
-            { $vision_login[] = $row[0]; }
-        }
-    }
+//    $DB->show("{$substring}_vision");
+//    if ($DB->sql_query_show != null) {
+//        {
+//            while ($row = mysqli_fetch_array($DB->sql_query_show))
+//            { $vision_login[] = $row[0]; }
+//        }
+//    }
 
     if ($_COOKIE['user'] == 'admin') { $additional_td = 1; }
     else { $additional_td = 0; }
@@ -88,32 +84,32 @@
 
 
 //var_dump($_REQUEST);
-
-    if ($max_count >= 1)
+    if ((count($title) - 1) >= 1)
     {
-        for ($tr = 0; $tr <= $max_count; $tr++)
+        for ($tr = 0; $tr <= count($title) - 1; $tr++)
         {
 
             if ((($tr_vision[$title[$tr][0]]) == ($title[$tr][0])) || ($_COOKIE['user'] == 'admin'))
             {
 
-                $time_1 = explode(':', date("H:i:s"));
-                $time_2 = explode(':', $current_var['time']);
-                $ex_alarm = explode(" ","{$current_var['alarm']}");
-                $current_date = explode(".","$ex_alarm[0]");
-                $current_time = explode(":","$ex_alarm[1]");
+                if ($substring == 'vibory')
+                {
+                    if ($title[$tr]['status'] == 'success')
+                    { $status_success++; }
+                    else if ($title[$tr]['status'] == 'warning')
+                    { $status_warning++; }
+                    else if ($title[$tr]['status'] == 'danger')
+                    { $status_danger++; }
 
-                if ($title[$tr][40] == 'success')
-                { $status_success++; }
-                else if ($title[$tr][40] == 'warning')
-                { $status_warning++; }
-                else if ($title[$tr][40] == 'danger')
-                { $status_danger++; }
+                    if (($title[$tr][18] == 'монтаж не произведён'))
+                    { $status_empty++; }
+                }
 
-                if (($title[$tr][18] == 'монтаж не произведён'))
-                { $status_empty++; }
 
-                if ($title[$tr][0] != '')
+
+
+
+                if ($title[$tr] != '')
                 {
                     $tr_count++;
 
@@ -193,16 +189,6 @@
                             { $class_color = 'table_head_bg2'; }
                             else if ((isset ($_POST['search_btn']) || ($_POST['hidden_sort_5'] != '')))
                             {
-                                //if (isset ($_POST['search_btn']))
-                                //{
-                                    //$DB->select("id","{$substring}_table","`name` = '{$_POST['selected_td']}'");
-                                //}
-                                //else if ($_POST['hidden_sort_5'] != '')
-                                //{
-                                    //$DB->select("id","{$substring}_table","sql_name` = '{$_POST['hidden_sort_5']}'");
-                                //}
-                                //while ($row = mysqli_fetch_row($DB->sql_query_select))
-                                //{ $td_title_count = $row[0]; }
                                 if ($new_td[$td_td] == $td_title_count)
                                 { $class_color = 'table_bg_search'; }
                                 else { $class_color = ''; }
@@ -211,7 +197,7 @@
 
 
                             if (($title[$tr][18] != 'монтаж не произведён') && ($class_color == ''))
-                            { $ready = $title[$tr][40]; }
+                            { $ready = $title[$tr]['status']; }
                             else if (($title[$tr][18] != 'монтаж не произведён') || ($class_color == '')) { $ready = ''; }
                             if ($class_color != '') { $ready = ''; }
 

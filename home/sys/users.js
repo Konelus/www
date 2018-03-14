@@ -12,9 +12,3 @@ function groups ()
     { document.write("<option>" + all_group[count_1] + "</option>"); count_1++; }
 }
 
-function tables ()
-{
-    var count_1 = 0;
-    while (count_1 < 6)
-    { document.write("<option>" +  header_lable[count_1] + "</option>"); count_1++; }
-}

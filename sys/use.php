@@ -1,17 +1,17 @@
 <?php
-header("Cache-Control: no-store, no-cache, must-revalidate");
-header("Expires: ".date("r"));
+    header("Cache-Control: no-store, no-cache, must-revalidate");
+    header("Expires: ".date("r"));
 
-$link = '';
-$descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-if ($descriptor)
-{ while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
-
-
-
-//$mysqli = new mysqli("localhost", "root", "{$link}", "rtk_01");
-//mysqli_set_charset($mysqli, 'utf8');
+    $link = '';
+    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
+    if ($descriptor)
+    { while (($string = fgets($descriptor)) !== false) { $link .= $string; } fclose($descriptor); }
 
 
-$substring = $_SERVER['QUERY_STRING'];
+
+    //$mysqli = new mysqli("localhost", "root", "{$link}", "rtk_01");
+    //mysqli_set_charset($mysqli, 'utf8');
+
+
+    if ($_GET != null) { $substring = $_SERVER['QUERY_STRING']; }
 ?>

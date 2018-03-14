@@ -18,7 +18,6 @@
             if ($sys_td[$query_table_array[0]][2] != $query_table_array[2])
             { $SQL_QUERY_update_sys = $mysqli->query("UPDATE `vibory_sys` SET `adres_uik_tik` = '".$query_table_array[2]."' WHERE `id` = $query_table_array[0] "); }
 
-            //$SQL_QUERY_update_sys = $mysqli->query("INSERT INTO `vibory_sys` values ('".$query_table_array[0]."', '".$query_table_array[1]."', '".$query_table_array[2]."', '".$query_table_array[39]."', '".$query_table_array[40]."') ");
         }
         $text = 'Клонирование vibory завершено!';
     }

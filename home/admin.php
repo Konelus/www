@@ -1,7 +1,6 @@
 <script>
     var all_users = <?= json_encode($all_users); ?>;
     var users_permission = <?= json_encode($users_permission); ?>;
-    var all_users_group = <?= json_encode($all_users_group); ?>;
     var all_group = <?= json_encode($all_group); ?>;
 
     var all_users_count = <?= json_encode($all_user_count); ?>;
@@ -47,7 +46,7 @@
                             <tbody>
                                 <tr><td class = 'users_main_td' colspan = '2'>Удаление пользователя</td><tr>
                                 <tr><td class = 'users_td_label'>Логин</td>
-                                    <td class = 'users_td_text_align'><select  name = 'del_user_name' class = 'form-control select_cursor'><?php foreach ($all_users as $key => $val) { if ($val != 'admin') { echo "<option>$val</option>"; } } ?></select></td></tr>
+                                    <td class = 'users_td_text_align'><select  name = 'del_user_name' class = 'form-control select_cursor'><?php foreach ($all_users as $key => $value) { if ($value != 'admin') { echo "<option>$value</option>"; } } ?></select></td></tr>
                                 <tr><td colspan = '2'><input name = 'del_user' value = 'Удалить' class = 'btn button' type = 'submit'></td></tr>
                             </tbody>
                         </table>
@@ -73,7 +72,7 @@
                             <tr><td class = 'users_main_td' colspan = '2'>Удаление группы</td><tr>
                             <tr><td class = 'users_td_label'>Название</td>
                                 <td class = 'users_td_text_align'><select name = 'del_group_name' class = 'form-control select_cursor'>
-                                        <?php foreach ($all_group as $key => $val) { echo "<option>$val</option>"; } ?></select></td></tr>
+                                        <?php foreach ($all_group as $key => $value) { echo "<option>$value</option>"; } ?></select></td></tr>
                             <tr><td colspan = '2'><input name = 'del_group' value = 'Удалить' class = 'btn button' type = 'submit'></td></tr>
                         </table>
                     </form>
@@ -84,11 +83,11 @@
                             <tr><td class = 'users_main_td' colspan = '2'>Группы пользователей</td>
                             <tr>
                                 <td class = 'users_td_label'>Логин</td>
-                                <td><select name = 'selected_user' class = 'form-control select_cursor'><?php foreach ($all_users as $key => $val) { if ($val != 'admin') { echo "<option>$val</option>"; } } ?></select></td>
+                                <td><select name = 'selected_user' class = 'form-control select_cursor'><?php foreach ($all_users as $key => $value) { if ($value != 'admin') { echo "<option>$value</option>"; } } ?></select></td>
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Группа</td>
-                                <td><select name = 'selected_group' class = 'form-control select_cursor'><?php foreach ($all_group as $key => $val) { echo "<option>$val</option>"; } ?></select></td>
+                                <td><select name = 'selected_group' class = 'form-control select_cursor'><?php foreach ($all_group as $key => $value) { echo "<option>$value</option>"; } ?></select></td>
                             </tr>
                             <tr><td colspan = '2'><input name = 'edit_users_group' value = 'Изменить' class = 'btn button' type = 'submit'></td></tr>
                         </table>
@@ -100,15 +99,15 @@
                             <tr><td class = 'users_main_td' colspan = '2'>Привязка группы к таблице</td>
                             <tr>
                                 <td class = 'users_td_label'>Группа</td>
-                                <td><select name = 'selected_group' class = 'form-control select_cursor'><?php foreach ($all_group as $key => $val) { echo "<option>$val</option>"; } ?></select></td>
+                                <td><select name = 'selected_group' class = 'form-control select_cursor'><?php foreach ($all_group as $key => $value) { echo "<option>$value</option>"; } ?></select></td>
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Таблицы</td>
                                 <td><select name = 'selected_table' class = 'form-control select_cursor'>
-                                        <?php
-                                            foreach ($table_name_array as $key => $table_name)
-                                            { echo "<option>{$table_name}</option>"; }
-                                        ?>
+                                    <?php
+                                        foreach ($released_table as $key => $value)
+                                        { echo "<option>{$value[1]}</option>"; }
+                                    ?>
                                     </select></td>
                             </tr>
                             <tr>
@@ -125,14 +124,14 @@
                             <tr><td class = 'users_main_td' colspan = '2'>Отвязка группы от таблицы</td>
                             <tr>
                                 <td class = 'users_td_label'>Группа</td>
-                                <td><select name = 'selected_del_group' class = 'form-control select_cursor'><?php foreach ($all_group as $key => $val) { echo "<option>$val</option>"; } ?></select></td>
+                                <td><select name = 'selected_del_group' class = 'form-control select_cursor'><?php foreach ($all_group as $key => $value) { echo "<option>$value</option>"; } ?></select></td>
                             </tr>
                             <tr>
                                 <td class = 'users_td_label'>Таблицы</td>
                                 <td><select name = 'selected_del_table' class = 'form-control select_cursor'>
                                     <?php
-                                        foreach ($table_name_array as $key => $table_name)
-                                        { echo "<option>{$table_name}</option>"; }
+                                        foreach ($released_table as $key => $value)
+                                        { echo "<option>{$value[1]}</option>"; }
                                     ?>
                                     </select></td>
                             </tr>

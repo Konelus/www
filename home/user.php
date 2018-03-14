@@ -31,13 +31,13 @@
             <?php
                 asort($important);
                 $count = 0;
-                foreach ($important as $key => $val)
+                foreach ($important as $key => $value)
                 {
                     if (($count != 0) && ($count % 13 == 0))
                     { echo '</ul></div>'; }
                     if (($count == 0) || ($count % 13 == 0))
                     { echo "<div class = 'col-lg-2 col-md-3 col-sm-3' style = 'float: left;'><ul>"; }
-                    echo "<li>{$val}</li>";
+                    echo "<li>{$value}</li>";
                     $count++;
                 }
                 $count = 0;
