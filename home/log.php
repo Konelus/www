@@ -2,13 +2,9 @@
 
 <?php
 /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
-    $link = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-    if ($descriptor)
-    { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
-
+    require_once($_SERVER['DOCUMENT_ROOT']."/sys/use.php");
     require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
-require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
 /* - - - - - - - - - - ↑ Подключение к БД ↑ - - - - - - - - - - */
 
 $lim = 27;
@@ -17,7 +13,7 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
 
     $log_count = 0;
 
-    $DB->select("*","log_info","","","id","{$lim}");
+    $DB->select("*","log_info","","DESC","id","{$lim}");
     $select = $DB->sql_query_select;
     if ($select != null)
     {

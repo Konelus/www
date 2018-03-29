@@ -4,11 +4,11 @@
 
     if ($_GET != null) { $substring = $_SERVER['QUERY_STRING']; }
 
-    $podcat_name_2 = explode('/', $cat_name);
-    $podcat_name_3 = explode('/', $substring);
+    //$podcat_name_2 = explode('/', $cat_name);
+    $substring_id = explode('/', $substring);
 
-    $DB->delete("".$podcat_name_3[0],"`id` = '".$podcat_name_3[1]."'");
-    $DB->delete("".$podcat_name_3[0],"`id_tr` = '".$podcat_name_3[1]."'");
+    $DB->delete("".$substring_id[0],"`id` = '".$substring_id[1]."'");
+    $DB->delete("".$substring_id[0],"`id_tr` = '".$substring_id[1]."'");
 
-    header ("Location: /?".$podcat_name_3[0]);
+    header ("Location: /?".$substring_id[0]);
 ?>

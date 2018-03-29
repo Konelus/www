@@ -3,30 +3,42 @@
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
     $log = explode('@', $_COOKIE["user"]);
     $log = $log[0];
+    if ($_COOKIE["user"] == 'admin') { $header = "style = 'height: 110px;'"; } else { $header = ''; }
 
+
+    if (isset ($_POST['add_table']))
+    {
+        $DB->create($_POST['table_name']);
+        header ("Location: /");
+    }
 ?>
 
 
-<script src="/home/sys/head.js"></script>
 <link rel="stylesheet" href="/home/sys/style.css">
 
 
 <div class = 'container-fluid'>
     <div class = 'row' style= 'margin-right: 0;'>
-        <div class = 'row main_header'>
+        <div class = 'row main_header' <?= $header ?>>
             <div class = 'col-lg-2 col-md-2 col-sm-3'>
                 <div style = 'float: left; padding-top: 10px; margin-left: 10px;'><img style = 'height: 40px;' src = '/img/logo.png'></div>
                 <div style = 'float: left; padding-top: 24px; font-size: 17px; cursor: default;'><span style = 'color: white;'>ELASTIC<span style = 'color: #ffdf5e;'>2</span></span></div>
             </div>
                 <script>var header_lable = <?= json_encode($all_tables_array); ?>;</script>
-            <div class = 'col-lg-7 col-md-7 col-sm-4'>
+            <div class = 'col-lg-8 col-md-8 col-sm-5'>
+                <?php if ($user_status == '+') { ?>
                 <div class="collapse navbar-collapse" id="navbar-main">
+                    <form method = "post">
                     <ul class="nav navbar-nav" style = 'margin-top: 5px;'>
                         <?php
                         if ($_COOKIE['user'] == 'admin')
                         {
                             foreach ($all_tables_array as $key => $value)
                             { ?><li><a href = '<?php if ($value[3] == '+') { echo "/?{$value[1]}"; } ?>' class = 'header_href_color'><?= $value[2] ?></a></li><?php }
+                            ?><li style = 'margin-top: 10px;'>
+                                <input type = 'text' style = 'color: black; margin-left: 10px; height: 30px; border: solid 1px gold; padding-left: 5px;' name = 'table_name' autocomplete="off">
+                                <input type = 'submit' style = 'color: white; height: 30px; width: 30px; background: black; border: solid 1px gold;' value = '+' name = 'add_table'>
+                            </li><?php
                         }
                         else if ($_COOKIE['user'] != 'admin')
                         {
@@ -37,9 +49,14 @@
                         }
                         ?>
                     </ul>
+                    </form>
                 </div>
+                <?php } else { ?>
+                <div style = 'color: red; padding-top: 10px; width: 100%; font-size: 30px; font-weight: bold; text-align: center; background: black;'>
+                    Внимание! Доступ по Вашей учётной записи запрещён!
+                </div>
+                <?php } ?>
             </div>
-            <div class = 'col-lg-1 col-md-1 col-sm-1'></div>
             <div class = 'col-lg-2 col-md-3 col-sm-4' style = 'text-align: center; margin-top: 8px; padding-right: 30px;'>
                 <div style = 'cursor: default;'>Вы авторизованы, как</div>
                 <div>
@@ -57,4 +74,4 @@
     else if ($_COOKIE['user'] != 'admin') { require_once($_SERVER['DOCUMENT_ROOT']."/home/user.php"); }
 ?>
 <div class = 'ver' style = 'margin-bottom: 25px;'><span style = 'color: red;'>Внимание!</span> Для корректной работы с сервисом необходим экран с минимальной шириной <span style = 'color: red;'>1000px</span>!</div>
-<div class = 'ver'>Версия продукта <?= $ver ?></div>
+<div class = 'ver'>Версия продукта <span style = 'color: red;'><?= $ver ?></span></div>

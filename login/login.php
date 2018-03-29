@@ -9,9 +9,10 @@
         $DB->select("*","users","`login` = '{$login}' and `password` = '{$password}'");
         if ($row = mysqli_fetch_row($DB->sql_query_select))
         {
-            setcookie("user", $login,  time() + 60 * 60 * 24 * 365, "/");
-            header ("Location: /");
+            setcookie("user", $login, time() + 60 * 60 * 24 * 365, "/");
+            header("Location: /");
         }
+
     }
 ?>
 

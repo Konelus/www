@@ -34,13 +34,15 @@
     if (isset ($_POST['add_td']))
     {
         $DB->insert($substring."_table","null, '".$_POST['new_td']."', '".translit($_POST['new_td'])."'");
-        $strSQL1 = $mysqli->query("ALTER TABLE {$substring} ADD `".translit($_POST['new_td'])."` TEXT CHARACTER SET utf8 NOT NULL");
-        $strSQL1 = $mysqli->query("ALTER TABLE {$substring}_permission ADD `".translit($_POST['new_td'])."` TEXT CHARACTER SET utf8 NOT NULL");
+        $DB->alter_add("{$substring}","".translit($_POST['new_td']),"TEXT CHARACTER SET utf8 NOT NULL");
+        $DB->alter_add("{$substring}_permission","".translit($_POST['new_td']),"TEXT CHARACTER SET utf8 NOT NULL");
+        //$strSQL1 = $mysqli->query("ALTER TABLE {$substring} ADD `".translit($_POST['new_td'])."` TEXT CHARACTER SET utf8 NOT NULL");
+        //$strSQL1 = $mysqli->query("ALTER TABLE {$substring}_permission ADD `".translit($_POST['new_td'])."` TEXT CHARACTER SET utf8 NOT NULL");
         if ($_COOKIE['user'] != 'admin')
         {
-            $DB->update("{$substring}_permission`","".translit($_POST['new_td']),"+","`{$substring}_group` = '{$current_users_group}'");
-            $DB->update("{$substring}_permission`","".translit($_POST['new_td']),"+","`{$substring}_group` = '{$current_users_group}_edit'");
-            $DB->update("{$substring}_permission`","".translit($_POST['new_td']),"-","`{$substring}_group` != '{$current_users_group[0]}' AND  `{$substring}_group` != '{$current_users_group}_edit'");
+            $DB->update("{$substring}_permission","".translit($_POST['new_td']),"+","`{$substring}_group` = '{$current_users_group}'");
+            $DB->update("{$substring}_permission","".translit($_POST['new_td']),"+","`{$substring}_group` = '{$current_users_group}_edit'");
+            $DB->update("{$substring}_permission","".translit($_POST['new_td']),"-","`{$substring}_group` != '{$current_users_group}' AND  `{$substring}_group` != '{$current_users_group}_edit'");
         }
         else if ($_COOKIE['user'] == 'admin')
         { $DB->update($substring."_permission`","".translit($_POST['new_td']),"-",""); }
@@ -52,11 +54,13 @@
 /* - - - - - - - - - - ↓ Удаление строки ↓ - - - - - - - - - - */
     if (isset ($_POST['del_td']))
     {
-        sql_name("{$substring}","{$_POST['old_td']}"); $sql_name = $result;
+        $sql_name = sql_name("{$substring}","{$_POST['old_td']}");
 
         $DB->delete("{$substring}_table","`sql_name` = '{$sql_name}'");
-        $strSQL1 = $mysqli->query("ALTER TABLE {$substring} DROP `{$sql_name}`");
-        $strSQL1 = $mysqli->query("ALTER TABLE {$substring}_permission DROP `{$sql_name}`");
+        $DB->alter_drop("{$substring}","{$sql_name}");
+        $DB->alter_drop("{$substring}_permission","{$sql_name}");
+        //$strSQL1 = $mysqli->query("ALTER TABLE {$substring} DROP `{$sql_name}`");
+        //$strSQL1 = $mysqli->query("ALTER TABLE {$substring}_permission DROP `{$sql_name}`");
         header ("Location: /?".$substring);
     }
 /* - - - - - - - - - - ↑ Удаление строки ↑ - - - - - - - - - - */

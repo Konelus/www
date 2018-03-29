@@ -31,7 +31,6 @@
         global $DB;
         if ($name != '') { $name = "`name` = '{$name}'"; }
         $DB->select("sql_name","{$table}_table","{$name}");
-        global $result;
         if ($DB->sql_query_select != null)
         {
             while ($row = mysqli_fetch_row($DB->sql_query_select))
@@ -40,16 +39,17 @@
                 if ($arr_count == 2) { $result[] = $row[0]; }
             }
         }
+        return $result;
     }
 
-    function monitoring_search($table, $status)
+    function monitoring_search($table, $status, $column)
     {
         global $DB;
         ?><script>
             $('input[name = "hidden_sort_5"]').val("<?= 'contact_groups' ?>");
             $('input[name = "hidden_sort_6"]').val("<?= "{$status}" ?>");
         </script><?php
-        $DB->select("*","{$table}","`contact_groups` =  '{$status}'");
+        $DB->select("*","{$table}","`{$column}` =  '{$status}'");
         global $SQL_QUERY_select_data;
         $SQL_QUERY_select_data = $DB->sql_query_select;
     }

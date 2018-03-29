@@ -1,25 +1,21 @@
 <?php
 
-    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/use.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/sys/use.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/body/sys/translit.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
 
 
-    $status = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/status.txt', 'r');
-    if ($descriptor)
-    {
-        while (($string = fgets($descriptor)) !== false)
-        { $status = $status.$string; }
-        fclose($descriptor);
-    }
-
     $page_title = 'ELASTIC 2';
 
 
-    if (($status == 'enable') && (isset ($_COOKIE['user'])))
+    if (($site_status == 'enable') && (isset ($_COOKIE['user'])))
     {
+
+        $DB->select("status","users","`login` = '{$_COOKIE['user']}'");
+        if ($row = mysqli_fetch_row($DB->sql_query_select))
+        { $user_status = $row[0]; }
+
         $table_isset = false;
 
         if ($_COOKIE['user'] == 'admin')
@@ -49,13 +45,15 @@
 
 
         // ↓ Получение группы пользователя ↓
-
-            $DB->select("*","group_namespace","`name` = '{$current_users_group}'");
-            $array = mysqli_fetch_array($DB->sql_query_select);
-            foreach ($array as $key => $value)
+            if ($_COOKIE['user'] != 'deactivated')
             {
-                if ((!is_numeric($key)) && ($value != ''))
-                { $current_users_access[$key] = $value; }
+                $DB->select("*","group_namespace","`name` = '{$current_users_group}'");
+                $array = mysqli_fetch_array($DB->sql_query_select);
+                foreach ($array as $key => $value)
+                {
+                    if ((!is_numeric($key)) && ($value != ''))
+                    { $current_users_access[$key] = $value; }
+                }
             }
         }
         // ↑ Получение группы пользователя ↑
@@ -108,21 +106,20 @@
                     }
                     unset ($count);
                 }
-
-                if (($_COOKIE['user'] != 'admin') && ($status == 'enable'))
+                if (($_COOKIE['user'] != 'admin') && ($site_status == 'enable'))
                 {
                     if ($substring == '') {require_once("home/home.php");}
                     else if ($substring != '')
                     {
                         foreach ($released_table as $key => $value)
                         {
-                            if ($value[1] == $substring) { $table_isset = true; }
+                            if (($value[1] == $substring) && ($user_status == '+')) { $table_isset = true; }
                         }
                         if ($table_isset == true) { require_once("body/body.php"); }
                         else { require_once("home/home.php"); }
                     }
                 }
-                else if (($_COOKIE['user'] != 'admin') && ($status == 'disable')) {require_once("break.php");}
+                else if (($_COOKIE['user'] != 'admin') && ($site_status == 'disable')) {require_once("break.php");}
 
 
                 else if ($_COOKIE['user'] == 'admin')
@@ -144,11 +141,11 @@
                     }
                 }
             }
-            else if ($status == 'disable') { require_once("break.php"); }
-            else if ($status == 'enable') { require_once("login/login.php"); }
-            //exec('q.exe');
+            else if ($site_status == 'disable') { require_once("break.php"); }
+            else if ($site_status == 'enable')  { require_once("login/login.php"); }
 
             // ↓ Отладка переменных ↓
+
             unset ($row, $array, $key, $value);
             if ($_GET == null) { unset ($_GET); }
             if ($_POST == null) { unset ($_POST); }
@@ -157,6 +154,8 @@
             if ($_ENV == null) { unset ($_ENV); }
             if ($_COOKIE == null) { unset ($_COOKIE); }
             unset($_SERVER, $DB);
+			
+            //new dBug(get_defined_vars());
             //pre(get_defined_vars());
             // ↑ Отладка переменных ↑
          ?>

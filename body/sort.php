@@ -49,7 +49,7 @@
         while ($row = mysqli_fetch_row($DB->sql_query_select))
         { $sql_td = $row[0]; }
         $DB->select("*","{$substring}","`{$sql_td}` LIKE '%{$_POST['caption']}%'");
-        $count++;
+        //$count++;
         $max_count = mysqli_num_rows($DB->sql_query_select) + 1;
     }
 
@@ -79,13 +79,10 @@
             { $sort = "ORDER BY `{$hid_1}` {$hid_2}"; }
             if ($lim != '')
             { $lim = " LIMIT {$lim}"; }
-            if (isset($_POST["edit_{$button_count}"])) { $bool_var_2 = 1; }
-            else if (isset($_POST["edit_true_{$button_count}"])) { $bool_var_2 = 0; }
+            //if (isset($_POST["edit_{$button_count}"]))
+            //{ $bool_var_2 = true; }
+            //else if (isset($_POST["edit_true_{$button_count}"]))
+            //{ $bool_var_2 = false; }
         }
     }
-
-
-
-
-
 ?>

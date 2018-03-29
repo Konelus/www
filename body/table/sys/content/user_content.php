@@ -1,6 +1,6 @@
 <td style='min-width: 150px; <?= $height ?>' class='<?= "{$class_color} {$ready}" ?>'><?php
     // ↓ Заполнение таблицы данными ↓
-    if ($bool_var_2 == 0)
+    if ($bool_var_2 == false)
     {
         if ($title[$tr][$new_td[$td_td]] == 'Online Test')
         { $parsed_title = "<a target = '_blank' href = '/body/table/additional_table.php/?{$substring}/{$title[$tr][0]}'>{$title[$tr][$new_td[$td_td]]}</a>"; }
@@ -12,7 +12,7 @@
 
 
     // ↓ Создание textarea для обычного пользователя ↓
-    else if ($bool_var_2 == 1)
+    else if ($bool_var_2 == true)
     { ?>
 <!--        <div style = 'height: 0px; background: black; color: white; margin-bottom: 2px;'>--><?//= $title_array[$td - 1][0] ?><!--</div>-->
         <textarea <?= $ro[$new_td[$td_td]] ?>

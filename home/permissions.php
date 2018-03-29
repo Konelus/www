@@ -48,12 +48,57 @@
     <input type = 'hidden' name = 'table_name'>
     <input type = 'hidden' name = 'table_description'>
     <input type = 'hidden' name = 'group'>
+    <input type = 'hidden' name = 'vision'>
+    <input type = 'hidden' name = 'perm'>
 
 
-    <?php if ((isset ($_POST['edit_users_permissions'])) || (isset ($_POST['confirm'])))
+
+    <?php
+    if ((isset ($_POST['edit_users_permissions'])) || (isset ($_POST['confirm'])) || (isset($_POST['vision_plus'])) || (isset($_POST['vision_minus'])) || (isset($_POST['perm_plus'])) || (isset($_POST['perm_minus'])))
     {
         $selected_table_name = $_POST['table_name'];
         $selected_table_description = $_POST['table_description'];
+        //$selected_vision = $_POST['vision'];
+        //$selected_perm = $_POST['perm'];
+
+        if (isset ($_POST['vision_plus']))
+        {
+            ?><script>
+                $('input[name = "vision"]').val("+");
+                $('input[name = "perm"]').val("<?= $_POST['perm'] ?>");
+            </script><?php
+            $selected_vision = '+';
+            if ($_POST['perm'] != '') { $selected_perm = $_POST['perm']; }
+        }
+        else if (isset ($_POST['vision_minus']))
+        {
+            ?><script>
+                $('input[name = "vision"]').val("-");
+                $('input[name = "perm"]').val("<?= $_POST['perm'] ?>");
+            </script><?php
+            $selected_vision = '-';
+            if ($_POST['perm'] != '') { $selected_perm = $_POST['perm']; }
+        }
+
+        if (isset ($_POST['perm_plus']))
+        {
+            ?><script>
+                $('input[name = "perm"]').val("+");
+                $('input[name = "vision"]').val("<?= $_POST['vision'] ?>");
+            </script><?php
+            $selected_perm = '+';
+            if ($_POST['vision'] != '') { $selected_vision = $_POST['vision']; }
+        }
+        else if (isset ($_POST['perm_minus']))
+        { ?><script>
+                $('input[name = "perm"]').val("-");
+                $('input[name = "vision"]').val("<?= $_POST['vision'] ?>");
+            </script><?php
+            $selected_perm = '-';
+            if ($_POST['vision'] != '') { $selected_vision = $_POST['vision']; }
+        }
+
+
         //$group = $_POST['group'];
         ?>
             <script>$('input[name = "table_name"]').val("<?= $selected_table_name ?>");</script>
@@ -64,18 +109,26 @@
         $selected_table_name = $_POST['table_name'];
         $selected_table_description = $_POST['table_description'];
         $group = $_POST['group_for_edit'];
+        //$selected_vision = $_POST['vision'];
+        //$selected_perm = $_POST['perm'];
 
 
 
-        $user_count = 0;
+
         $DB->select("name","group_namespace","{$selected_table_name} = '+'");
         $SQL_QUERY_select_users = $DB->sql_query_select;
         while ($row = mysqli_fetch_row($SQL_QUERY_select_users))
-        {
-            $table_user[$user_count] = $row[0];
-            $user_count++;
-        }
+        { $table_user[] = $row[0]; }
     }
+//    if ((isset($_POST['vision_plus'])) || (isset($_POST['vision_minus'])))
+//    {
+//        $selected_vision = $_POST['vision'];
+//    }
+//    if ((isset($_POST['perm_plus'])) || (isset($_POST['perm_minus'])))
+//    {
+//        $selected_perm = $_POST['perm'];
+//    }
+
 
 
 
@@ -141,7 +194,7 @@
         require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/query.php');
 
 
-        if (((isset ($_POST['select_table'])) && ($_POST['selected_table'] != '')) || (isset ($_POST['edit_users_permissions']) || (isset ($_POST['confirm']))) ) { ?>
+        if (((isset ($_POST['select_table'])) && ($_POST['selected_table'] != '')) || (isset ($_POST['edit_users_permissions']) || (isset ($_POST['confirm'])) || (isset($_POST['vision_plus'])) || (isset($_POST['vision_minus'])) || (isset($_POST['perm_plus'])) || (isset($_POST['perm_minus']))) ) { ?>
 
     <div class = 'permission_div_margin'>
 
@@ -162,13 +215,17 @@
                                         if ($table_user[$count] == $group) { $selected_group = 'selected'; } else { $selected_group = ''; }
                                         echo "<option {$selected_group}>{$table_user[$count]}</option>";
                                     }
-
                                 ?>
                             </select>
                         </div>
                         <div><input style = 'width: 120px;' type = 'submit' name = 'edit_users_permissions' value = 'Выбрать' class = 'add_submit'></div>
                     </td>
-                    <td class = 'table_head_info' colspan = <?= count($title_array) ?>></td>
+                    <td class = 'table_head_info' colspan = <?= count($title_array) ?>>
+                        <div style = 'float: left;'>
+<!--                            <input type = 'submit' style = 'border: solid 1px black; background: gold; height: 20px; width: 30px;' value = '+' name = 'vision_plus'>-->
+<!--                            <input type = 'submit' style = 'border: solid 1px black; background: gold; height: 20px; width: 30px;' value = '-' name = 'vision_minus'>-->
+                        </div>
+                    </td>
                     <td class = 'table_head_sys' rowspan = 4>
                         <div class = 'add_submit_div'><div class = 'add_input_div_margin'><input type = 'submit' value = 'Сохранить' class = 'add_submit' name = 'confirm'></div></div>
                     </td>
@@ -176,22 +233,39 @@
                 <?php
                     for ($count = 0; $count < count($title_array); $count++)
                     {
-                        if ($permission == null) { $option[$count] = '<option selected></option><option>+</option><option>-</option>'; }
-                        else if (($permission[($count + 2)] != '+') && ($permission[($count + 2)] != '-')) { $option[$count] = '<option>+</option><option selected>-</option>'; }
-                        else if ($permission[($count + 2)] === '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
-                        else if ($permission[($count + 2)] === '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                        if (!isset ($selected_vision))
+                        {
+                            if ($permission == null) { $option[$count] = '<option selected></option><option>+</option><option>-</option>'; }
+                            else if (($permission[($count + 2)] != '+') && ($permission[($count + 2)] != '-')) { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                            else if ($permission[($count + 2)] === '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
+                            else if ($permission[($count + 2)] === '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                        }
+                        elseif ($selected_vision == '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
+                        elseif ($selected_vision == '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
                         if ($count <= count($title_array)) { echo "<td><select name = 'listBox_{$count}' class = 'form-control select'>{$option[$count]}{$count}</select></td>"; }
                     }
                 ?>
 
-                <tr><td class = 'table_head_info' colspan = <?= count($title_array) ?>></td></tr>
+                <tr>
+                    <td class = 'table_head_info' colspan = <?= count($title_array) ?>>
+                        <div style = 'float: left;'>
+<!--                            <input type = 'submit' style = 'border: solid 1px black; background: gold; height: 20px; width: 30px;' value = '+' name = 'perm_plus'>-->
+<!--                            <input type = 'submit' style = 'border: solid 1px black; background: gold; height: 20px; width: 30px;' value = '-' name = 'perm_minus'>-->
+                        </div>
+                    </td>
+                </tr>
                 <?php
                 for ($count = 0; $count < count($title_array); $count++)
                 {
-                    if ($permission_edit == null) { $option[$count] = '<option selected></option><option>+</option><option>-</option>'; }
-                    else if (($permission_edit[($count + 2)] != '+') && ($permission_edit[($count + 2)] != '-')) { $option[$count] = '<option>+</option><option selected>-</option>'; }
-                    else if ($permission_edit[($count + 2)] === '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
-                    else if ($permission_edit[($count + 2)] === '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                    if (!isset ($selected_perm))
+                    {
+                        if ($permission_edit == null) { $option[$count] = '<option selected></option><option>+</option><option>-</option>'; }
+                        else if (($permission_edit[($count + 2)] != '+') && ($permission_edit[($count + 2)] != '-')) { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                        else if ($permission_edit[($count + 2)] === '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
+                        else if ($permission_edit[($count + 2)] === '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                    }
+                    elseif ($selected_perm == '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
+                    elseif ($selected_perm == '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
                     if ($count <= count($title_array)) { echo "<td><select name = 'edit_listBox_{$count}' class = 'form-control select'>{$option[$count]}</select></td>"; }
                 }
                 ?>
@@ -199,5 +273,7 @@
             </table>
     </div>
 </form>
-<?php } //pre(get_defined_vars()); ?>
+<?php }
+//pre(get_defined_vars());
+//pre($_POST);?>
 </body>

@@ -1,8 +1,5 @@
 <?php
-    $link = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-    if ($descriptor)
-    { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
+    require_once($_SERVER['DOCUMENT_ROOT']."/sys/use.php");
 
     $localhost = "localhost";
     $user = "root";

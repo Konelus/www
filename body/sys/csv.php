@@ -1,10 +1,7 @@
 <?php
 
     /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
-    $link = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-    if ($descriptor)
-    { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
+    require_once($_SERVER['DOCUMENT_ROOT']."/sys/use.php");
 
     $localhost = "localhost";
     $user = "root";
@@ -67,8 +64,8 @@ if ($SQL_QUERY_select_data != null)
                 for ($td = 1; $td <= ($max_td + 3); $td++)
                 { $csv_var = $csv_var.iconv("UTF-8", "windows-1251", $title[$tr][$td]).';'; }
                 $tr_count++;
-                $bool_query = 0;
-                $bool_var_2 = 0;
+                $bool_query = false;
+                $bool_var_2 = false;
                 $td_td = 1;
             }
         //}

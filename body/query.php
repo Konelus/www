@@ -11,6 +11,7 @@
     // ↓ Получение информации о правах пользователя ↓
     if ($_COOKIE['user'] != 'admin')
     {
+        $count = 0;
         $DB->select("*","{$substring}_permission","`{$substring}_group` = '{$current_users_group}'");
         if ($DB->sql_query_select != null)
         { $title1 = mysqli_fetch_row($DB->sql_query_select); }
@@ -19,17 +20,18 @@
 
 
     $bool_var = 0;
-    $bool_var_2 = 0;
+    //$bool_var_2 = false;
     if (isset ($_POST['hide']))
     { $bool_var = 1; }
 
 
     // ↓ Получение списка отображаемых столбцах ↓
-    $DB->select("name","{$substring}_table","");
+    $DB->select("name","{$substring}_table");
     if ($DB->sql_query_select != null)
     {
         $max_td_count = mysqli_num_rows($DB->sql_query_select);
 
+        //echo "<span style = 'color: red;'>{$max_td_count}</span><br>";
         while ($row = mysqli_fetch_row($DB->sql_query_select))
         {
             if (($title1[$table_count1] == '+') && ($_COOKIE['user'] != 'admin'))

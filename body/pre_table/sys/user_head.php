@@ -25,7 +25,7 @@
 if (($_COOKIE['user'] == 'admin') || ($_COOKIE['user'] == 'Aleksandr.Kvasha@south.rt.ru') || ($_COOKIE['user'] == 'Vlasov@south.rt.ru') ||
     ($_COOKIE['user'] == 'A.Pisarenko@south.rt.ru') || ($_COOKIE['user'] == 'Denis.Osadchiy@south.rt.ru') || ($status == 'superuser')) { ?>
     <a target = '_blank' style = 'color: white; border: 0; background: black;' href = '/body/sys/csv.php/?<?= $substring ?>'><?= $page_title." (".($max_count - 2).")"; ?></a>
-<?php } else {  echo $page_title." (".($max_count - 2).")"; } ?>
+<?php } else {  echo '<span style = "cursor: default;">'.$page_title." (".($max_count - 2).")</span>"; } ?>
 </div>
 
 <!-- ↓ Кнопки home и exit ↓ -->
