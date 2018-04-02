@@ -10,7 +10,7 @@
             <script>
                 while (table_count <= (max_td_count - 1))
                 {
-                    document.write("<option>" + table_mass[table_count + <?= $bag_1 ?> ] + "</option>");
+                    document.write("<option>" + table_mass[table_count + 1] + "</option>");
                     table_count++;
                 }
                 table_count = 0;

@@ -2,10 +2,9 @@
     $bool_edit = false;
     $tr_count = 2;
 
-
     if ($substring == 'vibory')
     { $height = 'height: 100px;'; $scroll = 111; }
-    else if ($substring == 'schools')
+    else 
     { $height = 'height: 60px;'; $scroll = 78;}
 
 

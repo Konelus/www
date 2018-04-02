@@ -36,9 +36,9 @@
 
         public function select($value, $table, $where = '', $sort = '', $order = '', $limit = '')
         {
-            if ($value != '*') { $value = "`{$value}`"; }
-            if ($where != null) { $where = " WHERE {$where}"; }
-            if ($order != null) { $order = " ORDER BY `{$order}`"; }
+            if ($value != '*') { $value = "`{$value}` "; }
+            if ($where != null) { $where = " WHERE {$where} "; }
+            if ($order != null) { $order = " ORDER BY `{$order}` "; }
             if ($limit != null) { $limit = " LIMIT {$limit}"; }
             $this->sql_query_select = $this->mysqli->query("SELECT {$value} FROM `{$table}`{$where}{$order}{$sort}{$limit}");
             //echo "<br>SELECT {$value} FROM `{$table}`{$where}{$order}{$sort}{$limit}";
@@ -74,6 +74,12 @@
         {
             $this->mysqli->query("ALTER TABLE `{$table}` DROP `{$cell}`");
             //echo "ALTER TABLE `{$table}` DROP `{$cell}`<br>";
+        }
+
+        public function alter_replace($table, $cell_current, $cell_other)
+        {
+            $this->mysqli->query("ALTER TABLE `{$table}` MODIFY COLUMN `{$cell_current}` TEXT AFTER `{$cell_other}`");
+            //echo "ALTER TABLE `{$table}` MODIFY COLUMN `{$cell_current}` TEXT AFTER `{$cell_other}`<br>";
         }
 
         public function show($table)

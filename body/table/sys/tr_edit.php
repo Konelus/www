@@ -25,23 +25,23 @@
         {
             if ($current_ver[2] == $version[2])
             {
-                $DB->select("{$table_sql[$td_count - 2]}","{$substring}","`id` = '{$title[$edit_true_count - 1][0]}'");
+                $DB->select("{$table_sql[$td_count - 1]}","{$substring}","`id` = '{$title[$edit_true_count - 1][0]}'");
                 if ($DB->sql_query_select != null)
                 {
                     while ($row_0 = mysqli_fetch_array($DB->sql_query_select))
                     {
                         if ($row_0[0] != $_POST["editBox_".($edit_true_count - 1)."_".($td_count - 1)])
                         {
-                            $DB->select("name",$substring."_table","`sql_name` = '{$table_sql[$td_count - 2]}' ");
+                            $DB->select("name",$substring."_table","`sql_name` = '{$table_sql[$td_count - 1]}' ");
                             while ($row = mysqli_fetch_row($DB->sql_query_select)) { $cell_name = $row[0]; }
                             $DB->insert("log_info","null, '{$user_fio}', '{$_SERVER['REMOTE_ADDR']}', '" . date("d.m.Y") . "', '" . date("H:i:s") . "', '{$table_name}', '{$title[$edit_true_count - 1][1]}', '{$cell_name}', '{$title[$edit_true_count - 1][($td_count - 1)]}', '{$_POST['editBox_'.($edit_true_count - 1).'_'.($td_count - 1)]}'");
                         }
                     }
                 }
 
-                if ($table_sql[$td_count - 2] != '')
+                if ($table_sql[$td_count - 1] != '')
                 {
-                    $DB->update("{$substring}","".$table_sql[$td_count - 2],"". $_POST["editBox_".($edit_true_count - 1)."_".($td_count - 1)],"`id` = '{$title[$edit_true_count - 1][0]}'");
+                    $DB->update("{$substring}","".$table_sql[$td_count - 1],"". $_POST["editBox_".($edit_true_count - 1)."_".($td_count - 1)],"`id` = '{$title[$edit_true_count - 1][0]}'");
                 }
             }
             else
@@ -52,7 +52,7 @@
         }
         else if ($_COOKIE['user'] == 'admin')
         {
-            $DB->update("{$substring}","".$table_sql[$td_count - 1],"".$_POST["editBox_".($edit_true_count - 1)."_".($td_count - 1)],"`id` = '{$title[$edit_true_count - 1][0]}'");
+            $DB->update("{$substring}","".$table_sql[$td_count - 1],"".$_POST["editBox_".($edit_true_count - 1)."_".($td_count - 2)],"`id` = '{$title[$edit_true_count - 1][0]}'");
 
         }
     }

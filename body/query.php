@@ -26,7 +26,7 @@
 
 
     // ↓ Получение списка отображаемых столбцах ↓
-    $DB->select("name","{$substring}_table");
+    $DB->select("*","{$substring}_table");
     if ($DB->sql_query_select != null)
     {
         $max_td_count = mysqli_num_rows($DB->sql_query_select);
@@ -37,37 +37,40 @@
             if (($title1[$table_count1] == '+') && ($_COOKIE['user'] != 'admin'))
             {
                 $new_td[$table_count + 1] = ($table_count1 - 1);
-                $table[$table_count + 1] = $row[0];
+                $table[$row[3]] = $row[1];
                 $table_count++;
                 $max_td_count_1 = $table_count;
             }
             else if ($_COOKIE['user'] == 'admin')
             {
                 $new_td[$table_count + 1] = ($table_count1 - 1);
-                $table[$table_count] = $row[0];
+                $table[$row[3]] = $row[1];
                 $table_count++;
             }
             $table_count1++;
         }
     }
+    ksort($table);
     // ↑ Получение списка отображаемых столбцах ↑
 
 
     // ↓ Запись в переменные названий всех столбцов таблицы ↓
-    $DB->select("sql_name","{$substring}_table");
+    $DB->select("*","{$substring}_table");
     if ($DB->sql_query_select != null)
     {
         $count = 0;
         while ($row = mysqli_fetch_row($DB->sql_query_select))
         {
             if (($title1[$count + 2] == '+') && ($_COOKIE['user'] != 'admin'))
-            { $table_sql[$count] = $row[0]; }
+            { $table_sql[$row[3]] = $row[2]; }
             else if ($_COOKIE['user'] == 'admin')
-            { $table_sql[] = $row[0]; }
+            { $table_sql[$row[3]] = $row[2]; }
             $count++;
         }
         unset ($count);
+        ksort($table_sql);
     }
+   // pre($table_sql);
     // ↑ Запись в переменные названий всех столбцов таблицы ↑
 
 

@@ -6,7 +6,7 @@
         foreach ($table as $key => $value)
         { ?>
             <td style = 'min-width: 100px;' class = 'table_head_bg'>
-                <div style = 'width: 100%; border-bottom: solid 1px black; padding-bottom: 5px;'>
+                <div style = 'width: 100%; border-bottom: solid 1px black; padding-bottom: 5px; padding-top: 5px;'>
                     <input class = 'table_head_submit_bg' type = 'submit' name = '<?= str_replace(".","", "{$table[$key]}") ?>_asc' value = '↑'>
                     <input class = 'table_head_submit_bg' type = 'submit' name = '<?= str_replace(".","", "{$table[$key]}") ?>_desc' value = '↓'>
                 </div>
@@ -22,3 +22,4 @@
             <td class = 'table_head_sys'>edit</td>
         <?php } ?>
 </tr>
+<?php //pre(get_defined_vars()); ?>

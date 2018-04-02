@@ -9,8 +9,38 @@
     $page_title = 'ELASTIC 2';
 
 
-    if (($site_status == 'enable') && (isset ($_COOKIE['user'])))
+    if ((($site_status == 'enable') && (isset ($_COOKIE['user']))) || ($_COOKIE['user'] == 'admin'))
     {
+
+
+        if (isset ($_POST['break']))
+        {
+            function write_status ($status)
+            {
+                $file = "{$_SERVER['DOCUMENT_ROOT']}/sys.txt";
+                $lines = file("{$file}", FILE_IGNORE_NEW_LINES);
+                $lines[0]  = "status = '{$status}';";
+                file_put_contents("{$file}", implode(PHP_EOL, $lines));
+            }
+
+            if ($site_status == 'enable')
+            {
+                write_status("disable");
+                $site_status = 'disable';
+            }
+            else if ($site_status == 'disable')
+            {
+                write_status("enable");
+                $site_status = 'enable';
+
+                ver();
+                $DB->update("ver","ver","".$current_ver[0].'.'.$current_ver[1].'.'.($current_ver[2] + 1));
+            }
+            //echo "<script>window.location.href = window.location.href;</script>";
+            header("index.php");
+        }
+
+
 
         $DB->select("status","users","`login` = '{$_COOKIE['user']}'");
         if ($row = mysqli_fetch_row($DB->sql_query_select))
@@ -145,7 +175,7 @@
             else if ($site_status == 'enable')  { require_once("login/login.php"); }
 
             // ↓ Отладка переменных ↓
-
+        //pre(get_defined_vars());
             unset ($row, $array, $key, $value);
             if ($_GET == null) { unset ($_GET); }
             if ($_POST == null) { unset ($_POST); }
@@ -158,6 +188,7 @@
             //new dBug(get_defined_vars());
             //pre(get_defined_vars());
             // ↑ Отладка переменных ↑
+
          ?>
     </body>
 </html>

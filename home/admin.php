@@ -106,7 +106,7 @@
                                 <td><select name = 'selected_table' class = 'form-control select_cursor'>
                                     <?php
                                         foreach ($released_table as $key => $value)
-                                        { echo "<option>{$value[1]}</option>"; }
+                                        { echo "<option>{$value[2]}</option>"; }
                                     ?>
                                     </select></td>
                             </tr>
@@ -131,7 +131,7 @@
                                 <td><select name = 'selected_del_table' class = 'form-control select_cursor'>
                                     <?php
                                         foreach ($released_table as $key => $value)
-                                        { echo "<option>{$value[1]}</option>"; }
+                                        { echo "<option>{$value[2]}</option>"; }
                                     ?>
                                     </select></td>
                             </tr>
@@ -162,7 +162,7 @@
         <div class = 'col-lg-4'></div>
         <div class = 'col-lg-4' style = 'padding-top: 20px;'>
             <div style = 'border: solid 1px black;'>
-                <div style = 'height: 35px; background: black; text-align: center; color: white; padding-top: 5px;'>Скрипты</div>
+                <div style = 'height: 35px; background: black; text-align: center; color: white; padding-top: 5px; cursor: default;'>Скрипты</div>
                 <div style = 'width: 80%; margin: auto; height: 60px;'>
                     <?php
                         require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script/script.php');

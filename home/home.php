@@ -11,6 +11,15 @@
         $DB->create($_POST['table_name']);
         header ("Location: /");
     }
+
+
+
+    if ($site_status == 'enable')
+    { $value = 'Выключить'; }
+    else if ($site_status == 'disable')
+    { $value = 'Включить'; }
+
+
 ?>
 
 
@@ -21,8 +30,22 @@
     <div class = 'row' style= 'margin-right: 0;'>
         <div class = 'row main_header' <?= $header ?>>
             <div class = 'col-lg-2 col-md-2 col-sm-3'>
-                <div style = 'float: left; padding-top: 10px; margin-left: 10px;'><img style = 'height: 40px;' src = '/img/logo.png'></div>
-                <div style = 'float: left; padding-top: 24px; font-size: 17px; cursor: default;'><span style = 'color: white;'>ELASTIC<span style = 'color: #ffdf5e;'>2</span></span></div>
+                <div style = 'float: left; padding-top: 10px; margin-left: 10px;'>
+                    <?php if ($site_status == 'enable') { ?><img style = 'height: 40px;' src = '/img/logo.png'><?php }
+                    else if ($site_status == 'disable') { ?><img style = 'height: 40px;' src = '/img/logo_grey.png'><?php }?>
+                </div>
+                <div style = 'padding-top: 24px; font-size: 17px; cursor: default;'><span style = 'color: white;'>ELASTIC<span style = 'color: #ffdf5e;'>2</span></span></div>
+
+                <?php if ($_COOKIE['user'] == 'admin') { ?>
+                    <form method = "post">
+                        <div style = 'margin-top: 8px; margin-left: 27px;' class = 'second_bar_div'>
+                            <div style = 'width: 100px; border: solid 1px gold;'>
+                                <input name = 'break' style = 'width: 100%; border: solid 0; color: white; background: black;' type = 'submit' value = '<?= $value ?>'>
+                            </div>
+                        </div>
+                    </form>
+                <?php } ?>
+
             </div>
                 <script>var header_lable = <?= json_encode($all_tables_array); ?>;</script>
             <div class = 'col-lg-8 col-md-8 col-sm-5'>

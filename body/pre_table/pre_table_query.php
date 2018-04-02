@@ -16,16 +16,23 @@
         $DB->show("{$substring}_vision");
         //$SQL_QUERY_td_count = $mysqli->query("SHOW COLUMNS FROM `{$substring}_vision`");
         $td_count = mysqli_num_rows($DB->sql_query_show) - 1;
+
         $str = "null, '{$id}'";
         for ($count = 0; $count <= ($td_count - 2); $count++)
         { $str .= ", ''"; }
 
         $DB->insert("{$substring}_vision","{$str}");
 
-        if ($_COOKIE['user'] != 'admin')
-        { $DB->update("{$substring}_vision","{$_COOKIE['user']}","+","`id_tr` = '{$id}'"); }
+        //if ($_COOKIE['user'] != 'admin')
+        //{
+            while ($row = mysqli_fetch_row($DB->sql_query_show))
+            {
+                if (($row[0] != 'id') && ($row[0] != 'id_tr'))
+                { $DB->update("{$substring}_vision","{$row[0]}","+","`id_tr` = '{$id}'"); }
+            }
+        //}
         // ↑ Добавление видимости новой строки ↑
-        //header ("Location: /?{$substring}");
+        header ("Location: /?{$substring}");
     }
 /* - - - - - - - - - - ↑ Добавление строки ↑ - - - - - - - - - - */
 
@@ -55,12 +62,28 @@
     if (isset ($_POST['del_td']))
     {
         $sql_name = sql_name("{$substring}","{$_POST['old_td']}");
-
         $DB->delete("{$substring}_table","`sql_name` = '{$sql_name}'");
         $DB->alter_drop("{$substring}","{$sql_name}");
         $DB->alter_drop("{$substring}_permission","{$sql_name}");
+
         //$strSQL1 = $mysqli->query("ALTER TABLE {$substring} DROP `{$sql_name}`");
         //$strSQL1 = $mysqli->query("ALTER TABLE {$substring}_permission DROP `{$sql_name}`");
+
+        $DB->select("sort","{$substring}_table");
+        while ($row = mysqli_fetch_row($DB->sql_query_select))
+        { $sort_array[$row[0]] = $row[0]; }
+        ksort($sort_array);
+
+        foreach ($sort_array as $key => $value)
+        {
+            if (($value != ($sort_array[$key - 1] + 1)) && ($value > 1))
+            {
+                $sort_array[$key]--;
+                $DB->update("{$substring}_table","sort","{$sort_array[$key]}","`sort` = {$key}");
+            }
+        }
+
+
         header ("Location: /?".$substring);
     }
 /* - - - - - - - - - - ↑ Удаление строки ↑ - - - - - - - - - - */

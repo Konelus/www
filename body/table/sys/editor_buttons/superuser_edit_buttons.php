@@ -6,7 +6,7 @@
     { ?>
         <td class='table_head_sys'>
             <button name='edit_true_<?= ($tr + $searched_tr); ?>' type="submit" style='margin-top: 33px;' class="btn btn-success"><span
-                    class="glyphicon glyphicon glyphicon-ok"><?= $td; ?></span></button>
+                    class="glyphicon glyphicon glyphicon-ok"></span></button>
         </td>
     <?php }
     if ($td == ($max_td_count + $kostil_3))
@@ -14,7 +14,7 @@
         <td class='table_head_sys'>
             <div style = 'margin-top: 33px;'>
                 <a href='/body/sys/del.php?<?= $substring ?>/<?= $title[$tr][0] ?>'>
-                    <div style='border: solid 1px black;' class="btn btn-danger"><span style='color: black; ' class="glyphicon glyphicon glyphicon-remove"><?= $td; ?></span></div>
+                    <div style='border: solid 1px black;' class="btn btn-danger"><span style='color: black; ' class="glyphicon glyphicon glyphicon-remove"></span></div>
                 </a>
             </div>
         </td>
