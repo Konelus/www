@@ -8,13 +8,6 @@
     }
 
 
-    function user_table($user_group = '')
-    {
-        global $DB;
-        if ($user_group != '') { $user_group = "`name` = '{$user_group}'"; }
-        $DB->select("*","group_namespace","{$user_group}");
-    }
-
     function ver()
     {
         global $DB;
@@ -54,17 +47,17 @@
         $SQL_QUERY_select_data = $DB->sql_query_select;
     }
 
-    function selected_data($table, $where = '', $sort = '', $search_tr = 0)
-    {
-        global $DB;
-        global $searched_tr, $SQL_QUERY_select_data, $max_count;
-        $searched_tr = $search_tr;
-
-        $DB->select("*","{$table}","{$where}", "{$sort}");
-        $SQL_QUERY_select_data = $DB->sql_query_select;
-        //if ($SQL_QUERY_select_data != null)
-        //{ $max_count = mysqli_num_rows($SQL_QUERY_select_data); }
-    }
+//    function selected_data($table, $where = '', $sort = '', $search_tr = 0)
+//    {
+//        global $DB;
+//        global $searched_tr, $SQL_QUERY_select_data, $max_count;
+//        $searched_tr = $search_tr;
+//
+//        $DB->select("*","{$table}","{$where}", "{$sort}");
+//        $SQL_QUERY_select_data = $DB->sql_query_select;
+//        //if ($SQL_QUERY_select_data != null)
+//        //{ $max_count = mysqli_num_rows($SQL_QUERY_select_data); }
+//    }
 
     function pre($array)
     {

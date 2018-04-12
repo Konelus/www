@@ -9,7 +9,10 @@
         <!-- ↓ Форма удаления столбца таблицы ↓ -->
         <div style = 'float: left; width: 190px;'>
             <select class = 'table_add_new_td_btn' name='old_td' style = 'width: 120px; float: left;'>
-                <script> while (table_count <= (max_td_count - 1)) { document.write("<option>" + table_mass[table_count + 1] + "</option>"); table_count++; } table_count = 0; </script>
+                <?php
+                    foreach ($table as $key => $value)
+                    { echo "<option>$value</option>"; }
+                ?>
             </select>
             <input class = 'table_small_add_btn' type='submit' value='-' name='del_td' style = 'height: 28px; width: 50px; float: left; border: solid 1px grey;'>
         </div>

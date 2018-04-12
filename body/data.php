@@ -4,12 +4,13 @@
 
     if (((!isset ($_POST['search_btn'])) && ($_POST['hidden_sort_5'] == '') && ($_POST['hidden_sort_6'] == '')))
     {
-        $DB->select("*","{$substring}","{$where}", "{$sort}");
-        selected_data("{$substring}","","{$sort}");
+        $DB->select("*","{$substring}","", "{$sort}");
+        $SQL_QUERY_select_data = $DB->sql_query_select;
+        //selected_data("{$substring}","","{$sort}");
         //$tr = 2;
     }
     else if (((isset ($_POST['search_btn']))) || (($_POST['hidden_sort_5'] != '') && ($_POST['hidden_sort_6'] != '')))
-    {
+        {
         //$tr = 0;
         $searched_td = sql_name("{$substring}","{$_POST['selected_td']}");
 
@@ -35,15 +36,24 @@
         }
 
         if (isset ($_POST['inversion']))
-        { selected_data("{$substring}","`{$searched_td}` !=  '".trim($caption)."'","{$sort}"); }
+        {
+            $DB->select("*","{$substring}","`{$searched_td}` !=  '".trim($caption)."'", "{$sort}");
+            $SQL_QUERY_select_data = $DB->sql_query_select;
+            //selected_data("{$substring}","`{$searched_td}` !=  '".trim($caption)."'","{$sort}");
+        }
         else if (!isset ($_POST['inversion']))
-        { selected_data("{$substring}","`{$searched_td}` LIKE  '%".trim($caption)."%'","{$sort}"); }
+        {
+            $DB->select("*","{$substring}","`{$searched_td}` LIKE  '%".trim($caption)."%'", "{$sort}");
+            $SQL_QUERY_select_data = $DB->sql_query_select;
+            //selected_data("{$substring}","`{$searched_td}` LIKE  '%".trim($caption)."%'","{$sort}");
+
+        }
     }
 
     // ↓ Вывод данных для мониторинга ↓
     if ($substring == 'vibory')
     {
-        if ($monitoring_view == 'monitoring')
+        if ($testing[$substring] == 'monitoring')
         {
             if (isset ($_POST['success_btn']))
             { monitoring_search("{$substring}","success", "contact_groups"); }
@@ -54,7 +64,7 @@
             else if (isset ($_POST['empty_btn']))
             { monitoring_search("{$substring}","монтаж не произведён","gotovnost_obekta_da"); }
         }
-        else if ($monitoring_view == 'sync')
+        else if ($testing[$substring] == 'sync')
         {
             if (isset ($_POST['success_btn']))
             { monitoring_search("{$substring}","Cинхронизация завершена. Оборудование можно демонтировать", "cinhronizaciya"); }
@@ -68,6 +78,12 @@
     }
     // ↑ Вывод данных для мониторинга ↑
 
+    foreach ($substring_table as $key => $value)
+    {
+        if (($value == 'contact_groups') && ($substring == 'vibory')) { $status_key = $key; }
+        else if (($value == 'monitoring') && ($substring != 'vibory')) { $status_key = $key; }
+        if ($value == 'cinhronizaciya') { $sync_key = $key; }
+    }
 
 
     if ($SQL_QUERY_select_data != null)
@@ -75,10 +91,13 @@
         $tr_max = mysqli_num_rows($SQL_QUERY_select_data);
         while ($row = mysqli_fetch_row($SQL_QUERY_select_data))
         {
-
             $title[$count][0] = $row[0];
             $title[$count][1] = $row[1];
-            if ($substring == 'vibory') { $title[$count]['status'] = $row[40]; $title[$count]['sync'] = $row[43]; }
+            if ($substring == 'vibory')
+            {
+                $title[$count]['status'] = $row[$status_key];
+                $title[$count]['sync'] = $row[$sync_key];
+            }
 
             for ($i = 0; $i <= count($row); $i++)
             {
@@ -100,5 +119,4 @@
             $count++;
         }
     }
-    //pre($title);
 ?>

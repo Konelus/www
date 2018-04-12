@@ -47,9 +47,8 @@
                 <?php } ?>
 
             </div>
-                <script>var header_lable = <?= json_encode($all_tables_array); ?>;</script>
             <div class = 'col-lg-8 col-md-8 col-sm-5'>
-                <?php if ($user_status == '+') { ?>
+                <?php if (($_COOKIE['user'] == 'admin') || ($user_status == '+')) { ?>
                 <div class="collapse navbar-collapse" id="navbar-main">
                     <form method = "post">
                     <ul class="nav navbar-nav" style = 'margin-top: 5px;'>
@@ -57,7 +56,7 @@
                         if ($_COOKIE['user'] == 'admin')
                         {
                             foreach ($all_tables_array as $key => $value)
-                            { ?><li><a href = '<?php if ($value[3] == '+') { echo "/?{$value[1]}"; } ?>' class = 'header_href_color'><?= $value[2] ?></a></li><?php }
+                            { ?><li><a href = '<?php if ($value[3] != '') { echo "/?{$value[1]}"; } ?>' class = 'header_href_color'><?= $value[2] ?></a></li><?php }
                             ?><li style = 'margin-top: 10px;'>
                                 <input type = 'text' style = 'color: black; margin-left: 10px; height: 30px; border: solid 1px gold; padding-left: 5px;' name = 'table_name' autocomplete="off">
                                 <input type = 'submit' style = 'color: white; height: 30px; width: 30px; background: black; border: solid 1px gold;' value = '+' name = 'add_table'>

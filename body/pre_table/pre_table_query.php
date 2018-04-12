@@ -40,20 +40,34 @@
 /* - - - - - - - - - - ↓ Добавление столбца ↓ - - - - - - - - - - */
     if (isset ($_POST['add_td']))
     {
-        $DB->insert($substring."_table","null, '".$_POST['new_td']."', '".translit($_POST['new_td'])."'");
-        $DB->alter_add("{$substring}","".translit($_POST['new_td']),"TEXT CHARACTER SET utf8 NOT NULL");
-        $DB->alter_add("{$substring}_permission","".translit($_POST['new_td']),"TEXT CHARACTER SET utf8 NOT NULL");
-        //$strSQL1 = $mysqli->query("ALTER TABLE {$substring} ADD `".translit($_POST['new_td'])."` TEXT CHARACTER SET utf8 NOT NULL");
-        //$strSQL1 = $mysqli->query("ALTER TABLE {$substring}_permission ADD `".translit($_POST['new_td'])."` TEXT CHARACTER SET utf8 NOT NULL");
-        if ($_COOKIE['user'] != 'admin')
+        if ($_POST['new_td'] != '')
         {
-            $DB->update("{$substring}_permission","".translit($_POST['new_td']),"+","`{$substring}_group` = '{$current_users_group}'");
-            $DB->update("{$substring}_permission","".translit($_POST['new_td']),"+","`{$substring}_group` = '{$current_users_group}_edit'");
-            $DB->update("{$substring}_permission","".translit($_POST['new_td']),"-","`{$substring}_group` != '{$current_users_group}' AND  `{$substring}_group` != '{$current_users_group}_edit'");
+            $DB->select("sort","{$substring}_table");
+            while ($row = mysqli_fetch_row($DB->sql_query_select))
+            { $table_sort[] = $row[0]; }
+            asort($table_sort);
+
+            foreach ($table_sort as $key => $value)
+            { $sort_id = $value; }
+            $sort_id++;
+
+
+            $DB->insert("{$substring}_table","null, '{$_POST['new_td']}', '".translit($_POST['new_td'])."', {$sort_id}");
+            $DB->alter_add("{$substring}","".translit($_POST['new_td']),"TEXT CHARACTER SET utf8 NOT NULL");
+            $DB->alter_add("{$substring}_permission","".translit($_POST['new_td']),"TEXT CHARACTER SET utf8 NOT NULL");
+            //$strSQL1 = $mysqli->query("ALTER TABLE {$substring} ADD `".translit($_POST['new_td'])."` TEXT CHARACTER SET utf8 NOT NULL");
+            //$strSQL1 = $mysqli->query("ALTER TABLE {$substring}_permission ADD `".translit($_POST['new_td'])."` TEXT CHARACTER SET utf8 NOT NULL");
+            if ($_COOKIE['user'] != 'admin')
+            {
+                $DB->update("{$substring}_permission","".translit($_POST['new_td']),"+","`{$substring}_group` = '{$current_users_group}'");
+                $DB->update("{$substring}_permission","".translit($_POST['new_td']),"+","`{$substring}_group` = '{$current_users_group}_edit'");
+                $DB->update("{$substring}_permission","".translit($_POST['new_td']),"-","`{$substring}_group` != '{$current_users_group}' AND  `{$substring}_group` != '{$current_users_group}_edit'");
+            }
+            else if ($_COOKIE['user'] == 'admin')
+            { $DB->update($substring."_permission`","".translit($_POST['new_td']),"-",""); }
+            header ("Location: /?".$substring);
         }
-        else if ($_COOKIE['user'] == 'admin')
-        { $DB->update($substring."_permission`","".translit($_POST['new_td']),"-",""); }
-        header ("Location: /?".$substring);
+        else { ?> <script>alert('Невозможно добавить пустой столбец!');</script> <?php }
     }
 /* - - - - - - - - - - ↑ Добавление столбца ↑ - - - - - - - - - - */
 

@@ -34,6 +34,7 @@
             mysqli_set_charset($mysqli, 'utf8');
         }
 
+
         public function select($value, $table, $where = '', $sort = '', $order = '', $limit = '')
         {
             if ($value != '*') { $value = "`{$value}` "; }
@@ -100,5 +101,4 @@
 
 
     $DB = new DB;
-    $DB->mysqli();
 ?>

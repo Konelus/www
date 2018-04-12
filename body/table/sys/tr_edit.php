@@ -34,7 +34,7 @@
                         {
                             $DB->select("name",$substring."_table","`sql_name` = '{$table_sql[$td_count - 1]}' ");
                             while ($row = mysqli_fetch_row($DB->sql_query_select)) { $cell_name = $row[0]; }
-                            $DB->insert("log_info","null, '{$user_fio}', '{$_SERVER['REMOTE_ADDR']}', '" . date("d.m.Y") . "', '" . date("H:i:s") . "', '{$table_name}', '{$title[$edit_true_count - 1][1]}', '{$cell_name}', '{$title[$edit_true_count - 1][($td_count - 1)]}', '{$_POST['editBox_'.($edit_true_count - 1).'_'.($td_count - 1)]}'");
+                            $DB->insert("log_info","null, '{$user_fio}', '{$_SERVER['REMOTE_ADDR']}', '" . date("d.m.Y") . "', '" . date("H:i:s") . "', '{$table_name}', '{$title[$edit_true_count - 1][1]}', '{$cell_name}', '{$title[$edit_true_count - 1][($td_count - 1)]}', '{$_POST['editBox_'.($edit_true_count - 1).'_'.($td_count - 1)]}', 'old'");
                         }
                     }
                 }
@@ -53,7 +53,6 @@
         else if ($_COOKIE['user'] == 'admin')
         {
             $DB->update("{$substring}","".$table_sql[$td_count - 1],"".$_POST["editBox_".($edit_true_count - 1)."_".($td_count - 2)],"`id` = '{$title[$edit_true_count - 1][0]}'");
-
         }
     }
     //pre($title);

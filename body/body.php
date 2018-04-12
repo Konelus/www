@@ -7,7 +7,6 @@
     require_once($_SERVER['DOCUMENT_ROOT']."/body/query.php");
     require_once($_SERVER['DOCUMENT_ROOT']."/body/pre_table/pre_table_query.php");
 
-    //$monitoring_view = 'monitoring';
 
     foreach ($_POST as $key => $value)
     {
@@ -19,6 +18,56 @@
             //echo $edit_true_count.'<br>';
         }
     }
+
+
+
+
+
+foreach ($_POST as $key => $value)
+{
+    if (strripos("{$key}",'file_save') !== false)
+    {
+        $file_save = explode("_","{$key}");
+        $file_save = $file_save[2];
+
+        //$DB->select("{$file_array[1][0]}","{$substring}", "`{$file_array[1][0]}` = '{$title[$file_save - 1][1]}'");
+        //$alias = mysqli_fetch_row($DB->sql_query_select);
+
+
+        if ((isset ($_POST["file_save_{$file_save}"])) && ($_FILES["file_{$file_save}"]['tmp_name'] != ''))
+        {
+            if (!is_dir($_SERVER['DOCUMENT_ROOT']."/damp/{$substring}/{$file_save}"))
+            { mkdir($_SERVER['DOCUMENT_ROOT']."/damp/{$substring}/{$file_save}", 0700); }
+
+            move_uploaded_file("{$_FILES["file_{$file_save}"]['tmp_name']}",$_SERVER['DOCUMENT_ROOT'].'/damp/'.$substring.'/'.$file_save.'/'.$_FILES["file_{$file_save}"]['name']);
+            $DB->select("load_file","{$substring}","`id` = '{$file_save}'");
+            while ($row = mysqli_fetch_row($DB->sql_query_select))
+            {
+                if ($row[0] != ''){ $row[0] .= "\n{$_FILES["file_{$file_save}"]['name']}"; }
+                else { $row[0] .= "{$_FILES["file_{$file_save}"]['name']}"; }
+
+                $DB->update("{$substring}","load_file","{$row[0]}","`id` = '$file_save'");
+            }
+        }
+    }
+
+    if (strripos("{$key}",'status_') !== false)
+    {
+        $testing_status = explode("_","{$key}");
+        if ($testing_status[1] == 'null') { $testing_status[1] = '-'; }
+        $DB->update("tables_namespace", "testing", "{$testing_status[1]}", "`name` = '{$substring}'");
+    }
+}
+
+    if ($_COOKIE['user'] == 'admin') { $DB->select("*","tables_namespace"); }
+    elseif ($_COOKIE['user'] != 'admin') { $DB->select("*","tables_namespace", "`released` = '+'"); }
+    while ($row = mysqli_fetch_row($DB->sql_query_select))
+    {
+        $released_table[$count][1] = $row[1];
+        $testing[$released_table[$count][1]] = $row[4];
+        $count++;
+    }
+
 
 ?>
 
@@ -37,7 +86,7 @@
 
 
 
-<form method = "post" id = 'form'>
+<form method = "post" enctype = "multipart/form-data">
     <input type = 'hidden' name = 'hidden_sort_5' placeholder = 'hidden_sort_5'> <!--  -->
     <input type = 'hidden' name = 'hidden_sort_6' placeholder = 'hidden_sort_6' > <!--  -->
     <!-- ↓ Шапка таблицы ↓ -->
@@ -115,7 +164,8 @@
                 else if (($caption != '') && ($_POST['inversion'] == true)) { echo 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')'; }
                 else                                                        { echo 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')'; }
 
-                if ((($substring == 'vibory') || ($substring == 'ege')) && ($monitoring_view != '')) { ?>
+
+                if (($testing[$substring] == 'monitoring') || ($testing[$substring] == 'sync')) { ?>
                     <input type = 'submit' name = 'success_btn' class = 'monitoring_btn' style = 'margin-left: 4px; background: forestgreen; width: 44px;' value = '<?= "{$status_success}" ?>'>
                     <input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '<?= "{$status_warning}" ?>'>
                     <input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '<?= "{$status_danger}" ?>'>
@@ -123,16 +173,16 @@
                 <?php } ?>
             </div>
             <div class = 'col-lg-4'>
-<!--                --><?php //if (($substring == 'vibory') || ($substring == 'ege'))
-//                {
-//                    if ($monitoring_view == '') { $border_1 = 'border: solid 1px gold;'; $border_2 = 'border: solid 1px white;'; $border_3 = 'border: solid 1px white;'; }
-//                    else if ($monitoring_view == 'monitoring') { $border_1 = 'border: solid 1px white;'; $border_2 = 'border: solid 1px gold;'; $border_3 = 'border: solid 1px white;'; }
-//                    else if ($monitoring_view == 'sync') { $border_1 = 'border: solid 1px white;'; $border_2 = 'border: solid 1px white;'; $border_3 = 'border: solid 1px gold;'; }
-//                    ?>
-<!--                    <input type = 'submit' value = 'Синхронизация' class = 'monitoring_btn' style = 'float: right; width: auto; margin-right: 5px;background: black; color: white; --><?//= $border_3 ?><!--'>-->
-<!--                    <input type = 'submit' value = 'Мониторинг' class = 'monitoring_btn' style = 'float: right; width: auto; margin-right: 5px; background: black; color: white; --><?//= $border_2 ?><!--'>-->
-<!--                    <input type = 'submit' value = 'Просмотр' class = 'monitoring_btn' style = 'float: right; width: auto; margin-right: 5px; background: black; color: white; --><?//= $border_1 ?><!--'>-->
-<!--                --><?php //} ?>
+                <?php if ($_COOKIE['user'] == 'admin')
+                {
+                    if (($testing[$substring] != 'monitoring') && ($testing[$substring] != 'sync')) { $border_1 = 'border: solid 1px gold;'; $border_2 = 'border: solid 1px white;'; $border_3 = 'border: solid 1px white;'; }
+                    else if ($testing[$substring] == 'monitoring') { $border_1 = 'border: solid 1px white;'; $border_2 = 'border: solid 1px gold;'; $border_3 = 'border: solid 1px white;'; }
+                    else if ($testing[$substring] == 'sync') { $border_1 = 'border: solid 1px white;'; $border_2 = 'border: solid 1px white;'; $border_3 = 'border: solid 1px gold;'; }
+                    ?>
+                    <input name = '<?= "status_sync" ?>' type = 'submit' value = 'Синхронизация' class = 'monitoring_btn' style = 'float: right; width: auto; margin-right: 5px;background: black; color: white; <?= $border_3 ?>'>
+                    <input name = '<?= "status_monitoring" ?>' type = 'submit' value = 'Мониторинг' class = 'monitoring_btn' style = 'float: right; width: auto; margin-right: 5px; background: black; color: white; <?= $border_2 ?>'>
+                    <input name = '<?= "status_null" ?>' type = 'submit' value = 'Просмотр' class = 'monitoring_btn' style = 'float: right; width: auto; margin-right: 5px; background: black; color: white; <?= $border_1 ?>'>
+                <?php } ?>
             </div>
         </div>
     </div>

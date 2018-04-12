@@ -1,6 +1,6 @@
 <?php
     if ($searched_tr == 0) { $searched_tr++; }
-    if ($substring != 'vibory') { $kostil_3 = 1; } else { $kostil_3 = 0; }
+    if ($substring != 'vibory') { $kostil_3 = 2; } else { $kostil_3 = 1; }
 
 
     if (($td == ($td_td + $kostil_3)) && ($bool_var_2 == true))

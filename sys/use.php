@@ -26,17 +26,9 @@
             { $site_status = parse_txt($string); }
             else if (strpos($string, 'alias') !== false)
             { $link = parse_txt($string); }
-            else if (strpos($string, 'view') !== false)
-            { $monitoring_view = parse_txt($string); }
         }
         fclose($descriptor);
     }
-
-
-
-
-    //$mysqli = new mysqli("localhost", "root", "{$link}", "rtk_01");
-    //mysqli_set_charset($mysqli, 'utf8');
 
 
     if ($_GET != null) { $substring = $_SERVER['QUERY_STRING']; }

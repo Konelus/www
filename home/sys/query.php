@@ -5,7 +5,7 @@
 
 
     /* - - - - - - - - - - ↓ Изменение видимости столбцов для пользователя ↓ - - - - - - - - - - */
-        $str = "null, '".$_POST['group']."'";
+        $str = "null, '{$_POST['group']}'";
         $str_edit = "null, '".$_POST['group']."_edit'";
         $group_perm_isset = false;
         $group_perm_edit_isset = 'false';
@@ -125,7 +125,7 @@
         // ↓ Добавление пользователя ↓
         if (isset ($_POST['add_user']))
         {
-            $DB->insert("users","null, '".$_POST['login']."','".$_POST['password']."', '', '', '".$_POST['fio']."','".$_POST['position']."', '".$_POST['phone']."','".$_POST['mail']."'");
+            $DB->insert("users","null, '{$_POST['login']}','{$_POST['password']}', '', '', '{$_POST['fio']}','{$_POST['position']}', '{$_POST['phone']}','{$_POST['mail']}', '+'");
             header ("Location: /");
         }
         // ↑ Добавление пользователя ↑

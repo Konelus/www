@@ -54,11 +54,22 @@
     }
 
 
+    if ($_COOKIE['user'] != 'admin')
+    {
+        $DB->select("load_file","{$substring}_permission","`{$substring}_group` = '{$current_users_group}_edit'");
+        if ($DB->sql_query_select != null)
+        {
+            while ($row = mysqli_fetch_row($DB->sql_query_select))
+            { $load_permissions = $row[0]; }
+        }
+    }
+    else { $load_permissions = '+'; }
+
+
 //pre($title);
 
     if ($_COOKIE['user'] == 'admin') { $additional_td = 1; }
     else { $additional_td = 0; }
-
 
     if (count($title) >= 1)
     {
@@ -69,7 +80,7 @@
 
                 if (($substring == 'vibory') && (isset ($title[$tr]['status'])))
                 {
-                    if ($monitoring_view == 'monitoring')
+                    if ($testing[$substring] == 'monitoring')
                     {
                         if ($title[$tr]['status'] == 'success')
                         { $status_success++; }
@@ -80,7 +91,7 @@
                         if (($title[$tr][18] == 'монтаж не произведён'))
                         { $status_empty++; }
                     }
-                    else if ($monitoring_view == 'sync')
+                    else if ($testing[$substring] == 'sync')
                     {
                         if ($title[$tr]['sync'] == 'Cинхронизация завершена. Оборудование можно демонтировать')
                         { $status_success++; }
@@ -181,14 +192,14 @@
 
                             if ($substring == 'vibory')
                             {
-                                if ($monitoring_view == 'monitoring')
+                                if ($testing[$substring] == 'monitoring')
                                 {
                                     if (($title[$tr][18] != 'монтаж не произведён') && ($class_color == ''))
                                     { $ready = $title[$tr]['status']; }
                                     else if (($title[$tr][18] != 'монтаж не произведён') || ($class_color == '')) { $ready = ''; }
                                     if ($class_color != '') { $ready = ''; }
                                 }
-                                else if ($monitoring_view == 'sync')
+                                else if ($testing[$substring] == 'sync')
                                 {
                                     if ($title[$tr]['sync'] == '') { $ready = ''; }
                                     else if (($title[$tr]['sync'] == 'Cинхронизация завершена. Оборудование можно демонтировать') && ($class_color == '')) { $ready = 'success'; }
@@ -212,24 +223,32 @@
                             { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/content/user_content.php'); }
                             // ↑ Для обычного пользователя ↑
                         }
+
+                        if (($td == ($max_td + 1)) && ($current_users_access["{$substring}_status"] != 'readonly'))
+                        {
+                            echo "<td class = 'table_head_sys'><div style = 'margin-top: 15px;'><a style = 'color: navy;' target = '_blank' href = '/body/sys/edit.php/?{$substring}/{$title[$tr][0]}'><div style = 'background: white; border: solid 1px black;'>Редактировать<br>в новом окне</div></a></div></td>";
+                        }
          /*  ↑ - - - - - - - - - - ↑ Формирование таблицы ↑ - - - - - - - - - - */
 
 
          /*  ↑ - - - - - - - - - - ↓ Формирование кнопок edit и del ↓ - - - - - - - - - - */
 
-                        // ↓ Для админа ↓
-                        if ($_COOKIE['user'] == 'admin') { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/admin_edit_buttons.php'); }
-                        // ↑ Для админа ↑
+                        if ($td >= ($max_td + 2))
+                        {
+                            // ↓ Для админа ↓
+                            //if ($_COOKIE['user'] == 'admin') { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/admin_edit_buttons.php'); }
+                            // ↑ Для админа ↑
 
 
-                        // ↓ Для суперюзера ↓
-                        else if ((($_COOKIE['user'] != 'admin') && ($current_users_access[$substring.'_status'] == 'superuser'))) { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/superuser_edit_buttons.php'); }
-                        // ↑ Для суперюзера ↑
+                            // ↓ Для суперюзера ↓
+                            //else if ((($_COOKIE['user'] != 'admin') && ($current_users_access[$substring.'_status'] == 'superuser'))) { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/superuser_edit_buttons.php'); }
+                            // ↑ Для суперюзера ↑
 
 
-                        // ↓ Для юзера ↓
-                        else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$substring.'_status'] == 'user'))  { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/user_edit_buttons.php'); }
-                        // ↑ Для рюзера ↑
+                            // ↓ Для юзера ↓
+                            if ($current_users_access["{$substring}_status"] != 'readonly') { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/editor_buttons/user_edit_buttons.php'); }
+                            // ↑ Для рюзера ↑
+                        }
 
         /*  ↑ - - - - - - - - - - ↑ Формирование кнопок edit и del ↑ - - - - - - - - - - */
 

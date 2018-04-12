@@ -1,6 +1,4 @@
 <?php
-
-
 if (isset ($_POST['replace_column']))
 {
     $DB->select("sql_name","{$substring}_table","`name` = '{$_POST['current']}'");
@@ -86,50 +84,10 @@ if (isset ($_POST['replace_column']))
         }
     }
     ksort($table);
-
+    header("Location: /?{$substring}");
 
 }
 
-
-
-
-
-//    $status = '';
-//    $descriptor_r = fopen($_SERVER['DOCUMENT_ROOT'].'/status.txt', 'r');
-//
-//
-//
-//    if ($descriptor_r)
-//    {
-//        while (($string = fgets($descriptor_r)) !== false)
-//        { $status = $status.$string; }
-//        fclose($descriptor_r);
-//
-//        if ($status == 'enable')
-//        { $value = 'Выключить'; }
-//        else if ($status == 'disable')
-//        { $value = 'Включить'; }
-//    }
-//
-//    if (isset ($_POST['break']))
-//    {
-//        if ($status == 'enable')
-//        {
-//            $descriptor_w = fopen($_SERVER['DOCUMENT_ROOT'] . '/status.txt', 'w+');
-//            fwrite($descriptor_w, 'disable');
-//            fclose($descriptor_w);
-//        }
-//        else if ($status == 'disable')
-//        {
-//            $descriptor_w = fopen($_SERVER['DOCUMENT_ROOT'].'/status.txt', 'w+');
-//            fwrite($descriptor_w, 'enable');
-//            fclose($descriptor_w);
-//
-//            ver();
-//            $DB->update("ver","ver","".$current_ver[0].'.'.$current_ver[1].'.'.($current_ver[2] + 1));
-//        }
-//        echo "<script>window.location.href = window.location.href;</script>";
-//    }
 
     // ↓ Список таблиц ↓
     //$DB->select("description","tables_namespace","`name` = '{$substring}'");
@@ -140,8 +98,7 @@ if (isset ($_POST['replace_column']))
     if (isset ($_POST['search_btn']))
     { sql_name("{$substring}","{$_POST['selected_td']}"); $searched_td = $result; }
 
-    $DB->select("*","{$substring}");
-    $max_count = mysqli_num_rows($DB->sql_query_select);
+
 
     if (($_COOKIE['user'] == 'admin') || ($current_users_access["{$substring}_status"] == 'superuser'))
     { $margin = 'margin-bottom: 110px;'; }

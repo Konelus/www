@@ -17,6 +17,7 @@
 .table_bg_search { background: #f2dede; cursor: default; }
 
 .table_head_sys { background: #dca7a7; }
+.table_head_new { background: #26FFED; }
 
 .qwerty { visibility: hidden; height: 10px; }
 
