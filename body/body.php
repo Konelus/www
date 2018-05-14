@@ -99,7 +99,7 @@ foreach ($_POST as $key => $value)
         <div class = 'row'>
             <div class = 'col-lg-12' style = 'padding-left: 0px; padding-right: 0px;'>
 
-                    <table class = 'table table-condensed table-striped main_table' border = 1>
+                    <table class = 'table table-condensed table-striped main_table' border = 1 style = 'margin-bottom: 60px;'>
 
                         <!-- ↓ Заголовок таблицы ↓ -->
                         <thead><?php require("pre_table/tables_title.php"); ?></thead>
@@ -155,11 +155,16 @@ foreach ($_POST as $key => $value)
     </div>
 </form>
 <form method = "post">
-    <div class = 'container' style = 'height: 30px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px;  cursor: default; background: black; color: white; text-align: center;'>
+    <?php if (($_COOKIE['user'] == 'admin') || ($current_users_access["{$substring}_status"] == 'superuser')) { $height = '70px'; } else { $height = '30px'; } ?>
+    <div class = 'container' style = 'height: <?= $height ?>; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px;  cursor: default; background: black; color: white; text-align: center;'>
+        <?php if (($_COOKIE['user'] == 'admin') || ($current_users_access["{$substring}_status"] == 'superuser')) { require_once($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/admin_head.php'); } ?>
         <div class = 'row'>
             <div class = 'col-lg-4'></div>
             <div class = 'col-lg-4'>
                 <?php
+
+
+
                 if (($caption != '') && ($_POST['inversion'] == false))     { echo "Показано записей: ".($tr_count - 2).' ('.($max_count - 1).')'; }
                 else if (($caption != '') && ($_POST['inversion'] == true)) { echo 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')'; }
                 else                                                        { echo 'Показано записей: '.($tr_count - 2).' ('.($max_count - 2).')'; }

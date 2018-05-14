@@ -163,10 +163,15 @@
         <div class = 'col-lg-4' style = 'padding-top: 20px;'>
             <div style = 'border: solid 1px black;'>
                 <div style = 'height: 35px; background: black; text-align: center; color: white; padding-top: 5px; cursor: default;'>Скрипты</div>
-                <div style = 'width: 80%; margin: auto; height: 60px;'>
+                <div style = 'width: 80%; margin: auto; height: 110px;'>
                     <?php
+                        echo '<div>';
                         require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script/script.php');
                         require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/clone_script/script.php');
+                        echo '</div><div>';
+                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script_ege/script.php');
+                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/ege_find_script/script.php');
+                        echo '</div>';
                     ?>
                 </div>
             </div>

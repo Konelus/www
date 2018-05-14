@@ -45,15 +45,15 @@
             // ↓ Отправка запроса ↓
             if ($_POST['group'] != '')
             {
-                $DB->select("sql_name","{$selected_table_name}_table");
-                while ($row = mysqli_fetch_row($DB->sql_query_select))
-                { $table_sql[] = $row[0]; }
+                //$DB->select("sql_name","{$selected_table_name}_table");
+                //while ($row = mysqli_fetch_row($DB->sql_query_select))
+                //{ $table_sql[] = $row[0]; }
                 if ($group_perm_isset == false)
                 { $DB->insert("{$selected_table_name}_permission","{$str}"); }
                 else if ($group_perm_isset == true)
                 {
                     for ($td_count = 0; $td_count <= count($title_array) - 1; $td_count++)
-                    { $DB->update("{$selected_table_name}_permission","{$table_sql[$td_count]}","{$_POST["listBox_{$td_count}"]}","`{$selected_table_name}_group` = '{$_POST['group']}'"); }
+                    { $DB->update("{$selected_table_name}_permission","{$title_array[$td_count][2]}","{$_POST["listBox_{$td_count}"]}","`{$selected_table_name}_group` = '{$_POST['group']}'"); }
                 }
 
                 if ($group_perm_edit_isset == 'false')
@@ -61,7 +61,7 @@
                 else if ($group_perm_edit_isset == 'true')
                 {
                     for ($td_count = 0; $td_count <= count($title_array) - 1; $td_count++)
-                    { $DB->update("{$selected_table_name}_permission","{$table_sql[$td_count]}","{$_POST["edit_listBox_{$td_count}"]}","`{$selected_table_name}_group` = '{$_POST['group']}_edit'"); }
+                    { $DB->update("{$selected_table_name}_permission","{$title_array[$td_count][2]}","{$_POST["edit_listBox_{$td_count}"]}","`{$selected_table_name}_group` = '{$_POST['group']}_edit'"); }
                 }
             }
             // ↑ Формирование запроса ↑

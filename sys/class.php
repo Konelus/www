@@ -34,15 +34,15 @@
             mysqli_set_charset($mysqli, 'utf8');
         }
 
-
-        public function select($value, $table, $where = '', $sort = '', $order = '', $limit = '')
+        public function select($value, $table, $where = '', $order = '', $limit = '')
         {
             if ($value != '*') { $value = "`{$value}` "; }
             if ($where != null) { $where = " WHERE {$where} "; }
-            if ($order != null) { $order = " ORDER BY `{$order}` "; }
+            if (($order != null) && ($order == '`rid_obekta` ASC')) { $order = " ORDER BY {$order} "; }
+            elseif ($order != null) { $order = " ORDER BY `{$order}` "; }
             if ($limit != null) { $limit = " LIMIT {$limit}"; }
-            $this->sql_query_select = $this->mysqli->query("SELECT {$value} FROM `{$table}`{$where}{$order}{$sort}{$limit}");
-            //echo "<br>SELECT {$value} FROM `{$table}`{$where}{$order}{$sort}{$limit}";
+            $this->sql_query_select = $this->mysqli->query("SELECT {$value} FROM `{$table}`{$where}{$order}{$limit}");
+            //echo "SELECT {$value} FROM `{$table}`{$where}{$order}{$limit}<br>";
         }
 
         public function insert($table, $values)
@@ -101,4 +101,5 @@
 
 
     $DB = new DB;
+    $DB->mysqli();
 ?>

@@ -21,6 +21,7 @@
         <?php } ?>
 </tr>
 <?php
+//pre($table);
 //pre(get_defined_vars());
 
 

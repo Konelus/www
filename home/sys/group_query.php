@@ -3,7 +3,7 @@
 /* - - - - - - - - - - ↓ Добавление группы ↓ - - - - - - - - - - */
     if (isset ($_POST['add_group']))
     {
-        $sql_str = "null, {$_POST['group_name']}";
+        $sql_str = "null, '{$_POST['group_name']}'";
         $DB->select("*", "group_namespace");
         for ($count = 1; $count <= ((mysqli_num_fields($DB->sql_query_select) - 2 )); $count++)
         { $sql_str .= ", ''"; }
@@ -16,10 +16,10 @@
 /* - - - - - - - - - - ↓ Удаление группы ↓ - - - - - - - - - - */
     if (isset ($_POST['del_group']))
     {
-        $DB->delete("group_namespace","`name` = '".$_POST['del_group_name']."'");
-        $DB->update("users","table_group","","`table_group` = '".$_POST['del_group_name']."'");
-        $DB->delete("{$_POST['selected_del_table']}_permission","`".$_POST['selected_del_table']."_group` = '".$_POST['del_group_name']."'");
-        $DB->delete("{$_POST['selected_del_table']}_permission","`".$_POST['selected_del_table']."_group` = '".$_POST['del_group_name']."_edit'");
+        $DB->delete("group_namespace","`name` = '{$_POST['del_group_name']}'");
+        $DB->update("users","table_group","","`table_group` = '{$_POST['del_group_name']}'");
+        $DB->delete("{$_POST['selected_del_table']}_permission","`{$_POST['selected_del_table']}_group` = '{$_POST['del_group_name']}'");
+        $DB->delete("{$_POST['selected_del_table']}_permission","`{$_POST['selected_del_table']}_group` = '{$_POST['del_group_name']}_edit'");
         header ("Location: /");
     }
 /* - - - - - - - - - - ↑ Удаление группы ↑ - - - - - - - - - - */

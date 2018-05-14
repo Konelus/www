@@ -1,6 +1,6 @@
 <div style = 'margin-top: 10px; float: left; width: 45%; margin-right: 5%;'>
     <form method = 'post'>
-        <input style = 'margin: auto; width: 100%; height: 40px; background: gold; border-radius: 5px; border: solid 1px black;' type = 'submit' name = 'create' value = 'Создать конфиги'>
+        <input style = 'margin: auto; width: 100%; height: 40px; background: gold; border-radius: 5px; border: solid 1px black;' type = 'submit' name = 'create' value = 'Создать конфиги VIBORY'>
     </form>
 </div>
 

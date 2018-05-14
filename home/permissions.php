@@ -185,12 +185,44 @@
 
 
     <?php
+
+
         if ($selected_table_name != '')
         {
             $DB->select("*","{$selected_table_name}_table");
             while ($array = mysqli_fetch_row($DB->sql_query_select))
             { $title_array[] = $array; }
+
+            foreach ($title_array as $key => $value) { $title_sort[] = $value[3]; }
+
+
+            //$title_sort = $title_array;
+            sort($title_sort);
+
+            foreach ($title_sort as $key => $value)
+            {
+                for ($count = 0; $count <= count($title_sort); $count++)
+                {
+                    if ($title_array[$count][3] == $value)
+                    {
+                        $title_array["0_{$key}"][0] = $title_array[$count][0];
+                        $title_array["0_{$key}"][1] = $title_array[$count][1];
+                        $title_array["0_{$key}"][2] = $title_array[$count][2];
+                        $title_array["0_{$key}"][3] = $title_array[$count][3];
+                        unset($title_array[$count]);
+                    }
+                }
+            }
+            foreach ($title_array as $key => $value)
+            {
+                $new_key = explode("_","{$key}");
+                $new_key = $new_key[1];
+                $title_array[$new_key] = $title_array[$key];
+                unset($title_array[$key]);
+            }
+
         }
+
         require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/query.php');
 
 
@@ -275,5 +307,6 @@
 </form>
 <?php }
 //pre(get_defined_vars());
-//pre($_POST);?>
+//pre($_POST);
+?>
 </body>

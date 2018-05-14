@@ -6,6 +6,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'].'/body/sys/translit.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/class/user.php');
 
     $page_title = 'ELASTIC 2';
 
@@ -38,7 +39,6 @@
 
             if (isset ($_COOKIE['user']))
             {
-
                 if ((($_COOKIE['user'] == 'admin') && ($substring == '')) || ($_COOKIE['user'] != 'admin'))
                 {
                     $count = 1;
@@ -72,12 +72,6 @@
 
                 else if ($_COOKIE['user'] == 'admin')
                 {
-                    // ↓ Получение списка актуальных таблиц ↓
-//                    $DB->select("name","tables_namespace");
-//                    while ($row = mysqli_fetch_row($DB->sql_query_select))
-//                    { $table_name_array[] = $row[0]; }
-                    // ↑ Получение списка актуальных таблиц ↑
-
                     if ($substring == '') {require_once("home/home.php");}
                     else if ($substring != '')
                     {

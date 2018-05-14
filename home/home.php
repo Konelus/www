@@ -19,7 +19,6 @@
     else if ($site_status == 'disable')
     { $value = 'Включить'; }
 
-
 ?>
 
 

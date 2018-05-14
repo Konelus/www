@@ -30,16 +30,6 @@
 
 
 
-    /* ↓ Получение прав пользователя на доступ к сайту ↓ */
-    if ($_COOKIE['user'] != 'admin')
-    {
-        $DB->select("status", "users", "`login` = '{$_COOKIE['user']}'");
-        $user_status = implode(mysqli_fetch_row($DB->sql_query_select));
-    }
-    /* ↑ Получение прав пользователя на доступ к сайту ↑ */
-
-
-
 /* - - - - - - - - - - ↓ Получение прав пользователя ↓ - - - - - - - - - - - */
     if ($_COOKIE['user'] == 'admin')
     {
@@ -58,24 +48,10 @@
     }
     else if ($_COOKIE['user'] != 'admin')
     {
-        // ↓ Получение группы пользователя ↓
-        $DB->select("table_group","users", "`login` = '{$_COOKIE['user']}'");
-        $current_users_group = implode(mysqli_fetch_row($DB->sql_query_select));
-        // ↑ Получение группы пользователя ↑
-
-
-        // ↓ Получение списка таблиц доступных пользователю ↓
-        $DB->select("*","group_namespace","`name` = '{$current_users_group}'");
-        $array = mysqli_fetch_array($DB->sql_query_select);
-        if ($array != '')
-        {
-            foreach ($array as $key => $value)
-            {
-                if ((!is_numeric($key)) && ($value != ''))
-                { $current_users_access[$key] = $value; }
-            }
-        }
-        // ↑ Получение списка таблиц доступных пользователю ↑
+        $user->user_table();
+        $user_status = $user->user_access_status;  // Получение прав пользователя на доступ к сайту
+        $current_users_group = $user->user_group;  // Получение группы пользователя
+        $current_users_access = $user->user_table; // Получение списка таблиц доступных пользователю
     }
 /* - - - - - - - - - - ↑ Получение прав пользователя ↑ - - - - - - - - - - - */
 
@@ -109,7 +85,8 @@
 
 
         /* ↓ Открытие столбцов для Read Only ↓ */
-        if (isset ($_POST['refresh']))
+        echo $current_users_group;
+        if ((isset ($_POST['refresh'])) && ($current_users_group == 'ALLRO'))
         {
             $DB->select("*","{$substring}_permission","`{$substring}_group` = '$current_users_group'");
             while ($array = mysqli_fetch_array($DB->sql_query_select)) { $perm_array = $array; }
@@ -120,6 +97,9 @@
                 { $DB->update("{$substring}_permission","{$key}","+","`{$substring}_group` = '{$current_users_group}'"); }
             }
         }
+        //else if ((isset ($_POST['refresh'])) && ($current_users_group != 'ALLRO'))
+        //{
+        //}
         /* ↑ Открытие столбцов для Read Only ↑ */
 
 

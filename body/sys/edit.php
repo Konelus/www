@@ -1,14 +1,13 @@
 <?php
 
-    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/class/user.php');
     require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
 
 
     if ($_GET != null) { $substring = $_SERVER['QUERY_STRING']; }
-    //$podcat_name_2 = explode('/', $cat_name);
-    $substring_xxx = explode('/', $substring);
-    $table = $substring_xxx[0];
-    $id = $substring_xxx[1];
+    $substring = explode('/', $substring);
+    $table  = $substring[0];
+    $id     = $substring[1];
 
 
     $DB->select("description","tables_namespace","`name` = '{$table}'");
@@ -44,43 +43,13 @@
     }
 
 
-
-    $DB->select("table_group","users", "`login` = '{$_COOKIE['user']}'");
-    $current_users_group = implode(mysqli_fetch_row($DB->sql_query_select));
-
     if ($_COOKIE['user'] != 'admin')
     {
-        $DB->select("{$table}_status","group_namespace","`name` = '{$current_users_group}'");
-        $users_status = implode(mysqli_fetch_row($DB->sql_query_select));
-
-        $DB->select("*","{$table}_permission","`{$table}_group` = '{$current_users_group}'");
-        if ($DB->sql_query_select != null)
-        { $vision = mysqli_fetch_row($DB->sql_query_select); }
-
-        $DB->select("*","{$table}_permission","`{$table}_group` = '{$current_users_group}_edit'");
-        if ($DB->sql_query_select != null)
-        { $permission = mysqli_fetch_row($DB->sql_query_select); }
-
-        unset($permission[0]);
-        foreach ($permission as $key => $value)
-        {
-            $permission[$key] = $permission[$key + 1];
-            if ($permission[$key] == '') { unset($permission[$key]); }
-        }
-
-
-
-        foreach ($vision as $key => $value)
-        {
-            if ($key >= 1)
-            {
-                if ($value != '+')
-                {
-                    unset($array[$key - 1], $title_array[$key - 1], $title_sql[$key - 1], $permission[$key - 1]);
-                }
-            }
-        }
-
+        $user->user_group();
+        $users_status = $user->user_access_status;
+        $user->user_permission($table);
+        $vision = $user->user_cell_vision;
+        $permission = $user->user_cell_edit;
     }
 
 
@@ -106,6 +75,7 @@ if (isset ($_POST['edit']))
             $array[$key] = $_POST["edit_{$key}"];
         }
     }
+    echo "<script>window.close()</script>";
 }
 
 if (isset ($_POST['del']))
@@ -135,7 +105,7 @@ if (isset ($_POST['del']))
             <?php
             foreach ($title_array as $key => $value)
             {
-                if (($permission[$key] == '+') || ($_COOKIE['user'] == 'admin'))
+                if (($permission[$title_sql[$key]] == '+') || ($_COOKIE['user'] == 'admin'))
                 { $ro = ''; $style = ''; }
                 else
                 {

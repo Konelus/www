@@ -1,5 +1,4 @@
 <?php
-    //$current_users_group = '';
     $title1 = '';
     $table_count = 0;
     $table_count1 = 2;  // ← Счетчик шапки
@@ -50,7 +49,18 @@
             $table_count1++;
         }
     }
+
     ksort($table);
+
+    //pre($table);
+    $count = 1;
+    foreach ($table as $key => $value)
+    {
+        unset($table[$key]);
+        $table[$count] = $value;
+        $count++;
+    }
+    //pre($table);
     // ↑ Получение списка отображаемых столбцах ↑
 
 
@@ -72,12 +82,4 @@
     }
    // pre($table_sql);
     // ↑ Запись в переменные названий всех столбцов таблицы ↑
-
-
-    // ↓ Получение доступных таблиц пользователя ↓
-    //user_table("{$current_users_group}");
-    //while ($array = mysqli_fetch_array($DB->sql_query_select))
-    //{ $current_users_access = $array; }
-    // ↑ Получение доступных таблиц пользователя ↑
-
 ?>

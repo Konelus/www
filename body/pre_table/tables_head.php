@@ -55,6 +55,7 @@ if (isset ($_POST['replace_column']))
         $DB->select("*","{$substring}_permission","`{$substring}_group` = '{$current_users_group}'");
         if ($DB->sql_query_select != null)
         { $title1 = mysqli_fetch_row($DB->sql_query_select); }
+        pre($title1);
     }
     // ↑ Получение информации о правах пользователя ↑
 
@@ -100,10 +101,12 @@ if (isset ($_POST['replace_column']))
 
 
 
-    if (($_COOKIE['user'] == 'admin') || ($current_users_access["{$substring}_status"] == 'superuser'))
-    { $margin = 'margin-bottom: 110px;'; }
-    else if (($_COOKIE['user'] != 'admin') && ($current_users_access["{$substring}_status"] != 'superuser'))
-    { $margin = 'margin-bottom: 70px;'; }
+    //if (($_COOKIE['user'] == 'admin') || ($current_users_access["{$substring}_status"] == 'superuser'))
+    //{ $margin = 'margin-bottom: 110px;'; }
+    //else if (($_COOKIE['user'] != 'admin') && ($current_users_access["{$substring}_status"] != 'superuser'))
+    //{
+        $margin = 'margin-bottom: 70px;';
+    //}
 
 
 
@@ -119,7 +122,7 @@ if (isset ($_POST['replace_column']))
         if (($_COOKIE['user'] == 'admin') || ($current_users_access[$substring.'_status'] == 'superuser'))
         {
             require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/user_head.php');
-            require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/admin_head.php');
+            //require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/admin_head.php');
          }
          else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$substring.'_status'] != 'superuser'))
          { require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/user_head.php'); } ?>
