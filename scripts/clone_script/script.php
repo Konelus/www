@@ -23,8 +23,8 @@
     }
 ?>
 
-<div style = 'margin-top: 10px; margin-bottom: 10px; width: 45%; float: left; margin-left: 5%;'>
+<div>
     <form method = 'post'>
-        <input style = 'margin: auto; width: 100%; height: 40px; background: gold; border-radius: 5px; border: solid 1px black;' type = 'submit' name = 'clone' value = 'Клонировать vibory'>
+        <input style = 'border: 0; background: white; color: navy; cursor: pointer;' type = 'submit' name = 'clone' value = 'Клонировать vibory'>
     </form>
 </div>

@@ -16,7 +16,7 @@
 
         <div class = 'container-fluid text_cursor'>
             <div class = 'row'>
-                <div class = 'col-lg-2'></div>
+                <div class = 'col-lg-1'></div>
                 <div class = 'col-lg-6 table_margin'>
                     <form method = "post">
                         <table class = 'table'>
@@ -52,12 +52,25 @@
                         </table>
                     </form>
                 </div>
-                <div class = 'col-lg-2'></div>
+                <div class = 'col-lg-2'>
+                <div style = 'text-align: center; padding-top: 25px; cursor: default;'>Скрипты</div>
+                <div style = 'width: 80%; margin: auto; border-top: dotted 1px black;'>
+                    <?php
+                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script/script.php');
+                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/clone_script/script.php');
+                        echo "<div style = 'border: solid 1px; width: 100%;'></div>";
+                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script_ege/script.php');
+                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/ege_find_script/script.php');
+                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/schedule_ege/script.php');
+                    ?>
+                </div>
+                </div>
+                <div class = 'col-lg-1'></div>
             </div>
         </div>
         <div class = 'container-fluid text_cursor'>
             <div class = 'row'>
-                <div class = 'col-lg-2'></div>
+                <div class = 'col-lg-1'></div>
                 <div class = 'col-lg-2'>
                     <form method = "post">
                         <table class = 'table'>
@@ -139,7 +152,7 @@
                         </table>
                     </form>
                 </div>
-                <div class = 'col-lg-2'></div>
+                <div class = 'col-lg-3'></div>
             </div>
         </div>
 
@@ -156,30 +169,6 @@
             <div class = 'col-lg-4'></div>
         </div>
     </div>
-
-<div class = 'container-fluid text_cursor div_margin div_padding'>
-    <div class = 'row'>
-        <div class = 'col-lg-4'></div>
-        <div class = 'col-lg-4' style = 'padding-top: 20px;'>
-            <div style = 'border: solid 1px black;'>
-                <div style = 'height: 35px; background: black; text-align: center; color: white; padding-top: 5px; cursor: default;'>Скрипты</div>
-                <div style = 'width: 80%; margin: auto; height: 110px;'>
-                    <?php
-                        echo '<div>';
-                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script/script.php');
-                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/clone_script/script.php');
-                        echo '</div><div>';
-                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script_ege/script.php');
-                        require_once ($_SERVER['DOCUMENT_ROOT'].'/scripts/ege_find_script/script.php');
-                        echo '</div>';
-                    ?>
-                </div>
-            </div>
-            <div style = 'text-align: center; font-weight: bold; color: lightgreen; width: 100%;'><?= $text ?></div>
-        </div>
-        <div class = 'col-lg-4'></div>
-    </div>
-</div>
 
 
 

@@ -1,6 +1,6 @@
-<div style = 'float: left; width: 45%; margin-right: 5%;'>
+<div style = ''>
     <form method = 'post'>
-        <input style = 'margin: auto; width: 100%; height: 40px; background: gold; border-radius: 5px; border: solid 1px black;' type = 'submit' name = 'create_ege' value = 'Создать конфиги EGE'>
+        <input style = 'border: 0; background: white; color: navy; cursor: pointer;' type = 'submit' name = 'create_ege' value = 'Создать конфиги EGE'>
     </form>
 </div>
 
@@ -65,7 +65,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
     hostgroups {$array['adres_en']},z_USBPAC,{$array['hostgroups']};
     contact_groups EGE,{$array['contact_groups']};
     notes Ответственный Ростелеком: {$array['fio_osnovnogo_otvetstvennogo_za_ppe']} {$array['e_mail_osnovnogo_otvetstvennogo_za_ppe']} {$array['kontaktnyy_telefon_123']};
-    contact_groups EGE,nvch;^M
 }
 ";
                     }
@@ -84,17 +83,18 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
 }
 ";
                 }
+                foreach ($array as $key => $value)
+                { if (is_numeric($key)) { unset($array[$key]); } }
+
                 $arr['adres_en'] = $array['adres_en'];
                 $arr['adres_ru'] = $array['adres_ru'];
                 $arr['rid_obekta'] = $array['rid_obekta'];
                 $arr_name['adres_en'][$count] = $array['adres_en'];
                 $arr_name['adres_ru'][$count] = $array['adres_ru'];
                 $arr_name['rid_obekta'][$count] = $array['rid_obekta'];
-
-                //$count++;
-                //echo '<pre>'.$count.' - '.$str[$count].'</pre><br><hr>';
             }
         }
+
         foreach ($str as $key => $value)
         {
             $win_str = iconv("UTF-8", "windows-1251", $value);
@@ -107,11 +107,6 @@ require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
             $fp = fopen($_SERVER['DOCUMENT_ROOT']."/scripts/config_script_ege/config/1251/{$arr_name['adres_en'][$key]}.cfg", "w");
             fwrite($fp, $win_str);
             fclose($fp);
-
-            //$str = '';
-            //$rid = $array['rid_obekta'];
-            //echo '<pre>'.$key.' -> '.$value.'</pre><br><hr>';
-
         }
 
         $text = 'Создание cfg-файлов завершено!';
