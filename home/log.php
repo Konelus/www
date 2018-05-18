@@ -13,7 +13,7 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
 
     $log_count = 0;
 
-    $DB->select("*","log_info","","DESC","id","{$lim}");
+    $DB->select("*","log_info","","`id` DESC","{$lim}");
     $select = $DB->sql_query_select;
     if ($select != null)
     {

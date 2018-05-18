@@ -1,3 +1,2 @@
 status = 'enable';
 alias = '';
-view = 'sync';

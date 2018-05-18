@@ -11,8 +11,8 @@
 
     if ($_COOKIE['user'] != 'admin')
     {
-        $user->user_permission("{$table}","load_file");
-        if ($user->user_cell_edit != '+') { $status = 'disabled'; $del_style = 'cursor: default; background: #99A0A0; color: black;'; }
+        $USER->user_permission("{$table}","load_file");
+        if ($USER->user_cell_edit != '+') { $status = 'disabled'; $del_style = 'cursor: default; background: #99A0A0; color: black;'; }
         else { $status = ''; $del_style = 'background: #ac2925; color: white;'; }
     }
     else { $status = ''; $del_style = 'background: #ac2925; color: white;'; }

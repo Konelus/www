@@ -45,11 +45,11 @@
 
     if ($_COOKIE['user'] != 'admin')
     {
-        $user->user_group();
-        $users_status = $user->user_access_status;
-        $user->user_permission($table);
-        $vision = $user->user_cell_vision;
-        $permission = $user->user_cell_edit;
+        $USER->user_group();
+        $users_status = $USER->user_access_status;
+        $USER->user_permission($table);
+        $vision = $USER->user_cell_vision;
+        $permission = $USER->user_cell_edit;
     }
 
 
@@ -65,14 +65,18 @@ if (isset ($_POST['edit']))
 
     foreach ($array as $key => $value)
     {
+        unset($array[0]);
+        $post_value[$key] = htmlspecialchars($_POST["edit_{$key}"]);
+        $post_value[$key] = trim($post_value[$key]);
+        $post_value[$key] = str_replace("'", "", "{$post_value[$key]}");
+        $post_value[$key] = str_replace('&quot;', "", "{$post_value[$key]}");
         if ($array[$key] != $_POST["edit_{$key}"])
         {
             if ($_COOKIE['user'] != 'admin')
             {
-                $DB->insert("log_info","null, '{$user_fio}', '{$_SERVER['REMOTE_ADDR']}', '" . date("d.m.Y") . "', '" . date("H:i:s") . "', '{$table_name}', '{$array[1]}', '{$title_array[$key]}', '{$array[$key]}', '{$_POST["edit_{$key}"]}', 'new'");
+                $DB->insert("log_info","null, '{$user_fio}', '{$_SERVER['REMOTE_ADDR']}', '" . date("d.m.Y") . "', '" . date("H:i:s") . "', '{$table_name}', '{$array[1]}', '{$title_array[$key]}', '{$array[$key]}', '{$post_value[$key]}', 'new'");
             }
-            $DB->update("{$table}","{$title_sql[$key]}","{$_POST["edit_{$key}"]}","`id` = '{$id}'");
-            $array[$key] = $_POST["edit_{$key}"];
+            $DB->update("{$table}","{$title_sql[$key]}","{$post_value[$key]}","`id` = '{$id}'");
         }
     }
     echo "<script>window.close()</script>";
@@ -122,7 +126,7 @@ if (isset ($_POST['del']))
             ?>
             <tr>
                 <td colspan = '2'>
-                    <?php if ($users_status == 'superuser') { ?>
+                    <?php if (($users_status == 'superuser') || ($_COOKIE['user'] == 'admin')) { ?>
                     <div style = 'width: 305px; height: 30px; margin: auto;'>
                         <div style = 'width: 150px; margin-right: 5px; float: left;'>
                             <input type = 'submit' name = 'edit' value = 'Редактировать' style = 'width: 150px; height: 30px; border: solid 1px black; background: gold;'>

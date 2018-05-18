@@ -48,10 +48,10 @@
     }
     else if ($_COOKIE['user'] != 'admin')
     {
-        $user->user_table();
-        $user_status = $user->user_access_status;  // Получение прав пользователя на доступ к сайту
-        $current_users_group = $user->user_group;  // Получение группы пользователя
-        $current_users_access = $user->user_table; // Получение списка таблиц доступных пользователю
+        $USER->user_table();
+        $user_status = $USER->user_access_status;  // Получение прав пользователя на доступ к сайту
+        $current_users_group = $USER->user_group;  // Получение группы пользователя
+        $current_users_access = $USER->user_table; // Получение списка таблиц доступных пользователю
     }
 /* - - - - - - - - - - ↑ Получение прав пользователя ↑ - - - - - - - - - - - */
 
@@ -85,7 +85,7 @@
 
 
         /* ↓ Открытие столбцов для Read Only ↓ */
-        echo $current_users_group;
+        //echo $current_users_group;
         if ((isset ($_POST['refresh'])) && ($current_users_group == 'ALLRO'))
         {
             $DB->select("*","{$substring}_permission","`{$substring}_group` = '$current_users_group'");

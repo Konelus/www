@@ -19,6 +19,8 @@
         }
     }
 
+    if (isset ($_POST['refresh'])) { header("Location: /?{$substring}"); }
+
 
 
 

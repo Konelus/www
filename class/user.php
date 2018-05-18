@@ -11,7 +11,7 @@
         public function user_vision($substring);
     }
 
-    class user implements user_interface
+    class USER implements user_interface
     {
 
         public $mysqli;
@@ -45,15 +45,18 @@
             $this->user_group();
             $this->mysqli->select("*","group_namespace","`name` = '{$this->user_group}'");
             $array = mysqli_fetch_array($this->mysqli->sql_query_select);
-            foreach ($array as $key => $value)
+            if ($array != null)
             {
-                if (($key != 'id') && ($key != 'name') && (!is_numeric($key)) && ($value != '') && ($value != '-'))
+                foreach ($array as $key => $value)
                 {
-                    if ($value == '+') { $this->user_table[$key] = $array[$key]; }
-                    else { $this->user_status[$key] = $array[$key]; }
+                    if (($key != 'id') && ($key != 'name') && (!is_numeric($key)) && ($value != '') && ($value != '-'))
+                    {
+                        if ($value == '+') { $this->user_table[$key] = $array[$key]; }
+                        else { $this->user_status[$key] = $array[$key]; }
+                    }
                 }
+                unset($array);
             }
-            unset($array);
         }
 
         public function user_permission($substring, $cell = '*')
@@ -88,6 +91,5 @@
         }
     }
 
-    $user = new user;
-
+    $USER = new USER;
 ?>

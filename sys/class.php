@@ -25,7 +25,6 @@
                         $link = str_replace("\n","","{$link}");
                         $link = str_replace("\r","","{$link}");
                     }
-
                 }
                 fclose($descriptor);
             }
@@ -39,7 +38,7 @@
             if ($value != '*') { $value = "`{$value}` "; }
             if ($where != null) { $where = " WHERE {$where} "; }
             if (($order != null) && ($order == '`rid_obekta` ASC')) { $order = " ORDER BY {$order} "; }
-            elseif ($order != null) { $order = " ORDER BY `{$order}` "; }
+            elseif ($order != null) { $order = " ORDER BY {$order} "; }
             if ($limit != null) { $limit = " LIMIT {$limit}"; }
             $this->sql_query_select = $this->mysqli->query("SELECT {$value} FROM `{$table}`{$where}{$order}{$limit}");
             //echo "SELECT {$value} FROM `{$table}`{$where}{$order}{$limit}<br>";

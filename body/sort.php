@@ -33,9 +33,9 @@
                 $class_count = $count;
 
                 if (isset($_POST[$str[$count].'_asc']))
-                { ?><script>$('input[name = "hidden_sort_2"]').val("ASC");</script><?php $sort = "ORDER BY `{$row[2]}` ASC"; }
+                { ?><script>$('input[name = "hidden_sort_2"]').val("ASC");</script><?php $sort = "`{$row[2]}` ASC"; }
                 if (isset($_POST[$str[$count].'_desc']))
-                { ?><script>$('input[name = "hidden_sort_2"]').val("DESC");</script><?php $sort = "ORDER BY `{$row[2]}` DESC"; }
+                { ?><script>$('input[name = "hidden_sort_2"]').val("DESC");</script><?php $sort = "`{$row[2]}` DESC"; }
             }
             $count++;
         }
@@ -76,7 +76,7 @@
             </script><?php
 
             if (($hid_1 != '') || ($hid_2 != ''))
-            { $sort = "ORDER BY `{$hid_1}` {$hid_2}"; }
+            { $sort = "`{$hid_1}` {$hid_2}"; }
             if ($lim != '')
             { $lim = " LIMIT {$lim}"; }
             //if (isset($_POST["edit_{$button_count}"]))
