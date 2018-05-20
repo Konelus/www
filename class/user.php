@@ -1,4 +1,6 @@
 <?php
+    require_once($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
+
     interface user_interface
     {
         public function user_group();

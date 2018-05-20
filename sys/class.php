@@ -54,7 +54,7 @@
         {
             if ($where != null) { $where = " WHERE {$where}"; }
             $this->mysqli->query("UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}");
-            echo "UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}<br>";
+            //echo "UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}<br>";
         }
 
         public function delete($table, $where = '')

@@ -61,7 +61,7 @@
 
 
     /* ↓ Название страницы ↓ */
-    if ($substring != '')
+    if (($substring != '') && (strpos("$substring","/") == false))
     {
         $DB->select("description","tables_namespace","`name` = '{$substring}'");
         $page_title = implode(mysqli_fetch_row($DB->sql_query_select));
@@ -107,17 +107,21 @@
 
 
         /* ↓ Загрузка файлов ↓ */
-        $DB->show("{$substring}");
-        while ($row = mysqli_fetch_row($DB->sql_query_show))
-        { $substring_table[] = $row[0]; }
+        if (($substring != '') && (strpos("$substring","/") == false))
+        {
+            $DB->show("{$substring}");
+            while ($row = mysqli_fetch_row($DB->sql_query_show))
+            { $substring_table[] = $row[0]; }
 
-        foreach ($substring_table as $key => $value)
-        { if ($value == 'load_file') { $load_file_bool = true; break; } }
+            foreach ($substring_table as $key => $value)
+            { if ($value == 'load_file') { $load_file_bool = true; break; } }
 
-        $DB->select("*","{$substring}");
-        while ($array = mysqli_fetch_array($DB->sql_query_select))
-        { if($array['load_file'] != '') { $load_file[$array['id']] = $array['load_file']; } }
-        $max_count = mysqli_num_rows($DB->sql_query_select);
+            $DB->select("*","{$substring}");
+            while ($array = mysqli_fetch_array($DB->sql_query_select))
+            { if($array['load_file'] != '') { $load_file[$array['id']] = $array['load_file']; } }
+            $max_count = mysqli_num_rows($DB->sql_query_select);
+        }
+
         /* ↑ Загрузка файлов ↑ */
     }
 /* - - - - - - - - - - ↑ Получение данных до Body ↑ - - - - - - - - - - - */
