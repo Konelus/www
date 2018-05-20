@@ -54,7 +54,7 @@
         {
             if ($where != null) { $where = " WHERE {$where}"; }
             $this->mysqli->query("UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}");
-            //echo "UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}<br>";
+            echo "UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}<br>";
         }
 
         public function delete($table, $where = '')
@@ -82,10 +82,12 @@
             //echo "ALTER TABLE `{$table}` MODIFY COLUMN `{$cell_current}` TEXT AFTER `{$cell_other}`<br>";
         }
 
-        public function show($table)
+        public function show($table = 'TABLES', $t_var = '')
         {
-            $this->sql_query_show = $this->mysqli->query("SHOW COLUMNS FROM `{$table}`");
-            //echo "SHOW COLUMNS FROM `{$table}`<br>";
+            if ($table == 'TABLES') { $t_var =  $table; }
+            else { $t_var = "COLUMNS FROM `{$table}`"; }
+            $this->sql_query_show = $this->mysqli->query("SHOW {$t_var}");
+            //echo "SHOW {$t_var}<br>";
         }
 
         public function create($table)

@@ -1,8 +1,6 @@
 <?php
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/query.php');
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
-    $log = explode('@', $_COOKIE["user"]);
-    $log = $log[0];
     if ($_COOKIE["user"] == 'admin') { $header = "style = 'height: 110px;'"; } else { $header = ''; }
 
 
@@ -78,11 +76,14 @@
                 </div>
                 <?php } ?>
             </div>
-            <div class = 'col-lg-2 col-md-3 col-sm-4' style = 'text-align: center; margin-top: 8px; padding-right: 30px;'>
-                <div style = 'cursor: default;'>Вы авторизованы, как</div>
-                <div>
-                    <form method = "post"><span class = 'login_div' style = 'padding-left: 15px; cursor: default;'><?= $log ?></span>
-                        <input name = 'exit' class = 'exit_button' type = 'submit' value = '(Выход)'>
+            <div class = 'col-lg-2 col-md-3 col-sm-4' style = 'text-align: center; margin-top: 12px; padding-right: 30px;'>
+                <div style = 'float: right;'>
+                    <form method = "post">
+                            <img style = 'width: 30px; height: 30px; float: left;' src = '/img/icons/user.png'>
+                            <div style = 'CURSOR: default; font-size: 20px; margin-top: 5px; float: left;'><?= $user_fio ?></div>
+                            <button name = 'exit' type = 'submit' style = 'background: black; border: 0; margin-left: 10px; float: left;'>
+                                <img style = 'float: left; width: 30px; height: 30px; margin-left: -10px; margin-right: -10px;' src = '/img/icons/exit.png'>
+                            </button>
                     </form>
                 </div>
             </div>

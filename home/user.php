@@ -42,7 +42,7 @@
 
 
         <?php //} ?>
-        <div style = 'margin: auto;' ><img src = '/img/vib2018.jpg' style = 'height: 100%; margin-top: -1px;'></div>
+        <div style = 'margin: auto;' ><img src = '/img/vib2018.jpg' style = 'height: 100%;'></div>
     <!-- <div class = 'col-lg-2' style = 'height: 170px;'>
             <div style = 'width: 100%; height: 150px; margin: auto;'>
                 <form method = 'post'>

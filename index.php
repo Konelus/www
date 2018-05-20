@@ -6,7 +6,11 @@
     require_once($_SERVER['DOCUMENT_ROOT'].'/body/sys/translit.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
+
     require_once($_SERVER['DOCUMENT_ROOT'].'/class/user.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/class/table.php');
+
+    $TABLE->t_released();
 
     $page_title = 'ELASTIC 2';
 

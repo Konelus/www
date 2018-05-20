@@ -49,10 +49,13 @@
     else if ($_COOKIE['user'] != 'admin')
     {
         $USER->user_table();
+
         $user_status = $USER->user_access_status;  // Получение прав пользователя на доступ к сайту
         $current_users_group = $USER->user_group;  // Получение группы пользователя
         $current_users_access = $USER->user_table; // Получение списка таблиц доступных пользователю
     }
+    $USER->user_fio();
+    $user_fio = $USER->user_fio;               // Получение ФИО пользователя
 /* - - - - - - - - - - ↑ Получение прав пользователя ↑ - - - - - - - - - - - */
 
 
