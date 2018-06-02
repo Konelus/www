@@ -7,27 +7,8 @@
         public $sql_query_show;
         public $mysqli;
 
-        public function mysqli()
+        public function mysqli($link = '')
         {
-            $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/sys.txt', 'r');
-            if ($descriptor)
-            {
-                while (($string = fgets($descriptor)) !== false)
-                {
-
-                    if (strpos($string, 'alias') !== false)
-                    {
-                        $link = explode("=","{$string}");
-                        $link = $link[1];
-                        $link = str_replace(";","","{$link}");
-                        $link = str_replace("'","","{$link}");
-                        $link = str_replace(" ","","{$link}");
-                        $link = str_replace("\n","","{$link}");
-                        $link = str_replace("\r","","{$link}");
-                    }
-                }
-                fclose($descriptor);
-            }
             $mysqli = new mysqli("localhost", "root", "".$link, "rtk_01");
             $this->mysqli = $mysqli;
             mysqli_set_charset($mysqli, 'utf8');
@@ -102,5 +83,5 @@
 
 
     $DB = new DB;
-    $DB->mysqli();
+    $DB->mysqli($link);
 ?>

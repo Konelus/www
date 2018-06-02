@@ -17,18 +17,10 @@
     }
 
 
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/sys.txt', 'r');
-    if ($descriptor)
-    {
-        while (($string = fgets($descriptor)) !== false)
-        {
-            if (strpos($string, 'status') !== false)
-            { $site_status = parse_txt($string); }
-            else if (strpos($string, 'alias') !== false)
-            { $link = parse_txt($string); }
-        }
-        fclose($descriptor);
-    }
+    $instructions = parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/instructions.ini');
+    $site_status = $instructions['status'];
+    $link = $instructions['alias'];
+
 
 
     if ($_GET != null) { $substring = $_SERVER['QUERY_STRING']; }
