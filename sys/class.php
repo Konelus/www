@@ -7,14 +7,14 @@
         public $sql_query_show;
         public $mysqli;
 
-        public function mysqli($link = '')
+        function mysqli($link = '')
         {
             $mysqli = new mysqli("localhost", "root", "".$link, "rtk_01");
             $this->mysqli = $mysqli;
             mysqli_set_charset($mysqli, 'utf8');
         }
 
-        public function select($value, $table, $where = '', $order = '', $limit = '')
+        function select($value, $table, $where = '', $order = '', $limit = '')
         {
             if ($value != '*') { $value = "`{$value}` "; }
             if ($where != null) { $where = " WHERE {$where} "; }
@@ -25,45 +25,45 @@
             //echo "SELECT {$value} FROM `{$table}`{$where}{$order}{$limit}<br>";
         }
 
-        public function insert($table, $values)
+        function insert($table, $values)
         {
             $this->mysqli->query("INSERT INTO `{$table}` VALUES ({$values})");
-            echo "INSERT INTO `{$table}` VALUES ({$values})<br>";
+            //echo "INSERT INTO `{$table}` VALUES ({$values})<br>";
         }
 
-        public function update($table, $cell, $value, $where = '')
+        function update($table, $cell, $value, $where = '')
         {
             if ($where != null) { $where = " WHERE {$where}"; }
             $this->mysqli->query("UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}");
             //echo "UPDATE `{$table}` SET `{$cell}` = '{$value}'{$where}<br>";
         }
 
-        public function delete($table, $where = '')
+        function delete($table, $where = '')
         {
             if ($where != null) { $where = " WHERE {$where}"; }
             $this->mysqli->query("DELETE FROM `{$table}`{$where}");
             //echo "DELETE FROM `{$table}`{$where}<br>";
         }
 
-        public function alter_add($table, $cell, $datatype = '')
+        function alter_add($table, $cell, $datatype = '')
         {
             $this->mysqli->query("ALTER TABLE `{$table}` ADD `{$cell}` {$datatype}");
             //echo "ALTER TABLE `{$table}` ADD `{$cell}` {$datatype}<br>";
         }
 
-        public function alter_drop($table, $cell)
+        function alter_drop($table, $cell)
         {
             $this->mysqli->query("ALTER TABLE `{$table}` DROP `{$cell}`");
             //echo "ALTER TABLE `{$table}` DROP `{$cell}`<br>";
         }
 
-        public function alter_replace($table, $cell_current, $cell_other)
+        function alter_replace($table, $cell_current, $cell_other)
         {
             $this->mysqli->query("ALTER TABLE `{$table}` MODIFY COLUMN `{$cell_current}` TEXT AFTER `{$cell_other}`");
             //echo "ALTER TABLE `{$table}` MODIFY COLUMN `{$cell_current}` TEXT AFTER `{$cell_other}`<br>";
         }
 
-        public function show($table = 'TABLES', $t_var = '')
+        function show($table = 'TABLES', $t_var = '')
         {
             if ($table == 'TABLES') { $t_var =  $table; }
             else { $t_var = "COLUMNS FROM `{$table}`"; }
@@ -71,7 +71,7 @@
             //echo "SHOW {$t_var}<br>";
         }
 
-        public function create($table)
+        function create($table)
         {
             $this->mysqli->query("CREATE TABLE `".translit($table)."`               (`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT)");
             $this->mysqli->query("CREATE TABLE `".translit($table)."_permission`    (`id` INT NOT NULL AUTO_INCREMENT, `".translit($table)."_group` TEXT CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB");
@@ -84,4 +84,11 @@
 
     $DB = new DB;
     $DB->mysqli($link);
+
+    function pre($array)
+    {
+        echo '<pre>';
+        print_r($array);
+        echo '</pre>';
+    }
 ?>

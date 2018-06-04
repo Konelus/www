@@ -59,10 +59,4 @@
 //        //{ $max_count = mysqli_num_rows($SQL_QUERY_select_data); }
 //    }
 
-    function pre($array)
-    {
-        echo '<pre>';
-        print_r($array);
-        echo '</pre>';
-    }
 ?>

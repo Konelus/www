@@ -46,8 +46,8 @@
                 <div class = 'col-lg-8'>
                     <div style = 'width: 110px; margin: auto;'>
                         <div style = 'float: left; padding-top: 10px;'>
-                            <?php if ($site_status == 'enable') { ?><img style = 'height: 40px;' src = '/img/logo.png'><?php }
-                            else if ($site_status == 'disable') { ?><img style = 'height: 40px;' src = '/img/logo_grey.png'><?php }?>
+                            <?php if ($site_status == 'enable') { $press_label = 'Выключить'; ?><img style = 'height: 40px;' src = '/img/logo.png'><?php }
+                            else if ($site_status == 'disable') { $press_label = 'Включить'; ?><img style = 'height: 40px;' src = '/img/logo_grey.png'><?php }?>
                         </div>
                         <div style = 'padding-top: 24px; font-size: 17px; cursor: default;'><span style = 'color: white;'>ELASTIC<span style = 'color: #ffdf5e;'>2</span></span></div>
                     </div>
@@ -101,7 +101,7 @@
                     <a href = '/?bar/projects' class = 'adm_menu_link'><div class = 'adm_menu_div'>Проекты</div></a>
                     <a href = '/?bar/scripts' class = 'adm_menu_link'><div class = 'adm_menu_div'>Скрипты</div></a>
                     <div style = 'margin-top: 40px;'></div>
-                    <div class = 'adm_menu_div'>Включить сайт</div>
+                    <a href = '/home/pages/press.php?<?= $substring ?>' class = 'adm_menu_link'><div class = 'adm_menu_div'><?= $press_label ?> сайт</div></a>
                 </div>
                 <div class = 'col-lg-4 col-md-4 col-sm-4'></div>
                 <?php } ?>

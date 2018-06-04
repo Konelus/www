@@ -6,9 +6,9 @@
     if (isset ($_POST['del_btn']))
     { $ADM_USER->delete_user($_POST['login']); }
     elseif (isset ($_POST['edit_btn']))
-    { $ADM_USER->update_user($_POST['hidden']); }
+    { $ADM_USER->update_user($_POST['login']); }
     elseif (isset ($_POST['add_user']))
-    { $ADM_USER->add_user($_POST['hidden']); }
+    { $ADM_USER->add_user(); }
 
     $ADM_USER->users_list();
     $ADM_USER->groups_list();
@@ -26,10 +26,10 @@
                 $count = $str_explode[2];
                 $post = 'modal';
             }
-            elseif (stripos("{$key}","edit") !== false)
+            elseif (stripos("{$key}","show_edit") !== false)
             {
                 $str_explode = explode("_","{$key}");
-                $count = $str_explode[1];
+                $count = $str_explode[2];
                 $post = 'edit';
             }
         }
@@ -133,7 +133,7 @@
                                     ?>
                                 <td>
                                     <form method = "post">
-                                        <input type = 'submit' value = 'Ред' class='btn btn-primary' style = 'background: black;' name = 'edit_<?= $key ?>'>
+                                        <input type = 'submit' value = 'Ред' class='btn btn-primary' style = 'background: black;' name = 'show_edit_<?= $key ?>'>
                                     </form>
                                 </td>
                                 <?php

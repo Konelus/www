@@ -51,9 +51,14 @@
             {
                 if ($arr[$key] != $_POST[$key])
                 {
-                    if ($_POST['status'] == 'True') { $_POST['status'] = '+'; }
-                    else if ($_POST['status'] == 'False') { $_POST['status'] = '-'; }
-                    $this->mysqli->update("users","{$key}","{$_POST[$key]}","`login` = '{$user}'");
+                    if ($key == 'fio') { $this->mysqli->update("users","{$key}","{$_POST['fio']}","`login` = '{$_POST['hidden']}'"); }
+                    elseif ($key == 'login') { $this->mysqli->update("users","{$key}","{$_POST['login']}","`login` = '{$_POST['hidden']}'"); }
+                    else
+                    {
+                        if ($_POST['status'] == 'True') { $_POST['status'] = '+'; }
+                        else if ($_POST['status'] == 'False') { $_POST['status'] = '-'; }
+                        $this->mysqli->update("users","{$key}","{$_POST[$key]}","`login` = '{$user}'");
+                    }
                 }
             }
         }

@@ -2,18 +2,32 @@
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/pages/class/class_groups.php');
 
     if ((isset ($_POST['add_group'])) && ($_POST['group_name'] != '')) { $ADM_GROUPS->add_group(trim($_POST['group_name'])); }
+    elseif (isset ($_POST['del_btn']))
+    {
+        $ADM_GROUPS->groups_list();
+        $ADM_GROUPS->del_group($ADM_GROUPS->cell_value[$_POST['hidden']][0]);
+    }
+    elseif (isset ($_POST['edit_btn']))
+    {
+        $ADM_GROUPS->groups_list();
+        $ADM_GROUPS->edit_group($ADM_GROUPS->cell_value[$_POST['hidden']][0]);
+    }
 
+
+    $ADM_GROUPS->columns_rus = null;
+    $ADM_GROUPS->cell_value = null;
     $ADM_GROUPS->tables_list();
     $columns_rus = $ADM_GROUPS->columns_rus;
     $ADM_GROUPS->groups_list();
     $cell_value = $ADM_GROUPS->cell_value;
+
 
     if (isset ($_POST) && ($_POST != null))
     {
         $edit = false;
         foreach ($_POST as $key => $value)
         {
-            if (stripos("{$key}","edit_btn") !== false)
+            if (stripos("{$key}","show_edit_") !== false)
             {
                 $edit_explode = explode("_","{$key}");
                 $show_count = $edit_explode[2];
@@ -60,17 +74,20 @@
                             </tr>
                                 <?php
                                 $n_count = 0;
-                                foreach ($cell_value as $key => $value)
+                                if ($cell_value != '')
                                 {
-                                    echo "<tr style = 'font-size: 15px;'>";
-                                    $count = 0;
-                                    foreach ($value as $nv_key => $nv_value)
+                                    foreach ($cell_value as $key => $value)
                                     {
-                                        if ($nv_key !== 0) { echo "<td style = '{$table_status[$count]} text-align: center;'>{$nv_value}</td>"; $count++;  }
-                                        elseif ($nv_key === 0) { echo "<td>{$nv_value}</td>"; }
+                                        echo "<tr style = 'font-size: 15px;'>";
+                                        $count = 0;
+                                        foreach ($value as $nv_key => $nv_value)
+                                        {
+                                            if ($nv_key !== 0) { echo "<td style = '{$table_status[$count]} text-align: center;'>{$nv_value}</td>"; $count++;  }
+                                            elseif ($nv_key === 0) { echo "<td>{$nv_value}</td>"; }
+                                        }
+                                        ?><td><input name = 'show_edit_<?= $n_count ?>' type = 'submit' class = 'btn' style = 'padding-top: 2px; height: 26px; color: white; background: black;' value = 'Ред'></td><?php $n_count++;
+                                        echo "</tr>";
                                     }
-                                    ?><td><input name = 'edit_btn_<?= $n_count ?>' type = 'submit' class = 'btn' style = 'padding-top: 2px; height: 26px; color: white; background: black;' value = 'Ред'></td><?php $n_count++;
-                                    echo "</tr>";
                                 } ?>
                         </table>
                     </div>
@@ -89,7 +106,7 @@
                 {
                     if ($group_access["{$c_value[0]}_status"] == 'user') { $option = "$c_value[0]_user"; }
                     elseif ($group_access["{$c_value[0]}_status"] == 'superuser') { $option = "$c_value[0]_superuser"; }
-                    elseif ($group_access["{$c_value[0]}_status"] == 'readonly') { $option = "$c_value[0]_readonly"; echo $cell_value[$show_count][0].' --> '.$group_access["{$c_value[0]}_status"].'<br>'; }
+                    elseif ($group_access["{$c_value[0]}_status"] == 'readonly') { $option = "$c_value[0]_readonly"; }
                     else { $option = "$c_value[0]_none"; }
                     ?><script>$("#select #<?= $option ?>").prop("selected", true)</script><?php
                 } ?>

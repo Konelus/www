@@ -16,7 +16,7 @@
                                             <label for = 'select' style = 'float: left; margin-top: 5px;'><?= $c_value[1] ?></label>
                                         </div>
                                         <div style = 'margin-bottom: 10px;' class = 'col-lg-4 col-md-4 col-sm-4'>
-                                            <select id = 'select' style = 'width: 200px; float: left;' class = 'form-control'>
+                                            <select name = '<?= $c_value[0] ?>' id = 'select' style = 'width: 200px; float: left;' class = 'form-control'>
                                                 <option id = '<?= $c_value[0] ?>_user'>user</option>
                                                 <option id = '<?= $c_value[0] ?>_superuser'>superuser</option>
                                                 <option id = '<?= $c_value[0] ?>_readonly'>readonly</option>
@@ -33,6 +33,8 @@
                 </div>
                 <div class = "modal-footer">
                     <input type = 'hidden' id = 'hidden' name = 'hidden'>
+                    <input type = 'submit' value = 'Сохранить изменения' class = 'btn btn-success' name = 'edit_btn'>
+                    <input type = 'submit' value = 'Удалить группу' class = 'btn btn-danger' name = 'del_btn'>
                     <button type = 'button' style = 'border: solid 1px grey;' class = "btn btn-default" data-dismiss = "modal">Закрыть</button>
                 </div>
             </form>
