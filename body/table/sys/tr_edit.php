@@ -1,42 +1,48 @@
 <?php
-    $SQL_QUERY_ver = $mysqli->query("select `ver` from `ver` ");
-    while ($row = mysqli_fetch_row($SQL_QUERY_ver))
-    { $current_ver = $row[0]; }
-    $version = $_POST['ver'];
-    //echo $current_ver.' --> '.$version;
+
+    ver();
+    $version = explode('.', "{$_POST['ver']}");
 
 
-    $DB->select("description","tables_namespace","`name` = '".$podcat_name[1]."' ");
-    while ($row = mysqli_fetch_row($DB->sql_query_select)) { $table_name = $row[0]; }
+    //$DB->select("description","tables_namespace","`name` = '{$substring}' ");
+    //while ($row = mysqli_fetch_row($DB->sql_query_select)) { $table_name = $row[0]; }
 
-    $DB->select("fio","users","`login` = '".$_COOKIE['user']."'");
+    $DB->select("fio","users","`login` = '{$_COOKIE['user']}'");
     while ($row = mysqli_fetch_row($DB->sql_query_select)) { $user_fio = $row[0]; }
 
+    $DB->select("description","tables_namespace", "`name` = '{$substring}'");
+    while ($row = mysqli_fetch_row($DB->sql_query_select)) { $table_name = $row[0]; }
 
 
-    for ($td_count = 2; $td_count <= $max_td_count + 2; $td_count++)
+
+//pre($table_sql);
+
+
+    for ($td_count = 1; $td_count <= $max_td_count + 1; $td_count++)
     {
+        //echo $td_count.' / '.$max_td_count.'<br>';
         if (($title1[$td_count] == '+') && $_COOKIE['user'] != 'admin')
         {
-            if ($current_ver == $version)
+            if ($current_ver[2] == $version[2])
             {
-                $SQL_select_td = $mysqli->query("select " . $table_sql[$td_count - 2] . " from " . $podcat_name[1] . " WHERE id = " . $title[$tr][0] . "  ");
-                if ($SQL_select_td != null)
+                $DB->select("{$table_sql[$td_count - 1]}","{$substring}","`id` = '{$title[$edit_true_count - 1][0]}'");
+                if ($DB->sql_query_select != null)
                 {
-                    while ($row_0 = mysqli_fetch_array($SQL_select_td))
+                    while ($row_0 = mysqli_fetch_array($DB->sql_query_select))
                     {
-
-                        if ($row_0[0] != $_POST['editBox_' . $tr . '_' . ($td_count - 1)])
+                        if ($row_0[0] != $_POST["editBox_".($edit_true_count - 1)."_".($td_count - 1)])
                         {
-                            $DB->select("name",$podcat_name[1]."_table","`sql_name` = '".$table_sql[$td_count - 2]."' ");
+                            $DB->select("name",$substring."_table","`sql_name` = '{$table_sql[$td_count - 1]}' ");
                             while ($row = mysqli_fetch_row($DB->sql_query_select)) { $cell_name = $row[0]; }
-                            $DB->insert("log_info","null, '" . $user_fio . "', '".$_SERVER['REMOTE_ADDR']."', '" . date("d.m.Y") . "', '" . date("H:i:s") . "', '" . $table_name . "', '" . $title[$tr][1] . "', '" . $cell_name . "', '" . $title[$tr][($td_count - 1)] . "', '" . $_POST['editBox_' . $tr . '_' . ($td_count - 1)] . "'");
+                            $DB->insert("log_info","null, '{$user_fio}', '{$_SERVER['REMOTE_ADDR']}', '" . date("d.m.Y") . "', '" . date("H:i:s") . "', '{$table_name}', '{$title[$edit_true_count - 1][1]}', '{$cell_name}', '{$title[$edit_true_count - 1][($td_count - 1)]}', '{$_POST['editBox_'.($edit_true_count - 1).'_'.($td_count - 1)]}', 'old'");
                         }
                     }
                 }
 
-                if ($table_sql[$td_count - 2] != '')
-                { $DB->update("".$podcat_name[1],"".$table_sql[$td_count - 2],"". $_POST['editBox_' . $tr . '_' . ($td_count - 1)],"`id` = '" . $title[$tr][0] . "'"); }
+                if ($table_sql[$td_count - 1] != '')
+                {
+                    $DB->update("{$substring}","".$table_sql[$td_count - 1],"". $_POST["editBox_".($edit_true_count - 1)."_".($td_count - 1)],"`id` = '{$title[$edit_true_count - 1][0]}'");
+                }
             }
             else
             {
@@ -45,6 +51,9 @@
             }
         }
         else if ($_COOKIE['user'] == 'admin')
-        { $DB->update("".$podcat_name[1],"".$table_sql[$td_count - 2],"".$_POST['editBox_'.$tr.'_'.($td_count - 1)],"`id` = '".$title[$tr][0]."'"); }
+        {
+            $DB->update("{$substring}","".$table_sql[$td_count - 1],"".$_POST["editBox_".($edit_true_count - 1)."_".($td_count - 2)],"`id` = '{$title[$edit_true_count - 1][0]}'");
+        }
     }
+    //pre($title);
 ?>

@@ -1,32 +1,18 @@
 <?php
 
-    $link = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-    if ($descriptor)
-    {
-        while (($string = fgets($descriptor)) !== false)
-        { $link = $link.$string; }
-        fclose($descriptor);
-    }
 
     if (isset ($_POST['enter']))
     {
-        $localhost = "localhost";
-        $user = "root";
-        $password = $link;
-        $db = "rtk_01";
-        $mysqli = new mysqli($localhost, $user, $password, $db);
-        mysqli_set_charset($mysqli, 'utf8');
-
         $login = $_POST["login"];
         //$password_P = md5($_POST["Password_p"]);  Хэш, если понадобится
         $password = $_POST["password"];
-        $sql_enter = $mysqli->query("select * from `users` where login = '".$login."' and password = '".$password."'");
-        if ($row = mysqli_fetch_row($sql_enter))
+        $DB->select("*","users","`login` = '{$login}' and `password` = '{$password}'");
+        if ($row = mysqli_fetch_row($DB->sql_query_select))
         {
-            setcookie("user", $login,  time() + 60 * 60 * 24 * 365, "/");
-            header ("Location: /");
+            setcookie("user", $login, time() + 60 * 60 * 24 * 365, "/");
+            header("Location: /");
         }
+
     }
 ?>
 

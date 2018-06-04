@@ -1,0 +1,54 @@
+{
+  "ip": "11.116.140.6",
+  "mac": "04:7d:7b:4d:3a:7c",
+  "vrid": "E61K9203A0005H01",
+  "srid": "E61K9203",
+  "region_id": "E61",
+  "object_id": "K9203",
+  "slot": "A0005",
+  "view": "H01",
+  "place": "209",
+  "room_number": "A0005",
+  "address": "г. Ростов-на-Дону, проспект Королева, д. 15, стр. 4",
+  "point_name": "ППЭ-11 №9203",
+  "version": "4.5",
+  "schema_name": "ege 320х240",
+  "schema_resolution": "320x240",
+  "disk_total_gb": 219.58705139160156,
+  "disk_free_gb": 203.88093185424805,
+  "disk_hw_problem": false,
+  "record": true,
+  "manual_record": false,
+  "broadcast": true,
+  "running_on_battery_now": false,
+  "on_battery_time_sec": 0,
+  "max_temperature": 57,
+  "channels": [
+    {
+      "view_id": 1,
+      "channel": "d3ffe8c4-43a6-11e8-9b0f-047d7b4d3a7c",
+      "plugged": true
+    },
+    {
+      "view_id": 2,
+      "channel": "d40867c4-43a6-11e8-9b0f-047d7b4d3a7c",
+      "plugged": true
+    }
+  ],
+  "grabber_messages": {
+    "info": [
+      "UIpushingVideo:Идёт трансляция, не отключайте сеть"
+    ],
+    "error": []
+  },
+  "device_uptime": 3535013,
+  "agent_uptime": 591603,
+  "type": "usb-pak",
+  "fqdn": "ege2018-p-047d7b4d3a7c",
+  "netmask": "255.255.255.224",
+  "gateway": "11.116.140.1",
+  "upstream_address": "10.16.150.143:4747",
+  "upstream_connected": true,
+  "database_address": "10.16.100.155",
+  "database_connected": true
+}

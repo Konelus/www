@@ -1,10 +1,7 @@
 <?php
 
     /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
-    $link = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-    if ($descriptor)
-    { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
+    require_once($_SERVER['DOCUMENT_ROOT']."/sys/use.php");
 
     $localhost = "localhost";
     $user = "root";
@@ -23,9 +20,10 @@
     $SQL_select_td_name = $mysqli->query("SELECT * FROM `".$podcat_name[1]."_table`");
     while ($row = mysqli_fetch_row($SQL_select_td_name))
     {
-        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\n', ' ')");
-        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\\r', ' ')");
-        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, '\;', '')");
+        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `{$podcat_name[1]}` SET `".$row[2]."` = REPLACE(`{$row[2]}`, '\\n', ' ')");
+        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `{$podcat_name[1]}` SET `".$row[2]."` = REPLACE(`{$row[2]}`, '\\r', ' ')");
+        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `{$podcat_name[1]}` SET `".$row[2]."` = REPLACE(`{$row[2]}`, '\;', '')");
+        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `{$podcat_name[1]}` SET `".$row[2]."` = REPLACE(`{$row[2]}`, '\"', '')");
         //echo "UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, ';', ' ')";
     }
 
@@ -47,29 +45,6 @@ if ($SQL_QUERY_select_data != null)
     $max_count = mysqli_num_rows($SQL_QUERY_select_data);
     $max_td = mysqli_num_fields($SQL_QUERY_select_data);
 
-//        $table_query_1 = $mysqli->query("select `name` from `".$podcat_name[1]."_table`");
-//        if ($table_query_1 != null)
-//        {
-//            $max_td_count = mysqli_num_rows($table_query_1);
-//
-//            while ($row = mysqli_fetch_row($table_query_1))
-//            {
-//                if (($title1[$table_count1] == '+') && ($_COOKIE['user'] != 'admin'))
-//                {
-//                    $new_td[$table_count + 1] = ($table_count1 - 1);
-//                    $table[$table_count + 1] = $row[0];
-//                    $table_count++;
-//                    $max_td_count_1 = $table_count;
-//                }
-//                else if ($_COOKIE['user'] == 'admin')
-//                {
-//                    $new_td[$table_count + 1] = ($table_count1 - 1);
-//                    $table[$table_count] = $row[0];
-//                    $table_count++;
-//                }
-//                $table_count1++;
-//            }
-//        }
 
 
     for ($tr = 0; $tr <= $max_count; $tr++)
@@ -90,8 +65,8 @@ if ($SQL_QUERY_select_data != null)
                 for ($td = 1; $td <= ($max_td + 3); $td++)
                 { $csv_var = $csv_var.iconv("UTF-8", "windows-1251", $title[$tr][$td]).';'; }
                 $tr_count++;
-                $bool_query = 0;
-                $bool_var_2 = 0;
+                $bool_query = false;
+                $bool_var_2 = false;
                 $td_td = 1;
             }
         //}

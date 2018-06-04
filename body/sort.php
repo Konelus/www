@@ -1,71 +1,62 @@
 <?php
-    $sql = $sort = $sql_text = '';
-    $c = 1;
-    $button_count = 0;
-
-    $qq01 = $mysqli->query("select * from `".$podcat_name[1]."_table`");
-    while ($row = mysqli_fetch_row($qq01))
-    {
-        $sql_text[$c] = $row[1];
-        $str1[$c] = str_replace(' ', '_', $sql_text[$c]);
-        $str[$c] = str_replace('.', '', $str1[$c]);
-        $sql[$c] = $row[2];
-
-
-        if (isset($_POST[$str[$c].'_asc']))
-        {
-            ?><script>
-                $('input[name = "hidden_sort_1"]').val("<?= $row[2] ?>");
-                $('input[name = "hidden_sort_2"]').val("ASC");
-                $('input[name = "hidden_sort_3"]').val("<?= $c ?>");
-            </script><?php
-            $class_count = $c;
-            $sort = 'ORDER BY `'.$row[2].'` ASC';
-        }
-        if (isset($_POST[$str[$c].'_desc']))
-        {
-            ?><script>
-                $('input[name = "hidden_sort_1"]').val("<?= $row[2] ?>");
-                $('input[name = "hidden_sort_2"]').val("DESC");
-                $('input[name = "hidden_sort_3"]').val("<?= $c ?>");
-            </script><?php
-            $sort = 'ORDER BY `'.$row[2].'` DESC';
-            $class_count = $c;
-        }
-
-        $c++;
-    }
-
-
-    //$hid = '';
-    //$sort = '';
-    //$sql_text = '';
+    $sort = $sql_text = '';
     //$c = 1;
-    //$qq01 = $mysqli->query("select * from `".$podcat_name[1]."_table`");
-    //while ($row = mysqli_fetch_row($qq01))
-    //{
-    //    $sql_text[$c] = $row[1];
-    //    $str1[$c] = str_replace(' ', '_', $sql_text[$c]);
-    //    $str[$c] = str_replace('.', '', $str1[$c]);
-    //    $c++;
-    //}
 
-
-
-    if ((isset ($_POST['search_btn'])))
+    $DB->select("*","{$substring}_table");
+    if ($DB->sql_query_select != null)
     {
-        $qq01 = $mysqli->query("select sql_name from `".$podcat_name[1]."_table` where `name` = '".$_POST['selected_td']."' ");
-        while ($row = mysqli_fetch_row($qq01))
-        { $sql_td = $row[0]; }
-        $qq = $mysqli->query("select * from `".$podcat_name[1]."` where `".$sql_td."` LIKE '%".$_POST['caption']."%' ");
-        $count++;
-        $max_count = mysqli_num_rows($qq) + 1;
+        $count = 1;
+        while ($row = mysqli_fetch_row($DB->sql_query_select))
+        {
+            if (($title1[$count + 1] == '+') && ($_COOKIE['user'] != 'admin'))
+            {
+                $sql_text[$count] = $row[1];
+                $str1[$count] = str_replace(' ', '_', $sql_text[$count]);
+                $str[$count] = str_replace('.', '', $str1[$count]);
+
+            }
+            else if ($_COOKIE['user'] == 'admin')
+            {
+                $sql_text[$count] = $row[1];
+                $str1[$count] = str_replace(' ', '_', $sql_text[$count]);
+                $str[$count] = str_replace('.', '', $str1[$count]);
+
+            }
+
+
+            if ((isset($_POST[$str[$count].'_asc'])) || (isset($_POST[$str[$count].'_desc'])))
+            {
+                ?><script>
+                    $('input[name = "hidden_sort_1"]').val("<?= $row[2] ?>");
+                    $('input[name = "hidden_sort_3"]').val("<?= $count ?>");
+                 </script><?php
+                $class_count = $count;
+
+                if (isset($_POST[$str[$count].'_asc']))
+                { ?><script>$('input[name = "hidden_sort_2"]').val("ASC");</script><?php $sort = "`{$row[2]}` ASC"; }
+                if (isset($_POST[$str[$count].'_desc']))
+                { ?><script>$('input[name = "hidden_sort_2"]').val("DESC");</script><?php $sort = "`{$row[2]}` DESC"; }
+            }
+            $count++;
+        }
+        unset ($count,$sql_text,$str1);
     }
 
 
-    while ($button_count <= $max_count)
+    if (((isset ($_POST['search_btn'])) && ($_POST['inversion'] == false)))
     {
-        if ((isset($_POST['edit_'.$button_count])) || (isset($_POST['edit_true_'.$button_count])))
+        $DB->select("sql_name","{$substring}_table","`name` = '{$_POST['selected_td']}'");
+        while ($row = mysqli_fetch_row($DB->sql_query_select))
+        { $sql_td = $row[0]; }
+        $DB->select("*","{$substring}","`{$sql_td}` LIKE '%{$_POST['caption']}%'");
+        //$count++;
+        $max_count = mysqli_num_rows($DB->sql_query_select) + 1;
+    }
+
+
+    for ($button_count = 0; $button_count <= $max_count; $button_count++)
+    {
+        if ((isset($_POST["edit_{$button_count}"])) || (isset($_POST["edit_true_{$button_count}"])))
         {
             $hid_1 = $_POST['hidden_sort_1'];
             $hid_2 = $_POST['hidden_sort_2'];
@@ -85,15 +76,13 @@
             </script><?php
 
             if (($hid_1 != '') || ($hid_2 != ''))
-            { $sort = 'ORDER BY `'.$hid_1.'` '.$hid_2.' '; }
+            { $sort = "`{$hid_1}` {$hid_2}"; }
             if ($lim != '')
-            { $lim = ' LIMIT'.$lim; }
+            { $lim = " LIMIT {$lim}"; }
+            //if (isset($_POST["edit_{$button_count}"]))
+            //{ $bool_var_2 = true; }
+            //else if (isset($_POST["edit_true_{$button_count}"]))
+            //{ $bool_var_2 = false; }
         }
-        $button_count++;
     }
-
-
-
-
-
 ?>

@@ -1,118 +1,122 @@
 <?php
     $title = '';
-    $count = 0;
+    $count =  $tr = 0;
 
-        if (((!isset ($_POST['search_btn'])) && ($_POST['hidden_sort_5'] == '') && ($_POST['hidden_sort_6'] == '')))
+    if (((!isset ($_POST['search_btn'])) && ($_POST['hidden_sort_5'] == '') && ($_POST['hidden_sort_6'] == '')))
+    {
+        $DB->select("*","{$substring}","", "{$sort}");
+        $SQL_QUERY_select_data = $DB->sql_query_select;
+        //selected_data("{$substring}","","{$sort}");
+        //$tr = 2;
+    }
+    else if (((isset ($_POST['search_btn']))) || (($_POST['hidden_sort_5'] != '') && ($_POST['hidden_sort_6'] != '')))
         {
-            $searched_tr = 0;
-            $SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."`".$sort." ");
-            if ($SQL_QUERY_select_data != null)
-            { $max_count = mysqli_num_rows($SQL_QUERY_select_data); }
-        }
-        else if (((isset ($_POST['search_btn']))) || (($_POST['hidden_sort_5'] != '') && ($_POST['hidden_sort_6'] != '')))
+        //$tr = 0;
+        $searched_td = sql_name("{$substring}","{$_POST['selected_td']}");
+
+        $caption = $_POST['caption'];
+        if (isset ($_POST['search_btn']))
         {
-            $SQL_QUERY_sql_name = $mysqli->query("select `sql_name` from `".$podcat_name[1]."_table` where `name` = '".$_POST['selected_td']."' ");
-            if ($SQL_QUERY_sql_name != null)
-            {
-                while ($row = mysqli_fetch_row($SQL_QUERY_sql_name))
-                { $searched_td = $row[0]; }
-            }
-            //$searched_td = ;
-            $caption = $_POST['caption'];
-            if (isset ($_POST['search_btn']))
-            {
-                $searched_tr = 1;
-                //$inversion  = ;
-                if ( isset ($_POST['inversion']))
-                {?>
-                    <script>
-                        $('#cb').prop('checked', true);
-                    </script>
-                <?php }
-            ?>
+            //$tr = 1;
+            $searched_tr = 1;
+            if ( isset ($_POST['inversion']))
+            {?><script>$('#cb').prop('checked', true);</script><?php } ?>
             <script>
                 $('input[name = "hidden_sort_5"]').val("<?= $searched_td ?>");
                 $('input[name = "hidden_sort_6"]').val("<?= trim($caption) ?>");
                 $('input[name = "caption"]').val("<?= trim($caption) ?>");
-            </script><?php } else if (!isset ($_POST['search_btn']))
-            {
-                $searched_tr = 1;
-                $searched_td = $_POST['hidden_sort_5'];
-                $caption = $_POST['hidden_sort_6'];
-            }
-            //$SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` where `".$_POST['hidden_sort_5'] ."` LIKE  '%".$_POST['hidden_sort_6']."%' ".$sort." LIMIT  ".$lim." ");
-    //        $max_count = mysqli_num_rows($SQL_QUERY_select_data);
-            if (isset ($_POST['inversion']))
-            { $SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` where `".$searched_td ."` !=  '".trim($caption)."' ".$sort." "); }
-            else if (!isset ($_POST['inversion']))
-            { $SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` where `".$searched_td ."` LIKE  '%".trim($caption)."%' ".$sort." "); }
-            if ($SQL_QUERY_select_data != null)
-            { $max_count = mysqli_num_rows($SQL_QUERY_select_data); }
-            //echo "select * from `".$podcat_name[1]."` where `".$searched_td ."` LIKE  '%".$caption."%' ".$sort." LIMIT  ".$lim." ";
-            //echo "select * from `".$podcat_name[1]."` where `".$searched_td ."` =  '".$caption."' ".$sort." LIMIT  ".$lim." ";
-            //echo '123';
+            </script><?php
+        }
+        else if (!isset ($_POST['search_btn']))
+        {
+            //$tr = 2;
+            $searched_tr = 1;
+            $searched_td = $_POST['hidden_sort_5'];
+            $caption = $_POST['hidden_sort_6'];
         }
 
+        if (isset ($_POST['inversion']))
+        {
+            $DB->select("*","{$substring}","`{$searched_td}` !=  '".trim($caption)."'", "{$sort}");
+            $SQL_QUERY_select_data = $DB->sql_query_select;
+            //selected_data("{$substring}","`{$searched_td}` !=  '".trim($caption)."'","{$sort}");
+        }
+        else if (!isset ($_POST['inversion']))
+        {
+            $DB->select("*","{$substring}","`{$searched_td}` LIKE  '%".trim($caption)."%'", "{$sort}");
+            $SQL_QUERY_select_data = $DB->sql_query_select;
+            //selected_data("{$substring}","`{$searched_td}` LIKE  '%".trim($caption)."%'","{$sort}");
 
+        }
+    }
 
     // ↓ Вывод данных для мониторинга ↓
-    if (isset ($_POST['success_btn']))
+    if ($substring == 'vibory')
     {
-        ?><script>
-            $('input[name = "hidden_sort_5"]').val("<?= 'contact_groups' ?>");
-            $('input[name = "hidden_sort_6"]').val("<?= 'success' ?>");
-            $('input[name = "caption"]').val("<?= 'success' ?>");
-        </script><?php
-        $SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` where `contact_groups` =  'success'");
-    }
-    else if (isset ($_POST['warning_btn']))
-    {
-        ?><script>
-            $('input[name = "hidden_sort_5"]').val("<?= 'contact_groups' ?>");
-            $('input[name = "hidden_sort_6"]').val("<?= 'warning' ?>");
-            $('input[name = "caption"]').val("<?= 'warning' ?>");
-        </script><?php
-        $SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` where `contact_groups` =  'warning'");
-    }
-    else if (isset ($_POST['danger_btn']))
-    {
-        ?><script>
-            $('input[name = "hidden_sort_5"]').val("<?= 'contact_groups' ?>");
-            $('input[name = "hidden_sort_6"]').val("<?= 'danger' ?>");
-            $('input[name = "caption"]').val("<?= 'danger' ?>");
-        </script><?php
-        $SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` where `contact_groups` =  'danger'");
-    }
-    else if (isset ($_POST['empty_btn']))
-    {
-        ?><script>
-            $('input[name = "hidden_sort_5"]').val("<?= 'contact_groups' ?>");
-            $('input[name = "hidden_sort_6"]').val("<?= '' ?>");
-            $('input[name = "caption"]').val("<?= '' ?>");
-        </script><?php
-        $SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` where `contact_groups` =  ''");
+        if ($testing[$substring] == 'monitoring')
+        {
+            if (isset ($_POST['success_btn']))
+            { monitoring_search("{$substring}","success", "contact_groups"); }
+            else if (isset ($_POST['warning_btn']))
+            { monitoring_search("{$substring}","warning","contact_groups"); }
+            else if (isset ($_POST['danger_btn']))
+            { monitoring_search("{$substring}","danger","contact_groups"); }
+            else if (isset ($_POST['empty_btn']))
+            { monitoring_search("{$substring}","монтаж не произведён","gotovnost_obekta_da"); }
+        }
+        else if ($testing[$substring] == 'sync')
+        {
+            if (isset ($_POST['success_btn']))
+            { monitoring_search("{$substring}","Cинхронизация завершена. Оборудование можно демонтировать", "cinhronizaciya"); }
+            else if (isset ($_POST['warning_btn']))
+            { monitoring_search("{$substring}","в процессе","cinhronizaciya"); }
+            else if (isset ($_POST['danger_btn']))
+            { monitoring_search("{$substring}","Необходима синхронизация на стенде","cinhronizaciya"); }
+            else if (isset ($_POST['empty_btn']))
+            { monitoring_search("{$substring}","в очереди","cinhronizaciya"); }
+        }
     }
     // ↑ Вывод данных для мониторинга ↑
+
+    foreach ($substring_table as $key => $value)
+    {
+        if (($value == 'contact_groups') && ($substring == 'vibory')) { $status_key = $key; }
+        else if (($value == 'monitoring') && ($substring != 'vibory')) { $status_key = $key; }
+        if ($value == 'cinhronizaciya') { $sync_key = $key; }
+    }
 
 
     if ($SQL_QUERY_select_data != null)
     {
+        $tr_max = mysqli_num_rows($SQL_QUERY_select_data);
         while ($row = mysqli_fetch_row($SQL_QUERY_select_data))
         {
-            if (($podcat_name[1] == 'vibory') && (is_numeric($row[1])))
+            $title[$count][0] = $row[0];
+            $title[$count][1] = $row[1];
+            if ($substring == 'vibory')
             {
-                for ($i = 0; $i <= count($row); $i++)
-                { $title[$count][$i] = str_replace('^M', '', $row[$i]); }
+                $title[$count]['status'] = $row[$status_key];
+                $title[$count]['sync'] = $row[$sync_key];
             }
-            else if ($podcat_name[1] != 'vibory')
+
+            for ($i = 0; $i <= count($row); $i++)
             {
-                for ($i = 0; $i <= count($row); $i++)
-                { $title[$count][$i] = str_replace('^M', '', $row[$i]); }
+                if (($title[$count][0] != 1) && ($title[$count][0] != 2))
+                {
+                    if ($_COOKIE['user'] != 'admin')
+                    {
+                        foreach ($new_td as $key => $value)
+                        {
+                            if ($value == $i) { $title[$count][$i] = $row[$i]; }
+                        }
+                    }
+                    else if ($_COOKIE['user'] == 'admin') { $title[$count][$i] = $row[$i]; }
+                }
+                else { unset($title[$count][0], $title[$count][1], $title[$count]['status'], $title[$count]['sync']); }
             }
-            $tr_new_count[$count] = $row[0];
+
+            if (($row[0] == 1) || ($row[0] == 2)) { $tr++; }
             $count++;
         }
     }
-    //print_r($title);
-
 ?>

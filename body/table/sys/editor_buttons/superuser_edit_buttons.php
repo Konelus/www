@@ -1,24 +1,27 @@
 <?php
-    if ($podcat_name[1] != 'vibory') { $kostil_3 = 1; $kostil_4 = 0; } else { $kostil_3 = 2; $kostil_4 = 1; }
+    if ($searched_tr == 0) { $searched_tr++; }
+    //if ($substring != 'vibory') { $kostil_3 = 1; $kostil_4 = 1; } else { $kostil_3 = 4; $kostil_4 = 2; }
 
-    if (($td == ($max_td_count)) && ($bool_var_2 == 1))
+    if (($td == ($max_td_count + 2)) && ($bool_var_2 == true))
     { ?>
         <td class='table_head_sys'>
             <button name='edit_true_<?= ($tr + $searched_tr); ?>' type="submit" style='margin-top: 33px;' class="btn btn-success"><span
-                    class="glyphicon glyphicon glyphicon-ok"><?= $td; ?></span></button>
+                    class="glyphicon glyphicon glyphicon-ok"></span></button>
         </td>
     <?php }
-    if ($td == ($max_td_count + $kostil_3))
+    if ($td == ($max_td_count + 3))
     { ?>
         <td class='table_head_sys'>
             <div style = 'margin-top: 33px;'>
-                <a href='/body/sys/del.php?<?= $podcat_name[1] ?>/<?= $title[$tr][0] ?>'>
-                    <div style='border: solid 1px black;' class="btn btn-danger"><span style='color: black; ' class="glyphicon glyphicon glyphicon-remove"><?= $td; ?></span></div>
+                <a href='/body/sys/del.php?<?= $substring ?>/<?= $title[$tr][0] ?>'>
+                    <div style='border: solid 1px black;' class="btn btn-danger"><span style='color: black; ' class="glyphicon glyphicon glyphicon-remove"></span></div>
                 </a>
             </div>
         </td>
     <?php }
-    if (($td === ($max_td_count + $kostil_4)) && ($bool_var_2 === 0))
+
+
+    if (($td === ($max_td_count + 2)) && ($bool_var_2 === false))
     { ?>
         <td class='table_head_sys'>
             <button onclick="" name='edit_<?= ($tr + $searched_tr); ?>' type="submit" style='border: solid 1px black; margin-top: 33px;'

@@ -9,7 +9,10 @@
         <!-- ↓ Форма удаления столбца таблицы ↓ -->
         <div style = 'float: left; width: 190px;'>
             <select class = 'table_add_new_td_btn' name='old_td' style = 'width: 120px; float: left;'>
-                <script> while (table_count <= (max_td_count - 1)) { document.write("<option>" + table_mass[table_count + <?= $bag_1 ?> ] + "</option>"); table_count++; } table_count = 0; </script>
+                <?php
+                    foreach ($table as $key => $value)
+                    { echo "<option>$value</option>"; }
+                ?>
             </select>
             <input class = 'table_small_add_btn' type='submit' value='-' name='del_td' style = 'height: 28px; width: 50px; float: left; border: solid 1px grey;'>
         </div>
@@ -21,26 +24,35 @@
             <input class = 'table_small_add_btn' type='submit' value='add' name='hide' style = 'height: 28px; width: 80px; float: left; border: solid 1px grey;'>
         </div>
 </div>
-<div class='col-lg-4 col-md-2 col-sm-1 table_title_div table_input_padding'>
+<div class='col-lg-3 col-md-2 col-sm-1 table_title_div table_input_padding'>
 
 
 </div>
-<div class='col-lg-3 col-md-4 col-sm-4 table_title_div table_bar_div'>
+<div class='col-lg-4 col-md-4 col-sm-4 table_title_div table_bar_div'>
 
-    <?php if ($_COOKIE['user'] == 'admin') { ?>
+    <div style = 'float: right;'>
+    <select style = 'color: black; width: 120px;' name = 'current'><?php foreach ($table as $key => $value) { echo "<option>{$value}</option>"; }?></select>
+    после
+    <select style = 'color: black; width: 120px;' name = 'other'><option>id</option><?php foreach ($table as $key => $value) { echo "<option>{$value}</option>"; }?></select>
+    <input type = 'submit' value = 'Переместить' style = 'background: black; border: solid 1px grey;' name = 'replace_column'>
+    </div>
 
-        <div style = 'float: right;'>
-            <div style = 'float: left;  margin-right: 2px;' class = 'second_bar_div'>
-                <div style = 'width: 100px; border: solid 1px gold;'>
-                    <input name = 'break' class = 'exit_btn' type = 'submit' value = '<?= $value ?>'>
-                </div>
-            </div>
 
-<!--            <div style = 'float: left; width: 150px;'>-->
-<!--                <input type='text' class = 'table_add_new_td_btn' value = '--><?php //echo ($lim - 2) ?><!--' style = 'width: 90px; float: left;' autocomplete='off' name='lim_text'>-->
-<!--                <input class = 'table_small_add_btn' type='submit' value='limit' name='lim_btn' style = 'width: 50px; float: left; height: 28px; border: solid 1px grey;'>-->
+
+<!--    --><?php //if ($_COOKIE['user'] == 'admin') { ?>
+<!---->
+<!--        <div style = 'float: right;'>-->
+<!--            <div style = 'float: left;  margin-right: 2px;' class = 'second_bar_div'>-->
+<!--                <div style = 'width: 100px; border: solid 1px gold;'>-->
+<!--                    <input name = 'break' class = 'exit_btn' type = 'submit' value = '--><?//= $value ?><!--'>-->
+<!--                </div>-->
 <!--            </div>-->
-        </div>
-    <?php } ?>
+<!---->
+<!--<!--            <div style = 'float: left; width: 150px;'>-->
+<!--<!--                <input type='text' class = 'table_add_new_td_btn' value = '--><?php ////echo ($lim - 2) ?><!--<!--' style = 'width: 90px; float: left;' autocomplete='off' name='lim_text'>-->
+<!--<!--                <input class = 'table_small_add_btn' type='submit' value='limit' name='lim_btn' style = 'width: 50px; float: left; height: 28px; border: solid 1px grey;'>-->
+<!--<!--            </div>-->
+<!--        </div>-->
+<!--    --><?php //} ?>
 </div>
 

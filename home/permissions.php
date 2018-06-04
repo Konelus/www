@@ -1,19 +1,19 @@
 <?php
-    /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
-    $link = '';
-    $descriptor = fopen($_SERVER['DOCUMENT_ROOT'].'/link.txt', 'r');
-    if ($descriptor)
-    { while (($string = fgets($descriptor)) !== false) { $link = $link.$string; } fclose($descriptor); }
 
-    $mysqli = new mysqli('localhost', 'root', $link, 'rtk_01');
-    mysqli_set_charset($mysqli, 'utf8');
-    /* - - - - - - - - - - ↑ Подключение к БД ↑ - - - - - - - - - - */
 
-    require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
+    //echo '<br><br><br>';
+
+
+
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/use.php');
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
+
 
 
     $table_count = 0;
-    $SQL_QUERY_select_table = $mysqli->query("SELECT * FROM  `tables_namespace` WHERE `released` = '+' ");
+    $DB->select("*","tables_namespace", "`released` = '1'");
+    $SQL_QUERY_select_table = $DB->sql_query_select;
     while ($row = mysqli_fetch_row($SQL_QUERY_select_table))
     {
         $table_name[$table_count] = $row[1];
@@ -48,12 +48,57 @@
     <input type = 'hidden' name = 'table_name'>
     <input type = 'hidden' name = 'table_description'>
     <input type = 'hidden' name = 'group'>
+    <input type = 'hidden' name = 'vision'>
+    <input type = 'hidden' name = 'perm'>
 
 
-    <?php if ((isset ($_POST['edit_users_permissions'])) || (isset ($_POST['confirm'])))
+
+    <?php
+    if ((isset ($_POST['edit_users_permissions'])) || (isset ($_POST['confirm'])) || (isset($_POST['vision_plus'])) || (isset($_POST['vision_minus'])) || (isset($_POST['perm_plus'])) || (isset($_POST['perm_minus'])))
     {
         $selected_table_name = $_POST['table_name'];
         $selected_table_description = $_POST['table_description'];
+        //$selected_vision = $_POST['vision'];
+        //$selected_perm = $_POST['perm'];
+
+        if (isset ($_POST['vision_plus']))
+        {
+            ?><script>
+                $('input[name = "vision"]').val("+");
+                $('input[name = "perm"]').val("<?= $_POST['perm'] ?>");
+            </script><?php
+            $selected_vision = '+';
+            if ($_POST['perm'] != '') { $selected_perm = $_POST['perm']; }
+        }
+        else if (isset ($_POST['vision_minus']))
+        {
+            ?><script>
+                $('input[name = "vision"]').val("-");
+                $('input[name = "perm"]').val("<?= $_POST['perm'] ?>");
+            </script><?php
+            $selected_vision = '-';
+            if ($_POST['perm'] != '') { $selected_perm = $_POST['perm']; }
+        }
+
+        if (isset ($_POST['perm_plus']))
+        {
+            ?><script>
+                $('input[name = "perm"]').val("+");
+                $('input[name = "vision"]').val("<?= $_POST['vision'] ?>");
+            </script><?php
+            $selected_perm = '+';
+            if ($_POST['vision'] != '') { $selected_vision = $_POST['vision']; }
+        }
+        else if (isset ($_POST['perm_minus']))
+        { ?><script>
+                $('input[name = "perm"]').val("-");
+                $('input[name = "vision"]').val("<?= $_POST['vision'] ?>");
+            </script><?php
+            $selected_perm = '-';
+            if ($_POST['vision'] != '') { $selected_vision = $_POST['vision']; }
+        }
+
+
         //$group = $_POST['group'];
         ?>
             <script>$('input[name = "table_name"]').val("<?= $selected_table_name ?>");</script>
@@ -64,18 +109,26 @@
         $selected_table_name = $_POST['table_name'];
         $selected_table_description = $_POST['table_description'];
         $group = $_POST['group_for_edit'];
+        //$selected_vision = $_POST['vision'];
+        //$selected_perm = $_POST['perm'];
 
-        //$kostil = $hid;
 
-        $user_count = 0;
-        $DB->select("name","group_namespace",$selected_table_name." = '+'");
+
+
+        $DB->select("name","group_namespace","{$selected_table_name} = '+'");
         $SQL_QUERY_select_users = $DB->sql_query_select;
         while ($row = mysqli_fetch_row($SQL_QUERY_select_users))
-        {
-            $table_user[$user_count] = $row[0];
-            $user_count++;
-        }
+        { $table_user[] = $row[0]; }
     }
+//    if ((isset($_POST['vision_plus'])) || (isset($_POST['vision_minus'])))
+//    {
+//        $selected_vision = $_POST['vision'];
+//    }
+//    if ((isset($_POST['perm_plus'])) || (isset($_POST['perm_minus'])))
+//    {
+//        $selected_perm = $_POST['perm'];
+//    }
+
 
 
 
@@ -83,8 +136,9 @@
     if ((isset ($_POST['select_table'])) && ($_POST['selected_table'] != ''))
     {
         $selected_table_description = $_POST['selected_table'];
-        $SQL_QUERY_select_table_name = $mysqli->query("SELECT `name` FROM `tables_namespace` WHERE `description` = '".$selected_table_description."' ");
-        while ($row = mysqli_fetch_row($SQL_QUERY_select_table_name))
+
+        $DB->select("name","tables_namespace","`description` = '{$selected_table_description}'");
+        while ($row = mysqli_fetch_row($DB->sql_query_select))
         { $selected_table_name = $row[0]; }
         ?>
             <script>$('input[name = "table_name"]').val("<?= $selected_table_name ?>");</script>
@@ -117,7 +171,7 @@
                                 for ($count = 0; $count < mysqli_num_rows($SQL_QUERY_select_table); $count++)
                                 {
                                     if ($selected_table_description == $table_description[$count]) { $selected_table = 'selected'; } else { $selected_table = ''; }
-                                    echo "<option ".$selected_table.">".$table_description[$count]."</option>";
+                                    echo "<option {$selected_table}>{$table_description[$count]}</option>";
                                 }
                             ?>
                             <input type = 'hidden' name = 'hid0'>
@@ -130,47 +184,56 @@
     </div>
 
 
+    <?php
 
 
+        if ($selected_table_name != '')
+        {
+            $DB->select("*","{$selected_table_name}_table");
+            while ($array = mysqli_fetch_row($DB->sql_query_select))
+            { $title_array[] = $array; }
+
+            foreach ($title_array as $key => $value) { $title_sort[] = $value[3]; }
 
 
-    <?php  require_once("sys/query.php"); ?>
-    <script>
-        var all_users = <?= json_encode($all_users); ?>;
-        var users_permission = <?= json_encode($users_permission); ?>;
-        var all_users_group = <?= json_encode($all_users_group); ?>;
-        var all_group = <?= json_encode($all_group); ?>;
+            //$title_sort = $title_array;
+            sort($title_sort);
 
-        var all_users_count = <?= json_encode($all_user_count); ?>;
-        var users_permission_count = <?= json_encode($ege_user_count); ?>;
-        var all_user_group_count = <?= json_encode($all_user_group_count); ?>;
-        var all_group_count = <?= json_encode($all_group_count); ?>;
+            foreach ($title_sort as $key => $value)
+            {
+                for ($count = 0; $count <= count($title_sort); $count++)
+                {
+                    if ($title_array[$count][3] == $value)
+                    {
+                        $title_array["0_{$key}"][0] = $title_array[$count][0];
+                        $title_array["0_{$key}"][1] = $title_array[$count][1];
+                        $title_array["0_{$key}"][2] = $title_array[$count][2];
+                        $title_array["0_{$key}"][3] = $title_array[$count][3];
+                        unset($title_array[$count]);
+                    }
+                }
+            }
+            foreach ($title_array as $key => $value)
+            {
+                $new_key = explode("_","{$key}");
+                $new_key = $new_key[1];
+                $title_array[$new_key] = $title_array[$key];
+                unset($title_array[$key]);
+            }
 
-        var table_mass = <?= json_encode($table); ?>;
-        var max_td_count = <?= json_encode($max_td_count); ?>;
-        var permission = <?= json_encode($permission); ?>;
-        var permission_edit = <?= json_encode($permission_edit); ?>;
+        }
 
-        var option = new Array();
-        var option_edit = new Array();
-    </script>
+        require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/query.php');
 
 
-
-
-
-
-<?php if (((isset ($_POST['select_table'])) && ($_POST['selected_table'] != '')) || (isset ($_POST['edit_users_permissions']) || (isset ($_POST['confirm']))) ) { ?>
+        if (((isset ($_POST['select_table'])) && ($_POST['selected_table'] != '')) || (isset ($_POST['edit_users_permissions']) || (isset ($_POST['confirm'])) || (isset($_POST['vision_plus'])) || (isset($_POST['vision_minus'])) || (isset($_POST['perm_plus'])) || (isset($_POST['perm_minus']))) ) { ?>
 
     <div class = 'permission_div_margin'>
 
             <table class = 'table table-condensed table-striped main_table'>
                 <tr><td class = 'table_head_sys' colspan = 2 rowspan = 2>Группа</td></tr>
                 <tr>
-                    <script>
-                        for (table_count = 0; table_count <= (max_td_count - 1); table_count++)
-                        { document.write("<td class = 'table_head_bg'>" + table_mass[table_count] + "</td>"); }
-                    </script>
+                    <?php for ($count = 0; $count < count($title_array); $count++) { echo "<td class = 'table_head_bg'>{$title_array[$count][1]}</td>"; } ?>
                     <td class = 'table_head_sys' colspan = 2>edit</td>
                 </tr>
                 <tr>
@@ -179,49 +242,71 @@
                             <select name = 'group_for_edit' class = 'textBox_group'>
                                 <?php
                                     if ($group == null) { echo '<option></option>'; }
-                                    $user_count = 0;
-                                    while ($user_count < mysqli_num_rows($SQL_QUERY_select_users))
+                                    for ($count = 0; $count < mysqli_num_rows($SQL_QUERY_select_users); $count++)
                                     {
-                                        if ($table_user[$user_count] == $group) { $selected_group = 'selected'; } else { $selected_group = ''; }
-                                        echo "<option ".$selected_group.">".$table_user[$user_count]."</option>";
-                                        $user_count++;
+                                        if ($table_user[$count] == $group) { $selected_group = 'selected'; } else { $selected_group = ''; }
+                                        echo "<option {$selected_group}>{$table_user[$count]}</option>";
                                     }
                                 ?>
                             </select>
                         </div>
                         <div><input style = 'width: 120px;' type = 'submit' name = 'edit_users_permissions' value = 'Выбрать' class = 'add_submit'></div>
                     </td>
-
-                    <script>document.write("<td class = 'table_head_info' colspan = " + (max_td_count) + "></td>");</script>
+                    <td class = 'table_head_info' colspan = <?= count($title_array) ?>>
+                        <div style = 'float: left;'>
+<!--                            <input type = 'submit' style = 'border: solid 1px black; background: gold; height: 20px; width: 30px;' value = '+' name = 'vision_plus'>-->
+<!--                            <input type = 'submit' style = 'border: solid 1px black; background: gold; height: 20px; width: 30px;' value = '-' name = 'vision_minus'>-->
+                        </div>
+                    </td>
                     <td class = 'table_head_sys' rowspan = 4>
                         <div class = 'add_submit_div'><div class = 'add_input_div_margin'><input type = 'submit' value = 'Сохранить' class = 'add_submit' name = 'confirm'></div></div>
                     </td>
                 </tr>
-                <script>
-                    for (table_count = 0; table_count <= (max_td_count - 1); table_count++)
+                <?php
+                    for ($count = 0; $count < count($title_array); $count++)
                     {
-                        if (permission == null) { option[table_count] = '<option selected></option><option>+</option><option>-</option>'; }
-                        else if ((permission[(table_count + 2)] != '+') && (permission[(table_count + 2)] != '-')) { option[table_count] = '<option>+</option><option selected>-</option>'; }
-                        else if (permission[(table_count + 2)] === '+') { option[table_count] = '<option selected>+</option><option>-</option>'; }
-                        else if (permission[(table_count + 2)] === '-') { option[table_count] = '<option>+</option><option selected>-</option>'; }
-                        if (table_count <= max_td_count) { document.write("<td><select name = 'textBox" + table_count + "' class = 'form-control select'>" +
-                            option[table_count] + "</select></td>"); }
+                        if (!isset ($selected_vision))
+                        {
+                            if ($permission == null) { $option[$count] = '<option selected></option><option>+</option><option>-</option>'; }
+                            else if (($permission[($count + 2)] != '+') && ($permission[($count + 2)] != '-')) { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                            else if ($permission[($count + 2)] === '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
+                            else if ($permission[($count + 2)] === '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                        }
+                        elseif ($selected_vision == '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
+                        elseif ($selected_vision == '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                        if ($count <= count($title_array)) { echo "<td><select name = 'listBox_{$count}' class = 'form-control select'>{$option[$count]}{$count}</select></td>"; }
                     }
-                </script>
-                <tr><script>document.write("<td class = 'table_head_info' colspan = " + (max_td_count) + "></td>");</script></tr>
-                <script>
-                    for (table_count = 0; table_count <= (max_td_count - 1); table_count++)
+                ?>
+
+                <tr>
+                    <td class = 'table_head_info' colspan = <?= count($title_array) ?>>
+                        <div style = 'float: left;'>
+<!--                            <input type = 'submit' style = 'border: solid 1px black; background: gold; height: 20px; width: 30px;' value = '+' name = 'perm_plus'>-->
+<!--                            <input type = 'submit' style = 'border: solid 1px black; background: gold; height: 20px; width: 30px;' value = '-' name = 'perm_minus'>-->
+                        </div>
+                    </td>
+                </tr>
+                <?php
+                for ($count = 0; $count < count($title_array); $count++)
+                {
+                    if (!isset ($selected_perm))
                     {
-                        if (permission_edit == null) { option_edit[table_count] = '<option selected></option><option>+</option><option>-</option>'; }
-                        else if ((permission_edit[(table_count + 2)] != '+') && (permission_edit[(table_count + 2)] != '-')) { option_edit[table_count] = '<option>+</option><option selected>-</option>'; }
-                        else if ((permission_edit[(table_count + 2)] === '+') && ((permission[(table_count + 2)] === '+'))) { option_edit[table_count] = '<option>+</option><option>-</option>'; }
-                        else if ((permission_edit[(table_count + 2)] === '-') || ((permission[(table_count + 2)] === '-'))) { option_edit[table_count] = '<option>+</option><option selected>-</option>'; }
-                        if (table_count <= max_td_count) { document.write("<td><select name = 'edit_listBox" + table_count + "' class = 'form-control select'>" +
-                            option_edit[table_count] + "</select></td>"); }
+                        if ($permission_edit == null) { $option[$count] = '<option selected></option><option>+</option><option>-</option>'; }
+                        else if (($permission_edit[($count + 2)] != '+') && ($permission_edit[($count + 2)] != '-')) { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                        else if ($permission_edit[($count + 2)] === '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
+                        else if ($permission_edit[($count + 2)] === '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
                     }
-                </script>
+                    elseif ($selected_perm == '+') { $option[$count] = '<option selected>+</option><option>-</option>'; }
+                    elseif ($selected_perm == '-') { $option[$count] = '<option>+</option><option selected>-</option>'; }
+                    if ($count <= count($title_array)) { echo "<td><select name = 'edit_listBox_{$count}' class = 'form-control select'>{$option[$count]}</select></td>"; }
+                }
+                ?>
+
             </table>
     </div>
 </form>
-<?php } ?>
+<?php }
+//pre(get_defined_vars());
+//pre($_POST);
+?>
 </body>
