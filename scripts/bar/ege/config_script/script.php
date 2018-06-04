@@ -1,18 +1,25 @@
+<div style = ''>
+    <form method = 'post'>
+        <input style = 'border: 0; background: white; color: navy; cursor: pointer;' type = 'submit' name = 'create_ege' value = 'Создать конфиги EGE'>
+    </form>
+</div>
+
 <?php
+
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
 
     if (isset ($_POST['create_ege']))
     {
-        $files = glob(dirname(__FILE__).'/config/*');
+        $files = glob($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script_ege/config/*');
         foreach($files as $file)
         { if(is_file($file)) { unlink($file); } }
 
-        $files = glob(dirname(__FILE__).'/config/1251/*');
+        $files = glob($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script_ege/config/1251/*');
         foreach($files as $file)
         { if(is_file($file)) { unlink($file); } }
 
-        $files = glob(dirname(__FILE__).'/config/new/*');
+        $files = glob($_SERVER['DOCUMENT_ROOT'].'/scripts/config_script_ege/config/new/*');
         foreach($files as $file)
         { if(is_file($file)) { unlink($file); } }
         $str = '';
@@ -31,16 +38,22 @@
 
                 if (($rid != $array['rid_obekta']) && ($rid != '') || (($count == 131) && ($count_bool == false)))
                 {
+
                     $str[$count] =
 "define hostgroup{
     hostgroup_name {$arr['adres_en']};
-    alias ".trim($arr['adres_ru']).";
-    notes Представитель ППЭ: {$array['predstavitel_ppe_telefon_e_mail']};
-}
-".$str[$count];
+    alias ".trim($arr['adres_ru']).";".$str['note'].$str[$count];
+                    //echo "{$count} <pre>{$str[$count]}</pre>";
                     if ($count < 131) { $count++; } else { $count_bool = true; }
                 }
                 $rid = $array['rid_obekta'];
+
+
+                    $str['note'] = "
+    notes Представитель ППЭ: {$array['predstavitel_ppe_telefon_e_mail']};
+}
+";
+                    $bool = false;
 
 
 
@@ -72,7 +85,7 @@
     address {$array['ip_adres_pak_ipcam']};
     hostgroups {$array['adres_en']},z_IPCAM,{$array['hostgroups']};
     contact_groups EGE,{$array['contact_groups']};
-    notes Ответственный Ростелеком: {$array['fio_osnovnogo_otvetstvennogo_za_ppe']} {$array['fio_osnovnogo_otvetstvennogo_za_ppe']} {$array['fio_osnovnogo_otvetstvennogo_za_ppe']};
+    notes Ответственный Ростелеком: {$array['fio_osnovnogo_otvetstvennogo_za_ppe']} {$array['e_mail_osnovnogo_otvetstvennogo_za_ppe']} {$array['kontaktnyy_telefon_123']};
 }
 ";
                 }
@@ -90,25 +103,21 @@
 
         foreach ($str as $key => $value)
         {
-            $win_str = iconv("UTF-8", "windows-1251", $value);
-            //echo $arr['rid_obekta'].' - '.$arr['adres_ru'].'<br>';
+            if ($arr_name['adres_en'][$key] != '')
+            {
+                $win_str = iconv("UTF-8", "windows-1251", $value);
+                //echo $arr['rid_obekta'].' - '.$arr['adres_ru'].'<br>';
 
-            $fp = fopen(dirname(__FILE__)."/config/{$arr_name['adres_en'][$key]}.cfg", "w");
-            fwrite($fp, $value);
-            fclose($fp);
+                $fp = fopen($_SERVER['DOCUMENT_ROOT']."/scripts/config_script_ege/config/{$arr_name['adres_en'][$key]}.cfg", "w");
+                fwrite($fp, $value);
+                fclose($fp);
 
-            $fp = fopen(dirname(__FILE__)."/config/1251/{$arr_name['adres_en'][$key]}.cfg", "w");
-            fwrite($fp, $win_str);
-            fclose($fp);
+                $fp = fopen($_SERVER['DOCUMENT_ROOT']."/scripts/config_script_ege/config/1251/{$arr_name['adres_en'][$key]}.cfg", "w");
+                fwrite($fp, $win_str);
+                fclose($fp);
+            }
         }
 
         $text = 'Создание cfg-файлов завершено!';
     }
 ?>
-
-
-<div style = ''>
-    <form method = 'post'>
-        <input style = 'border: 0; background: white; color: navy; cursor: pointer;' type = 'submit' name = 'create_ege' value = 'Создать конфиги ЕГЭ'>
-    </form>
-</div>

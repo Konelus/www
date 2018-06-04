@@ -12,7 +12,7 @@
 
 
     $table_count = 0;
-    $DB->select("*","tables_namespace", "`released` = '+'");
+    $DB->select("*","tables_namespace", "`released` = '1'");
     $SQL_QUERY_select_table = $DB->sql_query_select;
     while ($row = mysqli_fetch_row($SQL_QUERY_select_table))
     {

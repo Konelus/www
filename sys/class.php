@@ -28,7 +28,7 @@
         public function insert($table, $values)
         {
             $this->mysqli->query("INSERT INTO `{$table}` VALUES ({$values})");
-            //echo "INSERT INTO `{$table}` VALUES ({$values})<br>";
+            echo "INSERT INTO `{$table}` VALUES ({$values})<br>";
         }
 
         public function update($table, $cell, $value, $where = '')
