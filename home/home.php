@@ -78,7 +78,10 @@
     </div>
 </div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 48fa31c38613c885e95021083a26ab15ea06d4e6
 <?php
     if ($_COOKIE['user'] == 'admin')
     {

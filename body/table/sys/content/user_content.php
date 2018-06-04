@@ -3,7 +3,11 @@
     if ($bool_var_2 == false)
     {
         if ($title[$tr][$new_td[$td_td]] == 'Online Test')
+<<<<<<< HEAD
         { $parsed_title = "<a target = '_blank' href = '/body/table/additional_table.php/?{$substring}/{$title[$tr][0]}'>{$title[$tr][$new_td[$td_td]]}</a>"; }
+=======
+        { $parsed_title = "<a target = '_blank' href = '/body/table/additional_table.php/?{$podcat_name[1]}/{$title[$tr][0]}'>{$title[$tr][$new_td[$td_td]]}</a>"; }
+>>>>>>> 48fa31c38613c885e95021083a26ab15ea06d4e6
         else if ($title[$tr][$new_td[$td_td]] != 'Online Test')
         { $parsed_title = $title[$tr][$new_td[$td_td]]; }
         ?><div style = 'min-width: 150px; ; overflow: hidden;'>
@@ -31,11 +35,16 @@
 
 
     // ↓ Создание textarea для обычного пользователя ↓
+<<<<<<< HEAD
     else if ($bool_var_2 == true)
     {
         if ($substring_table[$new_td[$td_td]] == 'load_file')
         { $ro[$new_td[$td_td]] = 'readonly'; }
         ?>
+=======
+    else if ($bool_var_2 == 1)
+    { ?>
+>>>>>>> 48fa31c38613c885e95021083a26ab15ea06d4e6
 <!--        <div style = 'height: 0px; background: black; color: white; margin-bottom: 2px;'>--><?//= $title_array[$td - 1][0] ?><!--</div>-->
         <textarea <?= $ro[$new_td[$td_td]] ?>
             name = 'editBox_<?= "{$tr}_{$new_td[$td_td]}" ?>'

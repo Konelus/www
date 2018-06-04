@@ -1,6 +1,9 @@
 <?php
 
+<<<<<<< HEAD
     require_once ($_SERVER['DOCUMENT_ROOT'].'/body/sys/translit.php');
+=======
+>>>>>>> 48fa31c38613c885e95021083a26ab15ea06d4e6
     class DB
     {
         public $sql_query_select;
@@ -31,6 +34,22 @@
             $mysqli = new mysqli("localhost", "root", "".$link, "rtk_01");
             $this->mysqli = $mysqli;
             mysqli_set_charset($mysqli, 'utf8');
+<<<<<<< HEAD
+=======
+
+        }
+
+        function select($value, $table, $where = 0)
+        {
+            if ($where != null) { $where = ' WHERE '.$where; }
+            if ($value != '*') { $value = "`{$value}`"; }
+            $this->sql_query_select = $this->mysqli->query("SELECT {$value} FROM `{$table}`{$where}");
+            //if ($_COOKIE['user'] == 'admin')
+            //{
+            //echo "SELECT ".$value." FROM `".$table."`".$where.'<br>';
+            //}
+            //
+>>>>>>> 48fa31c38613c885e95021083a26ab15ea06d4e6
         }
 
         public function select($value, $table, $where = '', $order = '', $limit = '')
