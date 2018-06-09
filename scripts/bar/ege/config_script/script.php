@@ -8,6 +8,7 @@
 
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
+    $text = "Ожидает запуска!";
 
     if (isset ($_POST['create_ege']))
     {
@@ -108,16 +109,18 @@
                 $win_str = iconv("UTF-8", "windows-1251", $value);
                 //echo $arr['rid_obekta'].' - '.$arr['adres_ru'].'<br>';
 
-                $fp = fopen($_SERVER['DOCUMENT_ROOT']."/scripts/config_script_ege/config/{$arr_name['adres_en'][$key]}.cfg", "w");
+                $fp = fopen(dirname(__FILE__)."/config/{$arr_name['adres_en'][$key]}.cfg", "w");
                 fwrite($fp, $value);
                 fclose($fp);
 
-                $fp = fopen($_SERVER['DOCUMENT_ROOT']."/scripts/config_script_ege/config/1251/{$arr_name['adres_en'][$key]}.cfg", "w");
+                $fp = fopen(dirname(__FILE__)."/config/1251/{$arr_name['adres_en'][$key]}.cfg", "w");
                 fwrite($fp, $win_str);
                 fclose($fp);
             }
         }
 
-        $text = 'Создание cfg-файлов завершено!';
+
+        //$text = 'Создание cfg-файлов завершено!';
+        $text = "<div style = 'width: 50px; float: right; color: green; margin-right: 20px;'>Успешно!</div>";
     }
 ?>

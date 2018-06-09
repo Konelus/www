@@ -5,12 +5,12 @@
                     <?php
                     if ($_COOKIE['user'] == 'admin')
                     {
-                        foreach ($all_tables_array as $key => $value)
+                        foreach ($table_list as $key => $value)
                         { ?>
 
                                 <div class = 'col-lg-3 col-md-6 col-sm-6' style = 'margin-top: 20px;'>
                                     <div class = 'col-lg-1 col-md-1 col-sm-1'></div>
-                                    <a href = '<?php if ($value[3] != '') { echo "/?{$value[1]}"; } ?>' style = 'color: black;'>
+                                    <a href = '<?php if ($value[3] == 1) { echo "/?{$value[1]}"; } ?>' style = 'color: black;'>
                                     <div style = 'height: 80px; border: dotted 1px black; padding-right: 0; padding-left: 0;' class = 'col-lg-10 col-md-10 col-sm-10'>
                                         <div class = 'col-lg-4 col-md-4 col-sm-4'>
                                             <div style = 'margin-top: 15%;'><img style = 'width: 50px;' src = '/img/icons/projects/<?= $value[1] ?>.png'></div>
@@ -38,15 +38,15 @@
                     {
                         foreach ($released_table as $key => $value)
                         {
-                            if ($current_users_access[$value[1]] == '+') { ?>
-                                <a href = '<?= "/?{$value[1]}"; ?>' style = 'color: black;'>
+                            if ($current_users_access[$value['name']] == '+') { ?>
+                                <a href = '<?= "/?{$value['name']}"; ?>' style = 'color: black;'>
                                     <div class = 'col-lg-3 col-md-6 col-sm-6' style = 'margin-top: 20px;'>
                                         <div class = 'col-lg-1 col-md-1 col-sm-1'></div>
                                         <div style = 'height: 80px; border: dotted 1px black;' class = 'col-lg-10 col-md-10 col-sm-10'>
                                             <div class = 'col-lg-4 col-md-4 col-sm-4' style = 'padding-left: 0; padding-right: 0;'>
-                                                <img style = 'width: 100%; margin-top: 10px;' src = '/img/icons/projects/<?= $value[1] ?>.png'>
+                                                <img style = 'width: 100%; margin-top: 10px;' src = '/img/icons/projects/<?= $value['name'] ?>.png'>
                                             </div>
-                                            <div class = 'col-lg-8 col-md-8 col-sm-8' style = 'text-align: center; font-size: 18px; padding-top: 12px;'><?= $value[2] ?></div>
+                                            <div class = 'col-lg-8 col-md-8 col-sm-8' style = 'text-align: center; font-size: 18px; padding-top: 12px;'><?= $value['description'] ?></div>
                                         </div>
                                         <div class = 'col-lg-1 col-md-1 col-sm-1'></div>
                                     </div>

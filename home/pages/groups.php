@@ -41,7 +41,6 @@
 
 <html>
     <head>
-        <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -82,7 +81,7 @@
                                         $count = 0;
                                         foreach ($value as $nv_key => $nv_value)
                                         {
-                                            if ($nv_key !== 0) { echo "<td style = '{$table_status[$count]} text-align: center;'>{$nv_value}</td>"; $count++;  }
+                                            if ($nv_key !== 0) { echo "<td class = 'flash' style = '{$table_status[$count]} text-align: center;'>{$nv_value}</td>"; $count++;  }
                                             elseif ($nv_key === 0) { echo "<td>{$nv_value}</td>"; }
                                         }
                                         ?><td><input name = 'show_edit_<?= $n_count ?>' type = 'submit' class = 'btn' style = 'padding-top: 2px; height: 26px; color: white; background: black;' value = 'Ред'></td><?php $n_count++;
@@ -119,6 +118,5 @@
                 <script>$("#modal_edit").modal("show");</script>
             <?php }
         ?>
-
     </body>
 </html>

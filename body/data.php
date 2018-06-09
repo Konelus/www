@@ -1,5 +1,5 @@
 <?php
-    $title = '';
+    exit;
     $count =  $tr = 0;
 
     if (((!isset ($_POST['search_btn'])) && ($_POST['hidden_sort_5'] == '') && ($_POST['hidden_sort_6'] == '')))
@@ -86,37 +86,37 @@
     }
 
 
-    if ($SQL_QUERY_select_data != null)
-    {
-        $tr_max = mysqli_num_rows($SQL_QUERY_select_data);
-        while ($row = mysqli_fetch_row($SQL_QUERY_select_data))
-        {
-            $title[$count][0] = $row[0];
-            $title[$count][1] = $row[1];
-            if ($substring == 'vibory')
-            {
-                $title[$count]['status'] = $row[$status_key];
-                $title[$count]['sync'] = $row[$sync_key];
-            }
-
-            for ($i = 0; $i <= count($row); $i++)
-            {
-                if (($title[$count][0] != 1) && ($title[$count][0] != 2))
-                {
-                    if ($_COOKIE['user'] != 'admin')
-                    {
-                        foreach ($new_td as $key => $value)
-                        {
-                            if ($value == $i) { $title[$count][$i] = $row[$i]; }
-                        }
-                    }
-                    else if ($_COOKIE['user'] == 'admin') { $title[$count][$i] = $row[$i]; }
-                }
-                else { unset($title[$count][0], $title[$count][1], $title[$count]['status'], $title[$count]['sync']); }
-            }
-
-            if (($row[0] == 1) || ($row[0] == 2)) { $tr++; }
-            $count++;
-        }
-    }
+//    if ($SQL_QUERY_select_data != null)
+//    {
+//        $tr_max = mysqli_num_rows($SQL_QUERY_select_data);
+//        while ($row = mysqli_fetch_row($SQL_QUERY_select_data))
+//        {
+//            $title[$count][0] = $row[0];
+//            $title[$count][1] = $row[1];
+//            if ($substring == 'vibory')
+//            {
+//                $title[$count]['status'] = $row[$status_key];
+//                $title[$count]['sync'] = $row[$sync_key];
+//            }
+//
+//            for ($i = 0; $i <= count($row); $i++)
+//            {
+//                if (($title[$count][0] != 1) && ($title[$count][0] != 2))
+//                {
+//                    if ($_COOKIE['user'] != 'admin')
+//                    {
+//                        foreach ($new_td as $key => $value)
+//                        {
+//                            if ($value == $i) { $title[$count][$i] = $row[$i]; }
+//                        }
+//                    }
+//                    else if ($_COOKIE['user'] == 'admin') { $title[$count][$i] = $row[$i]; }
+//                }
+//                else { unset($title[$count][0], $title[$count][1], $title[$count]['status'], $title[$count]['sync']); }
+//            }
+//
+//            if (($row[0] == 1) || ($row[0] == 2)) { $tr++; }
+//            $count++;
+//        }
+    //}
 ?>

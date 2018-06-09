@@ -22,7 +22,7 @@
         {
             write_status("enable");
             $site_status = 'enable';
-            $DB->update("ver", "ver", "{$current_ver[0]}.{$current_ver[1]}.".($current_ver[2] + 1));
+
         }
         header("Location: /");
     }
@@ -31,31 +31,34 @@
 
 
 /* - - - - - - - - - - ↓ Получение прав пользователя ↓ - - - - - - - - - - - */
-    if ($_COOKIE['user'] == 'admin')
+    if (isset ($_COOKIE['user']))
     {
-        // ↓ Получение списка всех таблиц ↓
-        $count = 1;
-        $DB->select("*", "tables_namespace");
-        while ($row = mysqli_fetch_row($DB->sql_query_select))
+        if ($_COOKIE['user'] == 'admin')
         {
-            $all_tables_array[$count][1] = $row[1];
-            $all_tables_array[$count][2] = $row[2];
-            $all_tables_array[$count][3] = $row[3];
-            $count++;
+            // ↓ Получение списка всех таблиц ↓
+            $count = 1;
+            $DB->select("*", "tables_namespace");
+            while ($row = mysqli_fetch_row($DB->sql_query_select))
+            {
+                $all_tables_array[$count][1] = $row[1];
+                $all_tables_array[$count][2] = $row[2];
+                $all_tables_array[$count][3] = $row[3];
+                $count++;
+            }
+            unset ($count);
+            // ↑ Получение списка всех таблиц ↑
         }
-        unset ($count);
-        // ↑ Получение списка всех таблиц ↑
+        else if ($_COOKIE['user'] != 'admin')
+        {
+            $USER->user_group();
+            $USER->user_table();
+            $user_status = $USER->user_access_status;  // Получение прав пользователя на доступ к сайту
+            $current_users_group = $USER->user_group;  // Получение группы пользователя
+            $current_users_access = $USER->user_table; // Получение списка таблиц доступных пользователю
+        }
+        $USER->user_fio();
+        $user_fio = $USER->user_fio;               // Получение ФИО пользователя
     }
-    else if ($_COOKIE['user'] != 'admin')
-    {
-        $USER->user_table();
-
-        $user_status = $USER->user_access_status;  // Получение прав пользователя на доступ к сайту
-        $current_users_group = $USER->user_group;  // Получение группы пользователя
-        $current_users_access = $USER->user_table; // Получение списка таблиц доступных пользователю
-    }
-    $USER->user_fio();
-    $user_fio = $USER->user_fio;               // Получение ФИО пользователя
 /* - - - - - - - - - - ↑ Получение прав пользователя ↑ - - - - - - - - - - - */
 
 
@@ -74,36 +77,36 @@
 /* - - - - - - - - - - ↓ Получение данных до Body ↓ - - - - - - - - - - - */
     if ($substring != '')
     {
-        /* ↓ Скрытие столбцов для Read Only ↓ */
-        foreach ($_POST as $key => $value)
-        {
-            if ($value == 'Скрыть столбец')
-            {
-                $DB->update("{$substring}_permission","{$key}","!","`{$substring}_group` = '{$current_users_group}'");
-                header("Location: /?{$substring}");
-                break;
-            }
-        }
-        /* ↑ Скрытие столбцов для Read Only ↑ */
-
-
-        /* ↓ Открытие столбцов для Read Only ↓ */
-        //echo $current_users_group;
-        if ((isset ($_POST['refresh'])) && ($current_users_group == 'ALLRO'))
-        {
-            $DB->select("*","{$substring}_permission","`{$substring}_group` = '$current_users_group'");
-            while ($array = mysqli_fetch_array($DB->sql_query_select)) { $perm_array = $array; }
-            foreach ($perm_array as $key => $value)
-            {
-                if (!is_numeric($key)) { unset($perm_array[$key]); }
-                if ($value == '!')
-                { $DB->update("{$substring}_permission","{$key}","+","`{$substring}_group` = '{$current_users_group}'"); }
-            }
-        }
-        //else if ((isset ($_POST['refresh'])) && ($current_users_group != 'ALLRO'))
-        //{
-        //}
-        /* ↑ Открытие столбцов для Read Only ↑ */
+//        /* ↓ Скрытие столбцов для Read Only ↓ */
+//        foreach ($_POST as $key => $value)
+//        {
+//            if ($value == 'Скрыть столбец')
+//            {
+//                $DB->update("{$substring}_permission","{$key}","!","`{$substring}_group` = '{$current_users_group}'");
+//                header("Location: /?{$substring}");
+//                break;
+//            }
+//        }
+//        /* ↑ Скрытие столбцов для Read Only ↑ */
+//
+//
+//        /* ↓ Открытие столбцов для Read Only ↓ */
+//        //echo $current_users_group;
+//        if ((isset ($_POST['refresh'])) && ($current_users_group == 'ALLRO'))
+//        {
+//            $DB->select("*","{$substring}_permission","`{$substring}_group` = '$current_users_group'");
+//            while ($array = mysqli_fetch_array($DB->sql_query_select)) { $perm_array = $array; }
+//            foreach ($perm_array as $key => $value)
+//            {
+//                if (!is_numeric($key)) { unset($perm_array[$key]); }
+//                if ($value == '!')
+//                { $DB->update("{$substring}_permission","{$key}","+","`{$substring}_group` = '{$current_users_group}'"); }
+//            }
+//        }
+//        //else if ((isset ($_POST['refresh'])) && ($current_users_group != 'ALLRO'))
+//        //{
+//        //}
+//        /* ↑ Открытие столбцов для Read Only ↑ */
 
 
         /* ↓ Загрузка файлов ↓ */

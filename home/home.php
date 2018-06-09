@@ -1,6 +1,5 @@
 <?php
     require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/query.php');
-    require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
 
     if (isset ($_POST['add_table']))
     {
@@ -82,7 +81,6 @@
     if ($_COOKIE['user'] == 'admin')
     {
         require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/admin_sys.php');
-        require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/group_query.php');
     }
 ?>
 

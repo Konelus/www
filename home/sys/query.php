@@ -110,34 +110,6 @@
             }
         }
         // ↑ Получение информации о правах пользователя ↑
-
-
-
-
-
-
-
-
-
-
-
-
-        // ↓ Добавление пользователя ↓
-        if (isset ($_POST['add_user']))
-        {
-            $DB->insert("users","null, '{$_POST['login']}','{$_POST['password']}', '', '', '{$_POST['fio']}','{$_POST['position']}', '{$_POST['phone']}','{$_POST['mail']}', '+'");
-            header ("Location: /");
-        }
-        // ↑ Добавление пользователя ↑
-
-
-        // ↓ Удаление пользователя ↓
-        if (isset ($_POST['del_user']))
-        {
-            $DB->delete("users","`login` = '".$_POST['del_user_name']."'");
-            header ("Location: /");
-        }
-        // ↑ Удаление пользователя ↑
     }
 
 

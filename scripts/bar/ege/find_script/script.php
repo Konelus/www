@@ -1,4 +1,6 @@
 <?php
+
+    $text = "Ожидает запуска!";
     if (isset ($_POST['find']))
     {
         $count = 0;
@@ -11,6 +13,7 @@
             $date = $date[0];
             $DB->update("ege","podtverzhdenie_ustanovki","{$date}","`rid_pak` = '{$rid}'");
         }
+        $text = "<div style = 'width: 50px; float: right; color: green; margin-right: 20px;'>Успешно!</div>";
     }
 ?>
 

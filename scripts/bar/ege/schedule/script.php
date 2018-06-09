@@ -3,6 +3,7 @@
     require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
 
 
+    $text = "Ожидает запуска!";
     if (isset ($_POST['make_schedule']))
     {
         $str = '';
@@ -35,6 +36,7 @@
         $fp = fopen(dirname(__FILE__).'/config/raspisanie_1251.cfg', "w");
         fwrite($fp, $win_str);
         fclose($fp);
+        $text = "<div style = 'width: 50px; float: right; color: green; margin-right: 20px;'>Успешно!</div>";
     }
 ?>
 

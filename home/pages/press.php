@@ -1,11 +1,12 @@
 <?php
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
     $substring = $_SERVER['QUERY_STRING'];
 
 
     $arr = parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/instructions.ini');
 
     if ($arr['status'] == 'enable') { $arr['status'] = 'disable'; }
-    elseif ($arr['status'] == 'disable') { $arr['status'] = 'enable'; }
+    elseif ($arr['status'] == 'disable') { $arr['status'] = 'enable'; $DB->update("ver", "ver", "{$current_ver[0]}.{$current_ver[1]}.".($current_ver[2] + 1)); }
 
     $file = $_SERVER['DOCUMENT_ROOT'].'/instructions.ini';
     $descriptor = fopen($file,"w+");

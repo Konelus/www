@@ -62,31 +62,19 @@ foreach ($_POST as $key => $value)
 }
 
     if ($_COOKIE['user'] == 'admin') { $DB->select("*","tables_namespace"); }
-    elseif ($_COOKIE['user'] != 'admin') { $DB->select("*","tables_namespace", "`released` = '+'"); }
+    elseif ($_COOKIE['user'] != 'admin') { $DB->select("*","tables_namespace", "`released` = '1'"); }
     while ($row = mysqli_fetch_row($DB->sql_query_select))
     {
         $released_table[$count][1] = $row[1];
         $testing[$released_table[$count][1]] = $row[4];
         $count++;
     }
+    //pre($testing);
 
 
 ?>
 
 <link rel="stylesheet" href="/body/sys/ege.css">
-
-<script>
-    var table_count = 0;                                   // +
-    var table_mass = <?= json_encode($table); ?>;          // +
-    var bool_var = <?= json_encode($bool_var); ?>;         // +
-    var max_td_count = <?= json_encode($table_count); ?>;  // +
-
-    var max_tr_count = <?= json_encode($max_count); ?>;
-    var table = <?= json_encode($title); ?>;
-</script>
-
-
-
 
 <form method = "post" enctype = "multipart/form-data">
     <input type = 'hidden' name = 'hidden_sort_5' placeholder = 'hidden_sort_5'> <!--  -->

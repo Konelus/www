@@ -43,14 +43,14 @@
     }
 
 
-    if ($_COOKIE['user'] != 'admin')
-    {
-        $USER->user_group();
-        $users_status = $USER->user_access_status;
-        $USER->user_permission($table);
-        $vision = $USER->user_cell_vision;
-        $permission = $USER->user_cell_edit;
-    }
+//    if ($_COOKIE['user'] != 'admin')
+//    {
+//        $USER->user_group();
+//        $users_status = $USER->user_access_status;
+//        $USER->user_permission($table);
+//        $vision = $USER->user_cell_vision;
+//        $permission = $USER->user_cell_edit;
+//    }
 
 
 

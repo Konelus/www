@@ -10,7 +10,6 @@
     require_once($_SERVER['DOCUMENT_ROOT'].'/class/user.php');
     require_once($_SERVER['DOCUMENT_ROOT'].'/class/table.php');
 
-    $TABLE->t_released();
 
     $page_title = 'ELASTIC 2';
 
@@ -21,7 +20,6 @@
         $load_file_bool = false;
         require_once($_SERVER['DOCUMENT_ROOT'].'/sys/query_index.php');
     }
-
 ?>
 
 
@@ -40,33 +38,36 @@
 
     <body>
         <?php
+            //pre($user_status);
+            //pre($current_users_group);
+            //pre($current_users_access);
+        $TABLE->table_list(); $table_list = $TABLE->table_list;
+        $TABLE->table_list('1'); $released_table = $TABLE->table_list;
+
 
             if (isset ($_COOKIE['user']))
             {
-                if ((($_COOKIE['user'] == 'admin') && ($substring == '')) || ($_COOKIE['user'] != 'admin'))
-                {
-                    $count = 1;
-                    if ($_COOKIE['user'] == 'admin') { $DB->select("*","tables_namespace"); }
-                    elseif ($_COOKIE['user'] != 'admin') { $DB->select("*","tables_namespace", "`released` = '+'"); }
-
-                    while ($row = mysqli_fetch_row($DB->sql_query_select))
-                    {
-                        $released_table[$count][1] = $row[1];
-                        $released_table[$count][2] = $row[2];
-                        $testing[$released_table[$count][1]] = $row[4];
-                        $count++;
-                    }
-                    unset ($count);
-                }
+//                if ((($_COOKIE['user'] == 'admin') && ($substring == '')) || ($_COOKIE['user'] != 'admin'))
+//                {
+//                    $count = 1;
+//                    if ($_COOKIE['user'] == 'admin') { $DB->select("*","tables_namespace"); }
+//                    elseif ($_COOKIE['user'] != 'admin') { $DB->select("*","tables_namespace", "`released` = '1'"); }
+//
+//                    while ($row = mysqli_fetch_row($DB->sql_query_select))
+//                    {
+//                        $released_table[$count][1] = $row[1];
+//                        $released_table[$count][2] = $row[2];
+//                        $testing[$released_table[$count][1]] = $row[4];
+//                        $count++;
+//                    }
+//                    unset ($count);
+//                }
                 if (($_COOKIE['user'] != 'admin') && ($site_status == 'enable'))
                 {
                     if ($substring == '') {require_once("home/home.php");}
                     else if ($substring != '')
                     {
-                        foreach ($released_table as $key => $value)
-                        {
-                            if (($value[1] == $substring) && ($user_status == '+')) { $table_isset = true; }
-                        }
+                        foreach ($released_table as $key => $value) { if (($value['name'] == $substring) && ($user_status == '+')) { $table_isset = true; } }
                         if ($table_isset == true) { require_once("body/body.php"); }
                         else { require_once("home/home.php"); }
                     }
@@ -79,7 +80,7 @@
                     if ($substring == '') {require_once("home/home.php");}
                     else if ($substring != '')
                     {
-                        foreach ($all_tables_array as $key => $value)
+                        foreach ($table_list as $key => $value)
                         { if ($value[1] == $substring) { $table_isset = true; } }
 
                         if ($table_isset == true) { require_once("body/body.php"); }

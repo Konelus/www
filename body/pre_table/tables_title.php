@@ -2,7 +2,7 @@
     <?php
         $status = $current_users_access["{$substring}_status"];
         if ($_COOKIE['user'] == 'admin') { $bag_2 = 0; } else if ($status == 'superuser') { $bag_2 = 1; }
-        foreach ($table as $key => $value)
+        foreach ($title as $key => $value)
         { ?>
             <td style = 'min-width: 100px;' class = 'table_head_bg'>
                 <?php if ($_COOKIE['user'] == 'Vlasov@south.rt.ru') { ?>

@@ -212,16 +212,9 @@
 
 
 
-                            // ↓ Для админа ↓
-                            if ($_COOKIE['user'] == 'admin')
-                            { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/content/admin_content.php'); }
-                            // ↑ Для админа ↑
-
-
-                            // ↓ Для обычного пользователя ↓
-                            else if ($_COOKIE['user'] != 'admin')
-                            { require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/content/user_content.php'); }
-                            // ↑ Для обычного пользователя ↑
+                            // ↓ Зполнение контентом ↓
+                            require ($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/content.php');
+                            // ↑ Зполнение контентом ↑
                         }
 
                         if (($td == ($max_td + 1)) && ($current_users_access["{$substring}_status"] != 'readonly'))
