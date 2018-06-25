@@ -3,7 +3,9 @@
         $status = $current_users_access["{$substring}_status"];
         if ($_COOKIE['user'] == 'admin') { $bag_2 = 0; } else if ($status == 'superuser') { $bag_2 = 1; }
         foreach ($title as $key => $value)
-        { ?>
+        {
+            if ($key !== 'id')
+            { ?>
             <td style = 'min-width: 100px;' class = 'table_head_bg'>
                 <?php if ($_COOKIE['user'] == 'Vlasov@south.rt.ru') { ?>
                 <div style = 'width: 100%; padding-bottom: 5px; padding-top: 5px;'>
@@ -16,13 +18,7 @@
                 </div>
                 <div><?= $value ?></div>
             </td>
-        <?php } if ($current_users_access["{$substring}_status"] != 'readonly') { ?>
-        <td class = 'table_head_sys' colspan = '2'><div style = 'width: 200px; font-size: 25px;'>Изменить</div></td>
+        <?php } } if ($current_users_access["{$substring}_status"] != 'readonly') { ?>
+        <td class = 'table_head_sys' colspan = '2'><div style = 'width: 120px; font-size: 20px;'>Изменить</div></td>
         <?php } ?>
 </tr>
-<?php
-//pre($table);
-//pre(get_defined_vars());
-
-
-?>

@@ -27,7 +27,7 @@
 
         function tables_list()
         {
-            $this->mysqli->select("*","tables_namespace");
+            $this->mysqli->select("*","!sys_tables_namespace");
             while ($array = mysqli_fetch_array($this->mysqli->sql_query_select))
             { $temporary_columns_rus[] = $array; }
 
@@ -41,7 +41,7 @@
 
         function groups_list()
         {
-            $this->mysqli->select("*","group_namespace");
+            $this->mysqli->select("*","!sys_group_namespace");
             while ($array = mysqli_fetch_array($this->mysqli->sql_query_select))
             { $temporary_cell_value[] = $array; }
 
@@ -68,18 +68,18 @@
 
         function add_group($group_name)
         {
-                $this->mysqli->show("group_namespace");
+                $this->mysqli->show("!sys_group_namespace");
                 while ($array = mysqli_fetch_array($this->mysqli->sql_query_show))
                 { $show[] = $array; }
                 $sql_str = "null, '{$group_name}'";
                 for ($count = 1; $count <= (count($show) - 2); $count++)
                 { $sql_str .= ", ''"; }
-                $this->mysqli->insert("group_namespace","{$sql_str}");
+                $this->mysqli->insert("!sys_group_namespace","{$sql_str}");
         }
 
         function group_access($group_name)
         {
-            $this->mysqli->select("*","group_namespace","`name` = '{$group_name}'");
+            $this->mysqli->select("*","!sys_group_namespace","`name` = '{$group_name}'");
             $this->group_access = mysqli_fetch_array($this->mysqli->sql_query_select);
             unset ($this->group_access['id'], $this->group_access['name']);
             foreach ($this->group_access as $a_key => $a_value)
@@ -88,8 +88,8 @@
 
         function del_group($group_name)
         {
-            $this->mysqli->delete("group_namespace","`name` = '{$group_name}'");
-            $this->mysqli->update("users","table_group","","`table_group` = '{$group_name}'");
+            $this->mysqli->delete("!sys_group_namespace","`name` = '{$group_name}'");
+            $this->mysqli->update("!sys_users","table_group","","`table_group` = '{$group_name}'");
         }
 
         function edit_group($group_name)
@@ -97,8 +97,8 @@
             $this->tables_list();
             foreach ($this->columns_rus as $key => $value)
             {
-                $this->mysqli->update("group_namespace","$value[0]","+", "`name` = '{$group_name}'");
-                $this->mysqli->update("group_namespace","$value[0]_status","{$_POST[$value[0]]}", "`name` = '{$group_name}'");
+                $this->mysqli->update("!sys_group_namespace","$value[0]","+", "`name` = '{$group_name}'");
+                $this->mysqli->update("!sys_group_namespace","$value[0]_status","{$_POST[$value[0]]}", "`name` = '{$group_name}'");
             }
 
         }

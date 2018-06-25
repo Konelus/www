@@ -8,15 +8,15 @@
     }
 
 
-    function ver()
-    {
-        global $DB;
-        $DB->select("ver","ver");
-        global $ver, $current_ver;
-        $ver = mysqli_fetch_row($DB->sql_query_select);
-        $ver = $ver[0];
-        $current_ver = explode('.', "{$ver}");
-    }
+//    function ver()
+//    {
+//        global $DB;
+//        $DB->select("ver","!sys_ver");
+//        global $ver, $current_ver;
+//        $ver = mysqli_fetch_row($DB->sql_query_select);
+//        $ver = $ver[0];
+//        $current_ver = explode('.', "{$ver}");
+//    }
 
 
     function sql_name($table, $name = '', $arr_count = 1)

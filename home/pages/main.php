@@ -1,27 +1,26 @@
 <div class = 'col-lg-12 col-md-12 col-sm-12'>
-    <?php if (($_COOKIE['user'] == 'admin') || ($user_status == '+')) { ?>
+    <?php if (($_COOKIE['user'] == 'admin') || ($status == '+')) { ?>
             <form method = "post">
 
                     <?php
                     if ($_COOKIE['user'] == 'admin')
                     {
-                        foreach ($table_list as $key => $value)
+                        foreach ($tables as $key => $value)
                         { ?>
-
                                 <div class = 'col-lg-3 col-md-6 col-sm-6' style = 'margin-top: 20px;'>
                                     <div class = 'col-lg-1 col-md-1 col-sm-1'></div>
-                                    <a href = '<?php if ($value[3] == 1) { echo "/?{$value[1]}"; } ?>' style = 'color: black;'>
+                                    <a href = '<?php if ($value['released'] == 1) { echo "/?project={$value['name']}"; } ?>' style = 'color: black;'>
                                     <div style = 'height: 80px; border: dotted 1px black; padding-right: 0; padding-left: 0;' class = 'col-lg-10 col-md-10 col-sm-10'>
                                         <div class = 'col-lg-4 col-md-4 col-sm-4'>
-                                            <div style = 'margin-top: 15%;'><img style = 'width: 50px;' src = '/img/icons/projects/<?= $value[1] ?>.png'></div>
+                                            <div style = 'margin-top: 15%;'><img style = 'width: 50px;' src = '/img/icons/projects/<?= $value['name'] ?>.png'></div>
                                         </div>
                                         <div class = 'col-lg-8 col-md-8 col-sm-8' style = 'text-align: center; font-size: 18px; padding-top: 8px;'>
-                                            <div style = 'height: 52px; padding-left: 0; padding-right: 0; margin-left: -15px; margin-right: -15px;'><?= $value[2] ?></div>
+                                            <div style = 'height: 52px; padding-left: 0; padding-right: 0; margin-left: -15px; margin-right: -15px;'><?= $value['description'] ?></div>
                                         </div>
                                         <div class = 'col-lg-12 col-md-12 col-sm-12' style = 'font-size: 10px;'>
                                             <?php
-                                            if ($value[3] == 1)  { echo "<img style = 'width: 15px; margin-right: 5px;' src = '/img/icons/projects/status/green.png'>"; echo 'Доступно'; }
-                                            elseif ($value[3] == 0)  { echo "<img style = 'width: 15px; margin-right: 5px;' src = '/img/icons/projects/status/red.png'>"; echo 'Недоступно'; }
+                                            if ($value['released'] == 1)  { echo "<img style = 'width: 15px; margin-right: 5px;' src = '/img/icons/projects/status/green.png'>"; echo 'Доступно'; }
+                                            elseif ($value['released'] == 0)  { echo "<img style = 'width: 15px; margin-right: 5px;' src = '/img/icons/projects/status/red.png'>"; echo 'Недоступно'; }
                                             ?>
                                         </div>
                                     </div>
@@ -36,10 +35,10 @@
                     }
                     else if ($_COOKIE['user'] != 'admin')
                     {
-                        foreach ($released_table as $key => $value)
-                        {
-                            if ($current_users_access[$value['name']] == '+') { ?>
-                                <a href = '<?= "/?{$value['name']}"; ?>' style = 'color: black;'>
+                        foreach ($tables as $key => $value)
+                        { ?>
+
+                                <a href = '<?= "/?project={$value['name']}"; ?>' style = 'color: black;'>
                                     <div class = 'col-lg-3 col-md-6 col-sm-6' style = 'margin-top: 20px;'>
                                         <div class = 'col-lg-1 col-md-1 col-sm-1'></div>
                                         <div style = 'height: 80px; border: dotted 1px black;' class = 'col-lg-10 col-md-10 col-sm-10'>
@@ -51,15 +50,11 @@
                                         <div class = 'col-lg-1 col-md-1 col-sm-1'></div>
                                     </div>
                                 </a>
-                            <?php }
+                            <?php
                         }
                     }
                     ?>
 
             </form>
-    <?php } else { ?>
-        <div style = 'color: red; padding-top: 10px; width: 100%; font-size: 30px; font-weight: bold; text-align: center; background: black;'>
-            Внимание! Доступ по Вашей учётной записи запрещён!
-        </div>
-    <?php } ?>
+    <?php }  ?>
 </div>

@@ -26,38 +26,38 @@
 
         function users_list()
         {
-            $this->mysqli->select("*","users");
+            $this->mysqli->select("*","!sys_users");
             while ($array = mysqli_fetch_array($this->mysqli->sql_query_select)) { $this->users[] = $array; }
         }
 
         function groups_list()
         {
-            $this->mysqli->select("name","group_namespace");
+            $this->mysqli->select("name","!sys_group_namespace");
             while ($array = mysqli_fetch_array($this->mysqli->sql_query_select)) { $this->groups[] = $array; }
             unset($this->users[0]);
         }
 
         function delete_user($user)
         {
-            $this->mysqli->delete("users","`login` = '{$user}'");
+            $this->mysqli->delete("!sys_users","`login` = '{$user}'");
         }
 
         function update_user($user)
         {
             $td = array('fio' => 'ФИО', 'login' => 'Логин', 'password' => 'Пароль', 'table_group' => 'Группа', 'position' => 'Должность', 'phone' => 'Телефон', 'mail' => 'Почта', 'status' => 'Доступ');
-            $this->mysqli->select("*","users","`login` = '{$user}'");
+            $this->mysqli->select("*","!sys_users","`login` = '{$user}'");
             while ($array = mysqli_fetch_array($this->mysqli->sql_query_select)) { $arr[] = $array; }
             foreach ($td as $key => $value)
             {
                 if ($arr[$key] != $_POST[$key])
                 {
-                    if ($key == 'fio') { $this->mysqli->update("users","{$key}","{$_POST['fio']}","`login` = '{$_POST['hidden']}'"); }
-                    elseif ($key == 'login') { $this->mysqli->update("users","{$key}","{$_POST['login']}","`login` = '{$_POST['hidden']}'"); }
+                    if ($key == 'fio') { $this->mysqli->update("!sys_users","{$key}","{$_POST['fio']}","`login` = '{$_POST['hidden']}'"); }
+                    elseif ($key == 'login') { $this->mysqli->update("!sys_users","{$key}","{$_POST['login']}","`login` = '{$_POST['hidden']}'"); }
                     else
                     {
                         if ($_POST['status'] == 'True') { $_POST['status'] = '+'; }
                         else if ($_POST['status'] == 'False') { $_POST['status'] = '-'; }
-                        $this->mysqli->update("users","{$key}","{$_POST[$key]}","`login` = '{$user}'");
+                        $this->mysqli->update("!sys_users","{$key}","{$_POST[$key]}","`login` = '{$user}'");
                     }
                 }
             }
@@ -65,7 +65,7 @@
 
         function add_user()
         {
-            $this->mysqli->insert("users","null, '".$_POST['login']."','".$_POST['password']."', '', '', '".$_POST['fio']."','".$_POST['position']."', '".$_POST['phone']."','".$_POST['mail']."','+'");
+            $this->mysqli->insert("!sys_users","null, '".$_POST['login']."','".$_POST['password']."', '', '', '".$_POST['fio']."','".$_POST['position']."', '".$_POST['phone']."','".$_POST['mail']."','+'");
         }
     }
 

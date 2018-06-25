@@ -1,23 +1,41 @@
 <?php
-    // Добавление строки
-    // Вывод строк
-    // Вывод столбцов
-    $edit_true_bool = false;
-    $status_warning = $status_danger = $status_success = $status_empty = 0;
-    require_once($_SERVER['DOCUMENT_ROOT']."/body/query.php");
+
+    list($data, $permissions, $title) = $MODEL->body();
+    //pre($data);
+    //pre($permissions);
+    //pre($title);
+
+    //$edit_true_bool = false;
+    //$status_warning = $status_danger = $status_success = $status_empty = 0;
+
+
+
+
+
+    if (isset ($_POST['del']))
+    {
+        $TABLE->tr_delete("{$sub_page_value}","{$_POST['hidden']}");
+        list($data, $permissions, $title) = $MODEL->body();
+    }
+    elseif (isset ($_POST['edit']))
+    {
+        $TABLE->tr_edit();
+    }
+
+    require_once($_SERVER['DOCUMENT_ROOT'].'/body/query.php');
     require_once($_SERVER['DOCUMENT_ROOT']."/body/pre_table/pre_table_query.php");
 
 
-    foreach ($_POST as $key => $value)
-    {
-        if (strpos($key,'_true_'))
-        {
-            $edit_true_bool = true;
-            $edit_true_count = explode("_","{$key}");
-            $edit_true_count = $edit_true_count[2];
-            //echo $edit_true_count.'<br>';
-        }
-    }
+//    foreach ($_POST as $key => $value)
+//    {
+//        if (strpos($key,'_true_'))
+//        {
+//            $edit_true_bool = true;
+//            $edit_true_count = explode("_","{$key}");
+//            $edit_true_count = $edit_true_count[2];
+//            //echo $edit_true_count.'<br>';
+//        }
+//    }
 
     if (isset ($_POST['refresh'])) { header("Location: /?{$substring}"); }
 
@@ -57,12 +75,12 @@ foreach ($_POST as $key => $value)
     {
         $testing_status = explode("_","{$key}");
         if ($testing_status[1] == 'null') { $testing_status[1] = '-'; }
-        $DB->update("tables_namespace", "testing", "{$testing_status[1]}", "`name` = '{$substring}'");
+        $DB->update("!sys_tables_namespace", "testing", "{$testing_status[1]}", "`name` = '{$substring}'");
     }
 }
 
-    if ($_COOKIE['user'] == 'admin') { $DB->select("*","tables_namespace"); }
-    elseif ($_COOKIE['user'] != 'admin') { $DB->select("*","tables_namespace", "`released` = '1'"); }
+    if ($_COOKIE['user'] == 'admin') { $DB->select("*","!sys_tables_namespace"); }
+    elseif ($_COOKIE['user'] != 'admin') { $DB->select("*","!sys_tables_namespace", "`released` = '1'"); }
     while ($row = mysqli_fetch_row($DB->sql_query_select))
     {
         $released_table[$count][1] = $row[1];
@@ -89,7 +107,7 @@ foreach ($_POST as $key => $value)
         <div class = 'row'>
             <div class = 'col-lg-12' style = 'padding-left: 0px; padding-right: 0px;'>
 
-                    <table class = 'table table-condensed table-striped main_table' border = 1 style = 'margin-bottom: 60px;'>
+                    <table class = 'table table-condensed table-striped table-bordered table-hover main_table' border = 1 style = 'margin-bottom: 60px;'>
 
                         <!-- ↓ Заголовок таблицы ↓ -->
                         <thead><?php require("pre_table/tables_title.php"); ?></thead>
@@ -102,11 +120,6 @@ foreach ($_POST as $key => $value)
 
 
                         <?php
-                        //if ($edit_true_bool == false)
-                        //{
-                            require($_SERVER['DOCUMENT_ROOT'].'/body/sort.php');
-                            require($_SERVER['DOCUMENT_ROOT'].'/body/data.php');
-                        //}
                         if ($edit_true_bool == true)
                         {
                             $bool_edit = true;

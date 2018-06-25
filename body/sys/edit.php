@@ -10,7 +10,7 @@
     $id     = $substring[1];
 
 
-    $DB->select("description","tables_namespace","`name` = '{$table}'");
+    $DB->select("description","!sys_tables_namespace","`name` = '{$table}'");
     $table_name = implode(mysqli_fetch_row($DB->sql_query_select));
 
 
@@ -60,7 +60,7 @@
 
 if (isset ($_POST['edit']))
 {
-    $DB->select("fio", "users", "`login` = '{$_COOKIE['user']}'");
+    $DB->select("fio", "!sys_users", "`login` = '{$_COOKIE['user']}'");
     $user_fio = implode(mysqli_fetch_row($DB->sql_query_select));
 
     foreach ($array as $key => $value)
@@ -74,7 +74,7 @@ if (isset ($_POST['edit']))
         {
             if ($_COOKIE['user'] != 'admin')
             {
-                $DB->insert("log_info","null, '{$user_fio}', '{$_SERVER['REMOTE_ADDR']}', '" . date("d.m.Y") . "', '" . date("H:i:s") . "', '{$table_name}', '{$array[1]}', '{$title_array[$key]}', '{$array[$key]}', '{$post_value[$key]}', 'new'");
+                $DB->insert("!sys_log_info","null, '{$user_fio}', '{$_SERVER['REMOTE_ADDR']}', '" . date("d.m.Y") . "', '" . date("H:i:s") . "', '{$table_name}', '{$array[1]}', '{$title_array[$key]}', '{$array[$key]}', '{$post_value[$key]}', 'new'");
             }
             $DB->update("{$table}","{$title_sql[$key]}","{$post_value[$key]}","`id` = '{$id}'");
         }

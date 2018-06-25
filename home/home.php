@@ -1,35 +1,34 @@
 <?php
-    require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/query.php');
+    //require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/query.php');
 
-    if (isset ($_POST['add_table']))
+//    if (isset ($_POST['add_table']))
+//    {
+//        $DB->create($_POST['table_name']);
+//        header ("Location: /");
+//    }
+
+
+
+    if ($_COOKIE['user'] == 'admin')
     {
-        $DB->create($_POST['table_name']);
-        header ("Location: /");
-    }
+        if ($site_status == 'enable')
+        { $value = 'Выключить'; }
+        else if ($site_status == 'disable')
+        { $value = 'Включить'; }
 
 
-
-    if ($site_status == 'enable')
-    { $value = 'Выключить'; }
-    else if ($site_status == 'disable')
-    { $value = 'Включить'; }
-
-
-
-    if ($explode_substring = explode("/","{$substring}"))
-    {
-        $bar = $explode_substring[0];
-        if ($explode_substring[1] != '') { $label_key = $explode_substring[1]; }
-        else { $label_key = 'void'; }
-        if (($_COOKIE['user'] == 'admin') && (($bar == 'bar') || ($bar == '')))
+        if ($explode_substring = explode("/","{$substring}"))
         {
-            $label_array = parse_ini_file($_SERVER["DOCUMENT_ROOT"]."/sys/main_title.ini");
-            $title_label = $label_array[$label_key];
+            $bar = $explode_substring[0];
+            if ($explode_substring[1] != '') { $label_key = $explode_substring[1]; }
+            else { $label_key = 'void'; }
+            if (($_COOKIE['user'] == 'admin') && (($bar == 'bar') || ($bar == '')))
+            {
+                $label_array = parse_ini_file($_SERVER["DOCUMENT_ROOT"]."/sys/main_title.ini");
+                $title_label = $label_array[$label_key];
+            }
         }
     }
-
-
-
 
 
 ?>
@@ -56,7 +55,7 @@
             </div>
             <div class = 'col-lg-1 col-md-2 col-sm-2'></div>
             <div class = 'col-lg-6 col-md-4 col-sm-4'>
-                <?php if (($_COOKIE['user'] != 'admin') && ($user_status != '+')) { ?>
+                <?php if (($_COOKIE['user'] != 'admin') && ($status != '+')) { ?>
                 <div style = 'color: red; padding-top: 10px; width: 100%; font-size: 30px; font-weight: bold; text-align: center; background: black;'>
                     Внимание! Доступ по Вашей учётной записи запрещён!
                 </div>
@@ -93,11 +92,11 @@
                 <div class = 'col-lg-8 col-md-8 col-sm-8' style = 'background: black; color: white; height: calc(100vh - 115px); padding-left: 5px; padding-top: 10px; padding-right: 5px; border-top:solid 1px white; border-bottom: solid 1px white;'>
                     <a href = '/' class = 'adm_menu_link'><div class = 'adm_menu_div'>Главное меню</div></a>
                     <div style = 'margin-top: 40px;'></div>
-                    <a href = '/?bar/users' class = 'adm_menu_link'><div class = 'adm_menu_div'>Пользователи</div></a>
-                    <a href = '/?bar/groups' class = 'adm_menu_link'><div class = 'adm_menu_div'>Группы</div></a>
-                    <a href = '/?bar/logs' class = 'adm_menu_link'><div class = 'adm_menu_div'>Логи</div></a>
-                    <a href = '/?bar/projects' class = 'adm_menu_link'><div class = 'adm_menu_div'>Проекты</div></a>
-                    <a href = '/?bar/scripts' class = 'adm_menu_link'><div class = 'adm_menu_div'>Скрипты</div></a>
+                    <a href = '/?bar=users' class = 'adm_menu_link'><div class = 'adm_menu_div'>Пользователи</div></a>
+                    <a href = '/?bar=groups' class = 'adm_menu_link'><div class = 'adm_menu_div'>Группы</div></a>
+                    <a href = '/?bar=logs' class = 'adm_menu_link'><div class = 'adm_menu_div'>Логи</div></a>
+                    <a href = '/?bar=projects' class = 'adm_menu_link'><div class = 'adm_menu_div'>Проекты</div></a>
+                    <a href = '/?bar=scripts' class = 'adm_menu_link'><div class = 'adm_menu_div'>Скрипты</div></a>
                     <div style = 'margin-top: 40px;'></div>
                     <a href = '/home/pages/press.php?<?= $substring ?>' class = 'adm_menu_link'><div class = 'adm_menu_div'><?= $press_label ?> сайт</div></a>
                 </div>
@@ -108,13 +107,9 @@
                 <?php
                     if ($_COOKIE['user'] == 'admin')
                     {
-                        if ($explode_substring = explode("/","{$substring}"))
-                        {
-                            $bar = $explode_substring[0];
-                            $page = $explode_substring[1];
-                            if (($_COOKIE['user'] == 'admin') && ($bar == 'bar')) { echo "<iframe style = 'width: 100%; height: calc(100vh - 115px); border: 0;' src = '/home/pages/{$page}.php'></iframe>"; }
-                            else { require_once ($_SERVER['DOCUMENT_ROOT']."/home/pages/main.php");  }
-                        }
+                        if (($_COOKIE['user'] == 'admin') && ($sub_page_key == 'bar'))
+                        { echo "<iframe style = 'width: 100%; height: calc(100vh - 115px); border: 0;' src = '/home/pages/{$sub_page_value}.php'></iframe>"; }
+                        else { require_once ($_SERVER['DOCUMENT_ROOT']."/home/pages/main.php"); }
                     }
                     else { require_once ($_SERVER['DOCUMENT_ROOT']."/home/pages/main.php"); }
 

@@ -12,7 +12,7 @@
 
 
     $table_count = 0;
-    $DB->select("*","tables_namespace", "`released` = '1'");
+    $DB->select("*","!sys_tables_namespace", "`released` = '1'");
     $SQL_QUERY_select_table = $DB->sql_query_select;
     while ($row = mysqli_fetch_row($SQL_QUERY_select_table))
     {
@@ -115,7 +115,7 @@
 
 
 
-        $DB->select("name","group_namespace","{$selected_table_name} = '+'");
+        $DB->select("name","!sys_group_namespace","{$selected_table_name} = '+'");
         $SQL_QUERY_select_users = $DB->sql_query_select;
         while ($row = mysqli_fetch_row($SQL_QUERY_select_users))
         { $table_user[] = $row[0]; }
@@ -137,7 +137,7 @@
     {
         $selected_table_description = $_POST['selected_table'];
 
-        $DB->select("name","tables_namespace","`description` = '{$selected_table_description}'");
+        $DB->select("name","!sys_tables_namespace","`description` = '{$selected_table_description}'");
         while ($row = mysqli_fetch_row($DB->sql_query_select))
         { $selected_table_name = $row[0]; }
         ?>
@@ -145,7 +145,7 @@
             <script>$('input[name = "table_description"]').val("<?= $selected_table_description ?>");</script>
         <?php
         $user_count = 0;
-        $DB->select("name","group_namespace",$selected_table_name." = '+'");
+        $DB->select("name","!sys_group_namespace",$selected_table_name." = '+'");
         $SQL_QUERY_select_users = $DB->sql_query_select;
         while ($row = mysqli_fetch_row($SQL_QUERY_select_users))
         {

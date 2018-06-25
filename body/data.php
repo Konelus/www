@@ -1,5 +1,5 @@
 <?php
-    exit;
+    //exit;
     $count =  $tr = 0;
 
     if (((!isset ($_POST['search_btn'])) && ($_POST['hidden_sort_5'] == '') && ($_POST['hidden_sort_6'] == '')))

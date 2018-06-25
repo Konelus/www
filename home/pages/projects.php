@@ -8,7 +8,7 @@
     }
 
 
-    if (isset ($_POST['del'])) { $DB->delete("tables_namespace","`id` = '{$_POST['hidden']}'"); }
+    if (isset ($_POST['del'])) { $DB->delete("!sys_tables_namespace","`id` = '{$_POST['hidden']}'"); }
     elseif (isset ($_POST['save']))
     {
         if ($_POST['access'] == 'Доступно') { $access = '1'; }
@@ -17,14 +17,14 @@
         elseif ($_POST['additional'] == 'Мониторинг') { $additional = 'monitoring'; }
         elseif ($_POST['additional'] == 'Синхронизация') { $additional = 'sync'; }
 
-        $DB->update("tables_namespace","description","{$_POST['proj_name']}","`id` = {$_POST['hidden']}");
-        $DB->update("tables_namespace","released","{$access}","`id` = {$_POST['hidden']}");
-        $DB->update("tables_namespace","testing","{$additional}","`id` = {$_POST['hidden']}");
+        $DB->update("!sys_tables_namespace","description","{$_POST['proj_name']}","`id` = {$_POST['hidden']}");
+        $DB->update("!sys_tables_namespace","released","{$access}","`id` = {$_POST['hidden']}");
+        $DB->update("!sys_tables_namespace","testing","{$additional}","`id` = {$_POST['hidden']}");
     }
 
     $column = [1 => 'Проект', 2 => 'Изображение', 3 => 'Статус', 4 => 'Тест'];
 
-    $DB->select("*","tables_namespace");
+    $DB->select("*","!sys_tables_namespace");
     while ($array = mysqli_fetch_array($DB->sql_query_select))
     { $project[] = $array; }
 
