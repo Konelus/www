@@ -1,8 +1,4 @@
 <?php
-
-    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
-
-
     $text = "Ожидает запуска!";
     if (isset ($_POST['make_schedule']))
     {

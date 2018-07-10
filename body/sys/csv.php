@@ -1,39 +1,16 @@
 <?php
+    require_once($_SERVER['DOCUMENT_ROOT']."/class/connection.php");
 
-    /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
-    require_once($_SERVER['DOCUMENT_ROOT']."/sys/use.php");
-
-    $localhost = "localhost";
-    $user = "root";
-    $password = $link;
-    $db = "rtk_01";
-    $mysqli = new mysqli($localhost, $user, $password, $db);
-    mysqli_set_charset($mysqli, 'utf8');
-    /* - - - - - - - - - - ↑ Подключение к БД ↑ - - - - - - - - - - */
-
-
-    $cat_name = end(explode("=", ('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'])));
-    $podcat_name = explode('?', $cat_name);
-
-
-
-    $SQL_select_td_name = $mysqli->query("SELECT * FROM `".$podcat_name[1]."_table`");
-    while ($row = mysqli_fetch_row($SQL_select_td_name))
-    {
-        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `{$podcat_name[1]}` SET `".$row[2]."` = REPLACE(`{$row[2]}`, '\\n', ' ')");
-        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `{$podcat_name[1]}` SET `".$row[2]."` = REPLACE(`{$row[2]}`, '\\r', ' ')");
-        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `{$podcat_name[1]}` SET `".$row[2]."` = REPLACE(`{$row[2]}`, '\;', '')");
-        $SQL_QUERY_str_replace = $mysqli->query("UPDATE `{$podcat_name[1]}` SET `".$row[2]."` = REPLACE(`{$row[2]}`, '\"', '')");
-        //echo "UPDATE `vibory` SET `".$row[2]."` = REPLACE(`".$row[2]."`, ';', ' ')";
-    }
+    $substring = $_GET['project'];
 
 
 $td_td = 1;
 $count = 0;
-$SQL_QUERY_select_data = $mysqli->query("select * from `".$podcat_name[1]."` ");
-if ($SQL_QUERY_select_data != null)
+
+$DB->select("*","{$substring}");
+if ($DB->sql_query_select != null)
 {
-    while ($row = mysqli_fetch_row($SQL_QUERY_select_data))
+    while ($row = mysqli_fetch_row($DB->sql_query_select))
     {
         for ($i = 0; $i <= count($row); $i++) { $title[$count][$i] = $row[$i]; }
         $tr_new_count[$count] = $row[0];
@@ -42,8 +19,8 @@ if ($SQL_QUERY_select_data != null)
 }
 
 
-    $max_count = mysqli_num_rows($SQL_QUERY_select_data);
-    $max_td = mysqli_num_fields($SQL_QUERY_select_data);
+    $max_count = mysqli_num_rows($DB->sql_query_select);
+    $max_td = mysqli_num_fields($DB->sql_query_select);
 
 
 
@@ -73,9 +50,9 @@ if ($SQL_QUERY_select_data != null)
     }
 
 
-    $file = $_SERVER['DOCUMENT_ROOT'].'/temp3721/'.$podcat_name[1].".csv";
+    $file = $_SERVER['DOCUMENT_ROOT'].'/temp3721/'.$substring.".csv";
     unlink($file);
-    $fd = fopen($file, 'w') or die($_SERVER['DOCUMENT_ROOT'].'/temp3721/'.$podcat_name[1].".csv");
+    $fd = fopen($file, 'w') or die($_SERVER['DOCUMENT_ROOT'].'/temp3721/'.$substring.".csv");
     fwrite($fd, $csv_var);
     fclose($fd);
 ?>
@@ -87,5 +64,5 @@ if ($SQL_QUERY_select_data != null)
     <title>Выгрузка CSV</title>
 </head>
 <body>
-    <div style = 'text-align: center;'>Выгрузка успешно сформирована.</div><div style = 'text-align: center;'>Нажмите на <a style = 'color: red;' href = '/temp3721/<?= $podcat_name[1].".csv" ?>'>ссылку</a>, чтобы скачать</div>
+    <div style = 'text-align: center;'>Выгрузка успешно сформирована.</div><div style = 'text-align: center;'>Нажмите на <a style = 'color: red;' href = '/temp3721/<?= $substring.".csv" ?>'>ссылку</a>, чтобы скачать</div>
 </body>

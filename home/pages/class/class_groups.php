@@ -1,6 +1,6 @@
 <?php
 
-    require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/class/connection.php');
 
     abstract class ABSTRACT_ADM_GROUPS
     {
@@ -95,12 +95,56 @@
         function edit_group($group_name)
         {
             $this->tables_list();
-            foreach ($this->columns_rus as $key => $value)
+            foreach ($_POST as $key => $value)
             {
-                $this->mysqli->update("!sys_group_namespace","$value[0]","+", "`name` = '{$group_name}'");
-                $this->mysqli->update("!sys_group_namespace","$value[0]_status","{$_POST[$value[0]]}", "`name` = '{$group_name}'");
-            }
+                if (($key != 'hidden') && ($key != 'edit_btn'))
+                {
 
+                    $this->mysqli->select("id","{$key}_permission","`{$key}_group` = '{$group_name}'");
+                    if ($this->mysqli->sql_query_select != '') { $check = mysqli_fetch_array($this->mysqli->sql_query_select); }
+                    else { $check = ''; }
+                    //echo "$key";
+                    //pre($check);
+                    if ($value == '') { $val = ''; }
+                    elseif ($value != '') { $val = '+'; }
+
+                    if (($value == '') && ($check != ''))
+                    {
+                        $this->mysqli->delete("{$key}_permission","`{$key}_group` = '{$group_name}'");
+                        $this->mysqli->delete("{$key}_permission","`{$key}_group` = '{$group_name}_edit'");
+                    }
+                    elseif (($value != '') && ($check == ''))
+                    {
+
+
+
+                            $this->mysqli->show("{$key}_permission");
+                            if ($this->mysqli->sql_query_show != '')
+                            {
+                                $count = 0;
+                                while ($temp = mysqli_fetch_array($this->mysqli->sql_query_show)) { $count++; }
+                                $str = $str_edit = '';
+                                for ($str_count = 0; $str_count < $count; $str_count++)
+                                {
+                                    if ($str_count == 0) { $str = $str_edit = 'null, '; }
+                                    elseif ($str_count == 1)
+                                    { $str .= "'{$group_name}'"; $str_edit .= "'{$group_name}_edit'"; }
+                                    else
+                                    {
+                                        $str .= ", '+'";
+                                        if ($value == 'superuser') { $str_edit .= ", '+'"; }
+                                        else { $str_edit .= ", '-'"; }
+                                    }
+                                }
+                                $this->mysqli->insert("{$key}_permission","{$str}");
+                                $this->mysqli->insert("{$key}_permission","{$str_edit}");
+                            }
+                    }
+
+                    $this->mysqli->update("!sys_group_namespace", "{$key}", "{$val}", "`name` = '{$group_name}'");
+                    $this->mysqli->update("!sys_group_namespace", "{$key}_status", "{$value}", "`name` = '{$group_name}'");
+                }
+            }
         }
     }
 

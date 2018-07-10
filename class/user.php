@@ -8,6 +8,7 @@
         abstract function user_permission($substring);
         abstract function user_vision($substring);
         abstract function user_fio();
+        abstract function current_table_permissions($substring);
     }
 
     class USER extends ABSTRACT_USER
@@ -42,8 +43,11 @@
         function user_group()
         {
             //echo '<div style = "background: black; color: red;">-- -- -- user_group -- -- --</div>';
-            $this->mysqli->select("table_group","!sys_users","`login` = '{$_COOKIE['user']}'");
-            $this->user_group = implode(mysqli_fetch_row($this->mysqli->sql_query_select));
+            if ($_COOKIE['user'] != 'admin')
+            {
+                $this->mysqli->select("table_group","!sys_users","`login` = '{$_COOKIE['user']}'");
+                $this->user_group = implode(mysqli_fetch_row($this->mysqli->sql_query_select));
+            }
             //echo '<div style = "background: black; color: red;">-- -- -- user_group -- -- --</div><br>';
         }
 
@@ -57,10 +61,11 @@
             {
                 foreach ($array as $key => $value)
                 {
+                    if (is_numeric($key)) { unset($array[$key]); }
                     if (($key != 'id') && ($key != 'name') && (!is_numeric($key)) && ($value != '') && ($value != '-'))
                     {
                         if ($value == '+') { $this->user_table[] = $key; }
-                        else { $this->user_status[] = $key; }
+                        elseif (($value != '+') && ($value != '-') && ($value != '')) { $this->user_status[$key] = $value; }
                     }
                 }
                 unset($array);
@@ -68,41 +73,90 @@
             //echo '<div style = "background: black; color: red;">-- -- -- user_table -- -- -- </div><br>';
         }
 
+        function current_table_permissions($substring)
+        {
+            if ($_COOKIE['user'] != 'admin')
+            {
+                $this->user_group();
+                $this->mysqli->select("{$substring}_status","!sys_group_namespace","`name` = '{$this->user_group}'");
+                //pre(implode(mysqli_fetch_row($this->mysqli->sql_query_select)));
+                return implode(mysqli_fetch_row($this->mysqli->sql_query_select));
+            }
+            else { return 'superuser'; }
+        }
+
         function user_permission($substring, $cell = '*')
         {
             //echo '<div style = "background: black; color: red;">-- -- -- user_permission -- -- -- </div>';
             //$this->user_group();
 
-            $this->mysqli->select("{$cell}","{$substring}_permission","`{$substring}_group` = '{$this->user_group}'");
-            $array = mysqli_fetch_array($this->mysqli->sql_query_select);
-            foreach ($array as $key => $value)
+            if ($_COOKIE['user'] != 'admin')
             {
-                if (($key != "{$substring}_group") && (!is_numeric($key)) && ($value != '') && ($value != '-'))
+                $this->mysqli->select("{$cell}","{$substring}_permission","`{$substring}_group` = '{$this->user_group}'");
+                $array = mysqli_fetch_array($this->mysqli->sql_query_select);
+                foreach ($array as $key => $value)
                 {
-                    $this->user_cell_vision[$key] = $array[$key];
-                    $this->mysqli->select("{$key}","{$substring}","`id` = '1'");
-                    while ($row =  mysqli_fetch_row($this->mysqli->sql_query_select))
+                    if (($key != "{$substring}_group") && (!is_numeric($key)) && ($value != '') && ($value != '-'))
                     {
-                    if ($key == 'id') { $this->user_cell_vision_name['id'] =  $row[0]; }
-                    elseif ($key != 'id') $this->user_cell_vision_name[] = $row[0]; }
+                        $this->user_cell_vision[$key] = $array[$key];
+                        $this->mysqli->select("{$key}","{$substring}","`id` = '1'");
+                        if ($this->mysqli->sql_query_select != '')
+                        {
+                            while ($row =  mysqli_fetch_row($this->mysqli->sql_query_select))
+                            {
+                                if ($key == 'id') { $this->user_cell_vision_name['id'] =  $row[0]; }
+                                elseif ($key != 'id') { $this->user_cell_vision_name[] = $row[0]; }
+
+                            }
+                        }
+                    }
+                }
+                unset($array);
+
+                $this->mysqli->select("{$cell}","{$substring}_permission","`{$substring}_group` = '{$this->user_group}_edit'");
+                $array = mysqli_fetch_array($this->mysqli->sql_query_select);
+                foreach ($array as $key => $value)
+                {
+                    if (($key != 'id') && ($key != "{$substring}_group") && (!is_numeric($key)) && ($value != '') && ($value != '-'))
+                    { $this->user_cell_edit[$key] = $array[$key]; }
+                }
+                unset($array);
+            }
+            else
+            {
+                $this->mysqli->show("{$substring}");
+                while ($array = mysqli_fetch_array($this->mysqli->sql_query_show)) { $temp_cell_array[] = $array; }
+
+                $this->mysqli->select("*","{$substring}", "`id` = '1'");
+                $temp_cell_name = mysqli_fetch_array($this->mysqli->sql_query_select);
+
+
+                unset($this->user_cell_vision);
+                unset($this->user_cell_vision_name);
+                unset($this->user_cell_edit);
+                foreach ($temp_cell_array as $key => $value)
+                {
+                    //if ($value[0] != 'id')
+                    //{
+
+                        $this->user_cell_vision[$value[0]] = '+';
+                        $this->user_cell_vision_name[$key] = $temp_cell_name[$value[0]];
+                        $this->user_cell_edit[$value[0]] = '+';
+                    //}
                 }
 
+                //pre($this->user_cell_vision_name);
+                //pre($this->user_cell_edit);
+                //pre($this->user_cell_vision_name);
+                //pre($temp_cell_array);
             }
-            //pre($this->user_cell_vision_name);
-            unset($array);
-
-            $this->mysqli->select("{$cell}","{$substring}_permission","`{$substring}_group` = '{$this->user_group}_edit'");
-            $array = mysqli_fetch_array($this->mysqli->sql_query_select);
-            foreach ($array as $key => $value)
-            {
-                if (($key != 'id') && ($key != "{$substring}_group") && (!is_numeric($key)) && ($value != '') && ($value != '-'))
-                { $this->user_cell_edit[$key] = $array[$key]; }
-            }
-            //pre($this->user_cell_edit);
-            unset($array);
             //echo '<div style = "background: black; color: red;">-- -- -- user_permission -- -- --</div><br>';
         }
 
+        /***
+         * @param $substring
+         * user_vision не используется
+         */
         function user_vision($substring)
         {
             //echo '<div style = "background: black; color: red;">-- -- -- user_vision -- -- -- </div>';
@@ -121,11 +175,13 @@
             $fio = implode(mysqli_fetch_row($this->mysqli->sql_query_select));
 
             $fio = explode(" ","{$fio}");
-            for ($count = 1; $count <= 2; $count++)
+
+            for ($count = 0; $count < count($fio); $count++)
             {
-                if (mb_substr($fio[$count],"0","1") != '')
-                { $fio[$count] = mb_substr($fio[$count],"0","1").'.'; }
+                if ($count > 0)
+                { $fio[$count] = mb_substr($fio[$count], '0', '1', 'UTF-8').'.'; }
             }
+
             $this->user_fio = "{$fio[0]} {$fio[1]}{$fio[2]}";
             //echo '<div style = "background: black; color: red;">-- -- -- user_fio -- -- -- </div><br>';
         }

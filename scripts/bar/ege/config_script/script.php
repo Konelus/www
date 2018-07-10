@@ -5,9 +5,6 @@
 </div>
 
 <?php
-
-    require_once($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
-    require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
     $text = "Ожидает запуска!";
 
     if (isset ($_POST['create_ege']))

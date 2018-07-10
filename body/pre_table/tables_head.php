@@ -1,131 +1,50 @@
-<?php
-if (isset ($_POST['replace_column']))
-{
-    $DB->select("sql_name","{$substring}_table","`name` = '{$_POST['current']}'");
-    while ($row = mysqli_fetch_row($DB->sql_query_select)) { $current = $row[0]; }
-    if ($_POST['other'] != 'id')
-    {
-        $DB->select("sql_name", "{$substring}_table", "`name` = '{$_POST['other']}'");
-        while ($row = mysqli_fetch_row($DB->sql_query_select)) { $other = $row[0]; }
-    }
-    else { $other = 'id'; }
+<?php if (isset ($_POST['search_btn'])) { hidden_search(0); } ?>
+    <div class='container-fluid' style = 'margin-bottom: 70px;'>
+        <div class='row main_div_margin'>
+            <div class = 'col-lg-12 col-md-12 col-sm-12 affix' style = 'padding-left: 0; padding-right: 0; z-index: 1'>
+                <!-- ↓ Форма поиска записей в таблице ↓ -->
+                <div class='col-lg-3 col-md-4 col-sm-4 table_title_div table_search_input_div'>
+                    <?php if (isset ($_POST['inversion'])) { $ch = 'checked'; } else { $ch = ''; } ?>
+                    <div style = 'margin-top: 2px; width: 10%; float: left; margin-right: 5px;'><label for = 'cb'>не </label><div style = 'float: right; margin-top: 2px;'><input <?= $ch ?> id = 'cb' type = 'checkbox' name = 'inversion'></div></div>
+                    <div style = 'width: 30%; float: left; margin-right: 5px;'><input style = 'padding-left: 5px; padding-right: 5px;' class = 'form-control table_search_input' autocomplete='off' type = 'text' name = 'caption'></div>
+                    <div style = 'width: 35%; float: left; margin-right: 5px;'>
+                        <select class = 'form-control table_search_input' name = 'selected_td' style = 'padding-top: 4px;'>
+                            <?php
+                            foreach ($title as $key => $value)
+                            {
+                                if ($key != 'id')
+                                {
+                                    if ($_POST['hidden_sort_5'] == $value) { $selected = 'selected'; } else { $selected = ''; }
+                                    echo "<option $selected>$value</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div style = 'width: 20%; float: left;' class = 'second_bar_div'><input value = 'Поиск' type = 'submit' name = 'search_btn' class = 'table_search_btn'></div>
+                </div>
 
-    $DB->alter_replace("{$substring}","{$current}", "{$other}");
-    if ($other == 'id') { $other = "{$substring}_group"; }
-    $DB->alter_replace("{$substring}_permission","{$current}", "{$other}");
+                <!-- ↑ Форма поиска записей в таблице ↑ -->
+                <div class = 'col-lg-6 col-md-4 col-sm-3 table_title_div'>
+                    <?php $status = $current_users_access[$substring.'_status'];
+                    if (($_COOKIE['user'] == 'admin') || ($_COOKIE['user'] == 'Aleksandr.Kvasha@south.rt.ru') || ($_COOKIE['user'] == 'Vlasov@south.rt.ru') ||
+                        ($_COOKIE['user'] == 'A.Pisarenko@south.rt.ru') || ($_COOKIE['user'] == 'Denis.Osadchiy@south.rt.ru') || ($status == 'superuser')) { ?>
+                        <a target = '_blank' style = 'color: white; border: 0; background: black;' href = '/body/sys/csv.php/?<?= $substring ?>'><?= "{$page_title}"; ?> (выгрузка)</a>
+                    <?php } else {  echo "<span style = 'cursor: default;'>{$page_title}</span>"; } ?>
+                </div>
 
-
-
-
-    $DB->select("sort","{$substring}_table","sql_name = '$current'");
-    while ($row = mysqli_fetch_row($DB->sql_query_select)) { $current_id = $row[0]; }
-
-    $DB->select("sort","{$substring}_table","sql_name = '$other'");
-    while ($row = mysqli_fetch_row($DB->sql_query_select)) { $other_id = $row[0]; }
-
-    if (($other == 'sort') || ($other == "{$substring}_group")) { $other_id = 0; }
-    //echo "$current_id --> $other_id";
-
-    if ($current_id < $other_id)
-    {
-        //echo "{($current_id + 1)} <= {$other_id}<br>";
-        $DB->update("{$substring}_table","sort","temp{$current_id}", "`sort` = '{$current_id}'");
-        for ($count = $current_id + 1; $count <= $other_id; $count++)
-        {
-            $DB->update("{$substring}_table","sort","".($count - 1), "`sort` = '$count'");
-        }
-        $DB->update("{$substring}_table","sort","".($other_id),"`sort` = 'temp{$current_id}'");
-    }
-    else if ($current_id > $other_id)
-    {
-        //echo $current_id.'<br>';
-        $DB->update("{$substring}_table","sort","temp{$current_id}", "`sort` = '{$current_id}'");
-        for ($count = $current_id - 1; $count > $other_id; $count--)
-        {
-            $DB->update("{$substring}_table","sort","".($count + 1), "`sort` = '$count'");
-        }
-        $DB->update("{$substring}_table","sort","".($other_id + 1),"`sort` = 'temp{$current_id}'");
-    }
-
-    unset($table, $title1);
-    // ↓ Получение информации о правах пользователя ↓
-    if ($_COOKIE['user'] != 'admin')
-    {
-        //$count = 0;
-        $DB->select("*","{$substring}_permission","`{$substring}_group` = '{$current_users_group}'");
-        if ($DB->sql_query_select != null)
-        { $title1 = mysqli_fetch_row($DB->sql_query_select); }
-        pre($title1);
-    }
-    // ↑ Получение информации о правах пользователя ↑
-
-    $table_count1 = 2;
-    $DB->select("*","{$substring}_table");
-    if ($DB->sql_query_select != null)
-    {
-        //$max_td_count = mysqli_num_rows($DB->sql_query_select);
-
-        //echo "<span style = 'color: red;'>{$max_td_count}</span><br>";
-        while ($row = mysqli_fetch_row($DB->sql_query_select))
-        {
-            if (($title1[$table_count1] == '+') && ($_COOKIE['user'] != 'admin'))
-            {
-                //$new_td[$table_count + 1] = ($table_count1 - 1);
-                $table[$row[3]] = $row[1];
-                //$table_count++;
-                //$max_td_count_1 = $table_count;
-            }
-            else if ($_COOKIE['user'] == 'admin')
-            {
-                //$new_td[$table_count + 1] = ($table_count1 - 1);
-                $table[$row[3]] = $row[1];
-                //$table_count++;
-            }
-            $table_count1++;
-        }
-    }
-    ksort($table);
-    header("Location: /?{$substring}");
-
-}
-
-
-    // ↓ Список таблиц ↓
-    //$DB->select("description","tables_namespace","`name` = '{$substring}'");
-    //while ($row = mysqli_fetch_row($DB->sql_query_select))
-    //{ $table_name = $row[0]; }
-    // ↑ Список таблиц ↑
-
-    if (isset ($_POST['search_btn']))
-    { sql_name("{$substring}","{$_POST['selected_td']}"); $searched_td = $result; }
-
-
-
-    //if (($_COOKIE['user'] == 'admin') || ($current_users_access["{$substring}_status"] == 'superuser'))
-    //{ $margin = 'margin-bottom: 110px;'; }
-    //else if (($_COOKIE['user'] != 'admin') && ($current_users_access["{$substring}_status"] != 'superuser'))
-    //{
-        $margin = 'margin-bottom: 70px;';
-    //}
-
-
-
-
-
-?>
-
-<div class='container-fluid' style = '<?= $margin; ?>'>
-    <div class='row main_div_margin'>
-        <div class = 'col-lg-12 col-md-12 col-sm-12 affix' style = 'padding-left: 0; padding-right: 0; z-index: 1'>
-
-        <?php
-        if (($_COOKIE['user'] == 'admin') || ($current_users_access[$substring.'_status'] == 'superuser'))
-        {
-            require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/user_head.php');
-            //require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/admin_head.php');
-         }
-         else if (($_COOKIE['user'] != 'admin') && ($current_users_access[$substring.'_status'] != 'superuser'))
-         { require_once ($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/user_head.php'); } ?>
+                <!-- ↓ Кнопки home и exit ↓ -->
+                <div class='col-lg-3 col-md-4 col-sm-5 table_title_div table_bar_div' style = 'float: right;'>
+                    <div class = 'second_bar_div'><div class = 'exit_div'><input name = 'exit' class = 'exit_btn' type = 'submit' value = 'exit' style = ''></div></div>
+                    <div class = 'second_bar_div' style = 'margin-left: 20px; margin-right: 30px;'><a href='/' class='table_add_href'>Home</a></div>
+                    <div class = '' style = 'margin-top: 1px; width: 160px; float: right;'>
+                        <div style = 'width: 100%;'>
+                            <input type = 'submit' name = 'refresh' style = 'background: black; border: 0; text-decoration: underline; color: white;' value = 'Отмена сортировки'>
+                        </div>
+                    </div>
+                </div>
+                <!-- ↑ Кнопки home и exit ↑ -->
+            </div>
         </div>
     </div>
-</div>
+<?php if (isset ($_POST['search_btn'])) { hidden_search(1); } ?>

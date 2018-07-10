@@ -1,6 +1,6 @@
 <?php
 
-    require_once($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/class/connection.php');
 
 
     abstract class ABSTRACT_ADM_CLASS

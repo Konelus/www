@@ -1,5 +1,5 @@
 <?php
-    require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
+    require_once($_SERVER['DOCUMENT_ROOT'].'/class/connection.php');
     function pre0($array)
     {
         echo '<pre>';
@@ -8,7 +8,15 @@
     }
 
 
-    if (isset ($_POST['del'])) { $DB->delete("!sys_tables_namespace","`id` = '{$_POST['hidden']}'"); }
+    if (isset ($_POST['del']))
+    {
+        $DB->drop("{$_POST['hidden']}");
+        $DB->drop("{$_POST['hidden']}_permission");
+        $DB->drop("{$_POST['hidden']}_vision");
+        $DB->alter_drop("!sys_group_namespace","{$_POST['hidden']}");
+        $DB->alter_drop("!sys_group_namespace","{$_POST['hidden']}_status");
+        $DB->delete("!sys_tables_namespace","`name` = '{$_POST['hidden']}'");
+    }
     elseif (isset ($_POST['save']))
     {
         if ($_POST['access'] == 'Доступно') { $access = '1'; }
@@ -17,10 +25,15 @@
         elseif ($_POST['additional'] == 'Мониторинг') { $additional = 'monitoring'; }
         elseif ($_POST['additional'] == 'Синхронизация') { $additional = 'sync'; }
 
-        $DB->update("!sys_tables_namespace","description","{$_POST['proj_name']}","`id` = {$_POST['hidden']}");
-        $DB->update("!sys_tables_namespace","released","{$access}","`id` = {$_POST['hidden']}");
-        $DB->update("!sys_tables_namespace","testing","{$additional}","`id` = {$_POST['hidden']}");
+        $DB->update("!sys_tables_namespace","description","{$_POST['proj_name']}","`name` = {$_POST['hidden']}");
+        $DB->update("!sys_tables_namespace","released","{$access}","`name` = {$_POST['hidden']}");
+        $DB->update("!sys_tables_namespace","testing","{$additional}","`name` = {$_POST['hidden']}");
     }
+    elseif (isset ($_POST['add_project']))
+    {
+        $DB->create($_POST['project_name']);
+    }
+
 
     $column = [1 => 'Проект', 2 => 'Изображение', 3 => 'Статус', 4 => 'Тест'];
 
@@ -68,8 +81,8 @@
                 <div class = 'col-lg-12' style = 'margin-top: 2px; margin-bottom: 6px;'>
                     <div style = 'width: 500px; margin: auto;'>
                         <div style = 'float: left; cursor: default; margin-right: 4px; font-size: 20px; margin-top: 5px;'>Добавление проекта</div>
-                        <div style = 'float: left; margin-left: 2px;'><input type='text' style = 'width: 200px; color: black; margin-top: 4px; border: solid 1px black; padding-left: 5px; padding-right: 5px;' class = 'form-control text_box_border' autocomplete='off' name='group_name'></div>
-                        <div style = 'float: left;'><input class = 'table_small_add_btn btn' type='submit' value='Добавить' name='add_group' style = 'color: white; background: black; margin-left: 5px; margin-top: 4px; border: solid 1px grey;'></div>
+                        <div style = 'float: left; margin-left: 2px;'><input type='text' style = 'width: 200px; color: black; margin-top: 4px; border: solid 1px black; padding-left: 5px; padding-right: 5px;' class = 'form-control text_box_border' autocomplete='off' name='project_name'></div>
+                        <div style = 'float: left;'><input class = 'table_small_add_btn btn' type='submit' value='Добавить' name='add_project' style = 'color: white; background: black; margin-left: 5px; margin-top: 4px; border: solid 1px grey;'></div>
                     </div>
                 </div>
                 <div class = 'col-lg-12'>
@@ -121,7 +134,7 @@
         else { $prop[1] = 'null'; }
         ?>
     <script>
-        $("#hidden").val("<?= $project[$count]['id'] ?>");
+        $("#hidden").val("<?= $project[$count]['name'] ?>");
         $("#access #<?= $prop[0] ?>").prop("selected", true);
         $("#additional #<?= $prop[1] ?>").prop("selected", true);
         $("#proj_name").val("<?= $project[$count]['description'] ?>");

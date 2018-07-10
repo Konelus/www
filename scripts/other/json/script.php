@@ -5,9 +5,7 @@
 
     $substring = $_SERVER['QUERY_STRING'];
     $ch = curl_init($substring);
-    pre($ch);
     $json = file_get_contents($ch);
-    pre($json);
     echo '132';
     $n_json = json_decode($json,true);
 ?>

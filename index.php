@@ -2,6 +2,8 @@
 
     setlocale(LC_ALL, '');
 
+    require_once($_SERVER['DOCUMENT_ROOT'].'/sys/use.php');
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/hidden.php');
     require_once ($_SERVER['DOCUMENT_ROOT'].'/class/connection.php');
     require_once ($_SERVER['DOCUMENT_ROOT'].'/class/other.php');
     require_once ($_SERVER['DOCUMENT_ROOT'].'/class/route.php');
@@ -13,7 +15,20 @@
 
     $ROUTE->page_model();
     list($status, $tables, $user_fio, $page, $sub_page_key, $sub_page_value) = $ROUTE->return;
-    require_once($_SERVER['DOCUMENT_ROOT'].'/sys/use.php');
+
+
+    if (isset ($_POST['enter']))
+    {
+        $login = $_POST["login"];
+        //$password_P = md5($_POST["Password_p"]);  Хэш, если понадобится
+        $password = $_POST["password"];
+        $DB->select("*","!sys_users","`login` = '{$login}' and `password` = '{$password}'");
+        if ($row = mysqli_fetch_row($DB->sql_query_select))
+        {
+            setcookie("user", $login, time() + 60 * 60 * 24 * 365, "/");
+            header("Location: /");
+        }
+    }
 
     if (isset ($_POST['exit']))
     {

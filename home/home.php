@@ -16,20 +16,15 @@
         else if ($site_status == 'disable')
         { $value = 'Включить'; }
 
-
-        if ($explode_substring = explode("/","{$substring}"))
+        $label_array = parse_ini_file($_SERVER["DOCUMENT_ROOT"]."/sys/main_title.ini");
+        if (isset ($_GET['bar']))
         {
-            $bar = $explode_substring[0];
-            if ($explode_substring[1] != '') { $label_key = $explode_substring[1]; }
+            if ($_GET['bar'] != '') { $label_key = $_GET['bar']; }
             else { $label_key = 'void'; }
-            if (($_COOKIE['user'] == 'admin') && (($bar == 'bar') || ($bar == '')))
-            {
-                $label_array = parse_ini_file($_SERVER["DOCUMENT_ROOT"]."/sys/main_title.ini");
-                $title_label = $label_array[$label_key];
-            }
+            if (($_COOKIE['user'] == 'admin') && ($_GET['bar'] != '')) { $title_label = $label_array[$label_key]; }
         }
+        elseif (!isset ($_GET['bar'])) {$title_label = $label_array['void']; }
     }
-
 
 ?>
 
@@ -94,6 +89,7 @@
                     <div style = 'margin-top: 40px;'></div>
                     <a href = '/?bar=users' class = 'adm_menu_link'><div class = 'adm_menu_div'>Пользователи</div></a>
                     <a href = '/?bar=groups' class = 'adm_menu_link'><div class = 'adm_menu_div'>Группы</div></a>
+                    <a href = '/?bar=groups' class = 'adm_menu_link'><div class = 'adm_menu_div'>Права групп</div></a>
                     <a href = '/?bar=logs' class = 'adm_menu_link'><div class = 'adm_menu_div'>Логи</div></a>
                     <a href = '/?bar=projects' class = 'adm_menu_link'><div class = 'adm_menu_div'>Проекты</div></a>
                     <a href = '/?bar=scripts' class = 'adm_menu_link'><div class = 'adm_menu_div'>Скрипты</div></a>

@@ -306,7 +306,5 @@
     </div>
 </form>
 <?php }
-//pre(get_defined_vars());
-//pre($_POST);
 ?>
 </body>

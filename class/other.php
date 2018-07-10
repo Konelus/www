@@ -34,7 +34,7 @@
 
         function table_title()
         {
-            if ($this->view['value'] != '')
+            if ($this->view['key'] == 'project')
             {
                 $this->mysqli->select("description","!sys_tables_namespace","`name` = '{$this->view['value']}'");
                 $return = implode(mysqli_fetch_row($this->mysqli->sql_query_select));

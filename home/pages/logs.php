@@ -1,9 +1,10 @@
 <?php
 /* - - - - - - - - - - ↓ Подключение к БД ↓ - - - - - - - - - - */
     require_once($_SERVER['DOCUMENT_ROOT']."/sys/use.php");
-    require_once($_SERVER['DOCUMENT_ROOT']."/sys/class.php");
-    require_once($_SERVER['DOCUMENT_ROOT'].'/sys/db_func.php');
+    require_once($_SERVER['DOCUMENT_ROOT'].'/class/connection.php');
 /* - - - - - - - - - - ↑ Подключение к БД ↑ - - - - - - - - - - */
+
+    $title = ['ФИО', 'IP', 'Дата', 'Время', 'Проект', 'ID', 'Столбец', 'Исходный текст', 'Новый текст'];
 
 $lim = 27;
 if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
@@ -15,17 +16,26 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
     $select = $DB->sql_query_select;
     if ($select != null)
     {
+
         while ($row = mysqli_fetch_array($select))
         {
             $log_info[$log_count][1] = trim($row[1]);
 
+
+
             $fio = explode(" ","{$log_info[$log_count][1]}");
-            for ($count = 1; $count <= 2; $count++)
+            if ((strpos("{$fio[1]}",".") != true) && ($fio[1] != ''))
             {
-                if (mb_substr($fio[$count],"0","1") != '')
-                { $fio[$count] = mb_substr($fio[$count],"0","1").'.'; }
+                //pre($fio);
+                $fio = explode(" ","{$log_info[$log_count][1]}");
+                $log_info[$log_count][1] = $fio[0].' ';
+                for ($count = 0; $count < count($fio); $count++)
+                {
+                    if ($count > 0)
+                    { $log_info[$log_count][1] .= mb_substr($fio[$count],"0","1", 'UTF-8').'.'; }
+                }
             }
-            $log_info[$log_count][1] = "{$fio[0]} {$fio[1]}{$fio[2]}";
+
             $log_info[$log_count][2] = $row[2];
             $log_info[$log_count][3] = $row[3];
             $log_info[$log_count][4] = $row[4];
@@ -83,17 +93,7 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
 
 
         <table class = 'table table-bordered table-striped'>
-            <tr style = 'text-align: center; background: black; color: white; cursor: default; border: 0;'>
-                <td>ФИО</td>
-                <td>IP</td>
-                <td>Дата</td>
-                <td>Время</td>
-                <td>Проект</td>
-                <td>СКУП</td>
-                <td>Столбец</td>
-                <td>Исходный текст</td>
-                <td>Новый текст</td>
-            </tr>
+            <tr style = 'text-align: center; background: black; color: white; cursor: default; border: 0;'><?php foreach ($title as $key) { echo "<td>$key</td>"; } ?></tr>
             <?php
             for ($log_info_count_1 = 0; $log_info_count_1 < $log_count; $log_info_count_1++)
             {
@@ -101,9 +101,8 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
                 echo "<tr>";
                 for ($log_info_count_2 = 1; $log_info_count_2 <= 9; $log_info_count_2++)
                 {
-                    echo "<td style = 'font-size: 12px; {$logs_style}' title = '{$log_info[$log_info_count_1][$log_info_count_2]}'>";
-                    echo mb_strimwidth($log_info[$log_info_count_1][$log_info_count_2],"0","30");
-                    if (mb_strlen($log_info[$log_info_count_1][$log_info_count_2]) > 30) { echo '...'; }
+                    echo "<td style = '{$border} font-size: 12px; {$logs_style}' title = '{$log_info[$log_info_count_1][$log_info_count_2]}'>";
+                    echo $log_info[$log_info_count_1][$log_info_count_2];
                     echo '</td>';
                     $logs_style = 'text-align: center;';
                 }

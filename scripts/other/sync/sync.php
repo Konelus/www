@@ -57,5 +57,4 @@
     }
 
     $DB->update("vibory_table","name","Синхронизация (".date("H:i").")","`sql_name` = 'cinhronizaciya'");
-    pre($vibory_temp);
 ?>

@@ -1,12 +1,18 @@
 <?php
-    require_once ($_SERVER['DOCUMENT_ROOT'].'/sys/class.php');
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/class/connection.php');
     $substring = $_SERVER['QUERY_STRING'];
 
 
     $arr = parse_ini_file($_SERVER['DOCUMENT_ROOT'].'/instructions.ini');
 
     if ($arr['status'] == 'enable') { $arr['status'] = 'disable'; }
-    elseif ($arr['status'] == 'disable') { $arr['status'] = 'enable'; $DB->update("!sys_ver", "ver", "{$current_ver[0]}.{$current_ver[1]}.".($current_ver[2] + 1)); }
+    elseif ($arr['status'] == 'disable')
+    {
+        $DB->select("ver","!sys_ver");
+        $ver = implode(mysqli_fetch_row($DB->sql_query_select));
+        list($ver1, $ver2, $ver3) = explode(".","{$ver}");
+        $arr['status'] = 'enable'; $DB->update("!sys_ver", "ver", "{$ver1}.{$ver2}.".($ver3 + 1));
+    }
 
     $file = $_SERVER['DOCUMENT_ROOT'].'/instructions.ini';
     $descriptor = fopen($file,"w+");

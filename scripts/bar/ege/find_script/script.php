@@ -1,5 +1,4 @@
 <?php
-
     $text = "Ожидает запуска!";
     if (isset ($_POST['find']))
     {

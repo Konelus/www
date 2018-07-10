@@ -123,8 +123,10 @@
                                     echo '</td>';
                                     echo "<td>{$users[$key]['table_group']}</td>";
                                     echo "<td title = '{$users[$key]['position']}'>";
-                                    echo mb_strimwidth($users[$key]['position'],"0","55");
-                                    if (strlen($users[$key]['position']) > 55) { echo '...'; }
+
+                                    if (strlen($users[$key]['position']) > 55)
+                                    { echo mb_substr($users[$key]['position'],"0","55", 'UTF-8').'...'; }
+
                                     echo '</td>';
                                     echo "<td>{$users[$key]['phone']}</td>";
                                     echo "<td>{$users[$key]['mail']}</td>";

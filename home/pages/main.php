@@ -33,7 +33,7 @@
 <!--                        <input type = 'submit' style = 'color: white; height: 30px; width: 30px; background: black; border: solid 1px gold;' value = '+' name = 'add_table'>-->
                     <?php
                     }
-                    else if ($_COOKIE['user'] != 'admin')
+                    elseif (($_COOKIE['user'] != 'admin') && ($tables != ''))
                     {
                         foreach ($tables as $key => $value)
                         { ?>
