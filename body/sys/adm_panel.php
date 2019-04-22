@@ -1,4 +1,4 @@
-<div class = 'modal fade' id = 'adm_panel' style = 'color: black;'>
+<div class = 'modal fade' id = 'adm_panel' style = 'color: black;' data-backdrop="static">
     <div class = 'modal-dialog'>
         <div class = 'modal-content'>
             <form method = "post">

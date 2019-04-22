@@ -25,6 +25,7 @@
             //echo "<div style = 'background: darkblue; color: yellow;'>SELECT {$value} FROM `{$table}`{$where}{$order}{$limit}</div>";
         }
 
+
         function insert($table, $values)
         {
             $this->mysqli->query("INSERT INTO `{$table}` VALUES ({$values})");
@@ -86,10 +87,11 @@
                 $this->select("id","!sys_tables_namespace","`description` = '{$table}'");
                 $check = mysqli_fetch_row($this->sql_query_select);
                 if ($check == '')
-                { $this->insert("!sys_tables_namespace","null, '".translit($table)."', '$table', '1', '0'"); }
+                { $this->insert("!sys_tables_namespace","null, '".translit($table)."', '$table', '1', '0', '0'"); }
                 else { echo "<script>alert('Проект уже существует')</script>"; }
                 $this->alter_add("!sys_group_namespace",translit($table));
                 $this->alter_add("!sys_group_namespace",translit($table).'_status');
+                $this->insert(translit($table),"null");
             }
         }
     }

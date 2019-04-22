@@ -6,60 +6,174 @@
         { list($temp, $edit) = explode("_","{$key}"); }
     }
 
-
-    list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body();
-    //pre($data);
-    //pre($permissions);
-    //pre($title);
-
-    //$edit_true_bool = false;
-    //$status_warning = $status_danger = $status_success = $status_empty = 0;
-
-
     if (file_exists($_SERVER['DOCUMENT_ROOT']."/macro/{$_GET['project']}.ini"))
     { $macro = parse_ini_file($_SERVER['DOCUMENT_ROOT']."/macro/{$_GET['project']}.ini"); }
-    //pre($macro);
+
+    if (($macro['choice'] == 'true') && (!isset($_POST['edit'])) && (!isset($_POST['search_btn'])) && ($edit == '') && (!isset($_POST['arch'])) && (!isset($_POST['del'])) && (!isset($_POST['add_tr'])) && (!isset($_POST['show_adm_panel'])) && (!isset($_POST['show_add_tr']))) { $_POST['hidden_sort_5'] = $macro['choice_cell_name']; }
+    if (isset ($_POST['search_tmp']))
+    {
+        $_POST['inversion'] = 'checked';
+        $_POST['search_btn'] = 'Выбрать';
+    }
+
+
+    if (($_POST['caption'] != '') && ($macro['choice_alias'] != ''))
+    {
+        $temp_choice_alias = explode(",","{$macro['choice_alias']}");
+        foreach ($temp_choice_alias as $key => $value)
+        {
+            $temp_choice_alias[$key] = trim($value);
+            $temp_choice_alias_2[$key] = explode(" = ","{$temp_choice_alias[$key]}");
+            if ($_POST['caption'] == $temp_choice_alias_2[$key][1])
+            { $_POST['caption'] = $temp_choice_alias_2[$key][0]; }
+        }
+    }
+
+    list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body($macro);
+
+
+    require_once($_SERVER['DOCUMENT_ROOT'].'/class/macro.php');
+    $CHECK->check_main($macro);
+
+
+    foreach ($_POST as $key => $value)
+    {
+        if (stripos("{$key}","stats") !== false)
+        {
+            list($temp, $stats) = explode("_","{$key}");
+            $CHECK->check_in($stats, $macro);
+            break;
+        }
+    }
+
 
     if (isset ($_POST['del']))
     {
-        $TABLE->tr_delete("{$sub_page_value}","{$_POST['hidden']}");
+        $TABLE->tr_delete("{$sub_page_value}","{$_POST['hidden']}",$page_title,$title, $fio, $macro);
         list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body();
     }
     elseif (isset ($_POST['edit']))
     {
-        $TABLE->tr_edit($sub_page_value, $page_title,$title, $fio);
+        $month = ['01' => 'Январь', '02' => 'Февраль', '03' => 'Март', '04' => 'Апрель', '05' => 'Май', '06' => 'Июнь', '07' => 'Июль', '08' => 'Август', '09' => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
+        foreach ($_POST as $key => $value)
+        {
+            if (strpos("{$key}","select-") !== false)
+            {
+                list($s1, $s2, $s3, $s4, $s5) = explode("-",$key);
+                $select[$s2][$s3] = $value;
+                if ($s3 == 2)
+                {
+                    foreach ($month as $s_key => $s_value)
+                    {
+                        if ($select[$s2][$s3] == $s_value)
+                        { $select[$s2][$s3] = $s_key; }
+                    }
+                }
+
+                $_POST["text-{$s5}-{$s4}"] .= $select[$s2][$s3];
+                if (($s3 == 1) || ($s3 == 2)) { $_POST["text-{$s5}-{$s4}"] .= '.'; }
+                elseif ($s3 == 3) { $_POST["text-{$s5}-{$s4}"] .= ' '; }
+                elseif ($s3 == 4) { $_POST["text-{$s5}-{$s4}"] .= ':'; }
+                if (($select[$s2][1] == 'День') && ($select[$s2][2] == 'Месяц') && ($select[$s2][4] == 'Час') && ($select[$s2][5] == 'Мин.'))
+                { $_POST["text-{$s5}-{$s4}"] = ''; }
+            }
+        }
+
+        $TABLE->tr_edit($sub_page_value, $page_title,$title, $fio, $macro);
         list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body();
     }
     elseif (isset ($_POST['add_tr']))
     {
-        $TABLE->add_tr($sub_page_value,$macro);
+        //pre($_POST);
+        $month = ['01' => 'Январь', '02' => 'Февраль', '03' => 'Март', '04' => 'Апрель', '05' => 'Май', '06' => 'Июнь', '07' => 'Июль', '08' => 'Август', '09' => 'Сентябрь', 10 => 'Октябрь', 11 => 'Ноябрь', 12 => 'Декабрь'];
+
+        $key_check = false;
+        foreach ($_POST as $key => $value)
+        {
+            if (strpos("{$key}","select-") !== false)
+            {
+                list($s1, $s2, $s3, $s4, $s5) = explode("-",$key);
+                $select[$s2][$s3] = $value;
+                if ($s3 == 2)
+                {
+                    foreach ($month as $s_key => $s_value)
+                    {
+                        if ($select[$s2][$s3] == $s_value)
+                        { $select[$s2][$s3] = $s_key; }
+                    }
+                }
+                elseif (($s3 == 3) && ($select[$s2][$s3] != 'Год')) { $select[$s2][$s3] = $select[$s2][$s3]; }
+
+                $_POST["text-{$s5}-{$s4}"] .= $select[$s2][$s3];
+                if (($s3 == 1) || ($s3 == 2)) { $_POST["text-{$s5}-{$s4}"] .= '.'; }
+                elseif ($s3 == 3) { $_POST["text-{$s5}-{$s4}"] .= ' '; }
+                elseif ($s3 == 4) { $_POST["text-{$s5}-{$s4}"] .= ':'; }
+                if (($select[$s2][1] == 'День') && ($select[$s2][2] == 'Месяц') && ($select[$s2][4] == 'Час') && ($select[$s2][5] == 'Мин.'))
+                { $_POST["text-{$s5}-{$s4}"] = ''; }
+
+            }
+            if ((stripos($key,'text') !== false) && ($value != ''))
+            { $key_check = true; }
+        }
+        if ($key_check == true)
+        {
+            $TABLE->add_tr($sub_page_value,$page_title, $title, $fio, $macro, $status);
+            if ($macro['check'] == 'true')
+            { $CHECK->check_in_auto($macro); }
+
+            if ($macro['super_check'] == 'true')
+            {
+                $CHECK->check_in_auto($macro,"true");
+            }
+        }
         list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body();
     }
     elseif (isset ($_POST['add_cell_btn']))
     {
         $DB->alter_add("{$_GET['project']}",mb_substr(translit($_POST['add_cell_text']), "0","25","UTF-8"));
+
+        if ($macro['dump'] == 'true')
+        { $DB->alter_add("{$_GET['project']}_dump",mb_substr(translit($_POST['add_cell_text']), "0","25","UTF-8")); }
+
         $DB->update("{$_GET['project']}",mb_substr(translit($_POST['add_cell_text']), "0","25","UTF-8"),"{$_POST['add_cell_text']}","`id` = '1'");
         $DB->alter_add("{$_GET['project']}_permission",mb_substr(translit($_POST['add_cell_text']), "0","25","UTF-8"));
         list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body();
     }
     elseif (isset ($_POST['rename_cell']))
     {
+        if ($macro['dump'] == 'true')
+        { $TABLE->rename_cell("{$sub_page_value}_dump","{$_POST['old_cell_name']}","{$_POST['new_cell_name']}"); }
+
         $TABLE->rename_cell($sub_page_value,"{$_POST['old_cell_name']}","{$_POST['new_cell_name']}");
         list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body();
     }
     elseif (isset ($_POST['del_cell']))
     {
+        if ($macro['dump'] == 'true')
+        {  $TABLE->delete_cell("{$_GET['project']}_dump", $_POST['del_cell_name']); }
+
         $TABLE->delete_cell($_GET['project'], $_POST['del_cell_name']);
         list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body();
     }
     elseif (isset ($_POST['replace_cell']))
     {
+        if ($macro['dump'] == 'true')
+        { $TABLE->replace_cell("{$_GET['project']}_dump", $_POST['replace_current_cell'], $_POST['replace_after_cell']); }
+
         $TABLE->replace_cell($_GET['project'], $_POST['replace_current_cell'], $_POST['replace_after_cell']);
         list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body();
     }
+    elseif (isset($_POST['arch']))
+    {
+        $TABLE->tr_arch("{$_GET['project']}","{$_POST['hidden']}");
+        list($data, $total_tr_count, $tr_count, $permissions, $title, $permission_status, $fio) = $MODEL->body();
+    }
+
 
     require_once($_SERVER['DOCUMENT_ROOT']."/body/pre_table/pre_table_query.php");
 
+
+ //pre($_POST);
 
 //    foreach ($_POST as $key => $value)
 //    {
@@ -106,12 +220,12 @@ foreach ($_POST as $key => $value)
         }
     }
 
-    if (strripos("{$key}",'status_') !== false)
-    {
-        $testing_status = explode("_","{$key}");
-        if ($testing_status[1] == 'null') { $testing_status[1] = '-'; }
-        $DB->update("!sys_tables_namespace", "testing", "{$testing_status[1]}", "`name` = '{$substring}'");
-    }
+//    if (strripos("{$key}",'status_') !== false)
+//    {
+//        $testing_status = explode("_","{$key}");
+//        if ($testing_status[1] == 'null') { $testing_status[1] = '-'; }
+//        $DB->update("!sys_tables_namespace", "testing", "{$testing_status[1]}", "`name` = '{$substring}'");
+//    }
 }
 
     if ($_COOKIE['user'] == 'admin') { $DB->select("*","!sys_tables_namespace"); }
@@ -164,7 +278,16 @@ $hid = 'hidden';
                     } ?>
 
                     <!-- ↓ Таблица ↓ -->
-                    <?php require_once($_SERVER['DOCUMENT_ROOT'].'/body/table/table.php'); ?>
+                    <?php
+                    if ($macro['choice'] == 'true')
+                    {
+                        if (($edit != '') || (isset($_POST['edit'])) || (isset($_POST['search_btn'])) || (isset($_POST['arch'])) || (isset($_POST['del'])) || (isset($_POST['add_tr'])) || (isset($_POST['show_adm_panel'])) || (isset($_POST['show_add_tr'])))
+                        { require_once($_SERVER['DOCUMENT_ROOT'].'/body/table/table.php'); }
+                        else { require_once($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/choice.php'); }
+                    }
+                    else { require_once($_SERVER['DOCUMENT_ROOT'].'/body/table/table.php'); }
+
+                    ?>
                     <!-- ↑ Таблица ↑ -->
 
                 </table>
@@ -177,32 +300,45 @@ $hid = 'hidden';
     <?php //if ($edit == '') { ?>
     <div class = 'container' style = 'height: 36px; position: fixed; bottom: 0; left: 0; width: 100%; padding-top: 5px;  cursor: default; background: black; color: white; text-align: center;'>
         <?php
+
         //if (($_COOKIE['user'] == 'admin') || ($current_users_access["{$substring}_status"] == 'superuser'))
         //{ require_once($_SERVER['DOCUMENT_ROOT'].'/body/pre_table/sys/admin_head.php'); } ?>
         <div class = 'row'>
             <div class = 'col-lg-4' style = 'padding-left: 8px;'>
-                <?php if ($permission_status == 'superuser') { ?>
+                <?php if (($permission_status == 'superuser') || ($macro)) { ?>
                 <form method = "post">
+                    <?php if ($permission_status == 'superuser') { ?>
                     <div style = 'float: left;'>
                         <button type = 'submit' name = 'show_adm_panel' style = 'background: black; float: left; border: solid 1px gold;'>
                             <div>
-                            <span style = 'font-size: 18px; padding-top: 2px;' class = 'glyphicon glyphicon-cog'></span>
-                            <div style = 'padding-left: 5px; padding-top: 3px; float: right; font-size: 12px;'>Администрирование</div>
+                                <span style = 'font-size: 18px; padding-top: 2px;' class = 'glyphicon glyphicon-cog'></span>
+                                <div style = 'padding-left: 5px; padding-top: 3px; float: right; font-size: 12px;'>Администрирование</div>
                             </div>
                         </button>
                     </div>
-                    <div style = 'margin-left: 10px; float: left;'>
-                        <button type = 'submit' name = 'show_add_tr' style = 'background: black; float: left; border: solid 1px gold;'>
-                            <div>
-                            <span style = 'font-size: 18px; padding-top: 2px;' class = 'glyphicon glyphicon-plus'></span>
-                            <div style = 'padding-left: 5px; padding-top: 3px; float: right; font-size: 12px;'>Добавление строки</div>
-                            </div>
-                        </button>
-                    </div>
+<!--                    --><?php //if ($macro['autocomplete'] == 'true') ?>
+<!--                        <div style = 'margin-left: 10px; float: left;'>-->
+<!--                            <button type = 'submit' name = 'add_autocomplete' style = 'background: black; float: left; border: solid 1px gold;'>-->
+<!--                                <div>-->
+<!--                                    <span style = 'font-size: 18px; padding-top: 2px;' class = 'glyphicon glyphicon-cog'></span>-->
+<!--                                    <div style = 'padding-left: 5px; padding-top: 3px; float: right; font-size: 12px;'>--><?//= $macro['autocomplete_name'] ?><!--</div>-->
+<!--                                </div>-->
+<!--                            </button>-->
+<!--                        </div>-->
+                    <?php } if (($permission_status != 'readonly') && (stripos("{$_GET['project']}","_dump")) === false) { ?>
+                        <div style = 'margin-left: 10px; float: left;'>
+                            <button type = 'submit' name = 'show_add_tr' style = 'background: black; float: left; border: solid 1px gold;'>
+                                <div>
+                                    <span style = 'font-size: 18px; padding-top: 2px;' class = 'glyphicon glyphicon-plus'></span>
+                                    <div style = 'padding-left: 5px; padding-top: 3px; float: right; font-size: 12px;'>Добавление строки</div>
+                                </div>
+                            </button>
+                        </div>
+                    <?php } ?>
                 </form>
                 <?php }
 
-                if (isset ($_POST['show_add_tr']))
+                if ((isset ($_POST['show_add_tr'])) || (isset ($_POST['autocomplete'])))
                 {
                     require_once($_SERVER['DOCUMENT_ROOT'].'/body/table/sys/edit.php');
                     ?><script>$("#edit").modal("show");</script><?php
@@ -214,6 +350,10 @@ $hid = 'hidden';
                     require_once ($_SERVER['DOCUMENT_ROOT'].'/body/sys/adm_panel.php');
                     ?><script>$("#adm_panel").modal("show");</script><?php
                 }
+
+
+                if (($macro['choice'] == 'true') && ($_POST['search_btn'] == ''))
+                { ?><script>$("#choice").modal("show");</script><?php }
 
 
 
@@ -236,10 +376,61 @@ $hid = 'hidden';
                     <input type = 'submit' name = 'warning_btn' class = 'monitoring_btn' style = 'background: orange;' value = '<?= "{$status_warning}" ?>'>
                     <input type = 'submit' name = 'danger_btn'  class = 'monitoring_btn' style = 'background: red;' value = '<?= "{$status_danger}" ?>'>
                     <input type = 'submit' name = 'empty_btn'   class = 'monitoring_btn' style = 'background: white;' value = '<?= "{$status_empty}" ?>'>
-                <?php //} ?>
+                <?php } ?>
             </div>
-            <div class = 'col-lg-4'></div>
+            <div class = 'col-lg-4' style = ''>
+                <form method = "post">
+                    <?php if (($permission_status != 'readonly') && ($macro['dump'] == 'true')) { ?>
+                        <div style = 'margin-left: 10px; float: right;'>
+                            <a href = '<?= '/?project='.$_GET['project'].'_dump' ?>' target="_blank" style = 'background: black; float: left; border: solid 1px gold;'>
+                                <div style = 'padding-left: 5px; padding-right: 5px; color: white;'>
+                                    <span style = 'font-size: 18px; padding-top: 2px;' class = 'glyphicon glyphicon-folder-open'></span>
+                                    <div style = 'padding-left: 10px; padding-top: 3px; float: right; font-size: 12px;'>Архив заявок</div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php } if (($permission_status != 'readonly') && ($macro['check'] == 'true')) { ?>
+                        <div style = 'margin-left: 10px; float: right;'>
+                            <a href = '<?= '/body/table/stats.php/?project='.$_GET['project'] ?>' target="_blank" style = 'background: black; float: left; border: solid 1px gold;'>
+                                <div style = 'padding-left: 5px; padding-right: 5px; color: white;'>
+                                    <span style = 'font-size: 18px; padding-top: 2px;' class = 'glyphicon glyphicon-stats'></span>
+                                    <div style = 'padding-left: 10px; padding-top: 3px; float: right; font-size: 12px;'>Мониторинг заявок</div>
+                                </div>
+                            </a>
+                        </div>
+                        <div style = 'margin-left: 10px; float: right;'>
+                            <a href = '<?= '/body/table/stats_fast.php/?project='.$_GET['project'] ?>' target="_blank" style = 'background: black; float: left; border: solid 1px gold;'>
+                                <div style = 'padding-left: 5px; padding-right: 5px; color: white;'>
+                                    <span style = 'font-size: 18px; padding-top: 2px;' class = 'glyphicon glyphicon-stats'></span>
+                                    <div style = 'padding-left: 10px; padding-top: 3px; float: right; font-size: 12px;'>Текущий план ОР</div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php }
+                        elseif (($permission_status != 'readonly') && ($macro['super_check'] == 'true'))
+                        {
+                            $super_check_array = explode(",", "{$macro['super_check_array']}");
+                            krsort($super_check_array);
+                            foreach ($super_check_array as $key => $value)
+                            {
+                                list($key0, $value0) = explode(" - ", trim($value));
+                                $super_check_array[$key0] = $value0;
+                                unset($super_check_array[$key]);
+                                ?>
+                                <div style = 'margin-left: 10px; float: right;'>
+                                    <a href = '<?= '/body/table/stats.php/?project='.$_GET['project'].'%'.str_replace('"','',$key0) ?>' title = '<?= $value0 ?>' target="_blank" style = 'background: black; float: left; border: solid 1px gold;'>
+                                        <div style = 'padding: 0 5px 0 5px; color: white;'>
+                                            <div style = 'padding: 4px 8px 4px 8px; float: right; font-size: 12px;'>МЦТЭТ <?= $key0 ?></div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <?php
+                            }
+                        ?>
+
+                        <?php } ?>
+                </form>
+            </div>
         </div>
     </div>
-<?php } ?>
 </form>

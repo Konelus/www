@@ -19,8 +19,12 @@
 
             foreach ($_GET as $key => $value)
             {
+                /** ↓ dump macros ↓ **/
                 $this->view['key'] = $key;
-                $this->view['value'] = $value;
+                if (stripos("{$value}","_dump") !== false)
+                { list($this->view['value']) = explode("_dump","{$value}"); }
+                /** ↑ dump macros ↑ **/
+                else { $this->view['value'] = $value; }
             }
         }
 
@@ -34,10 +38,15 @@
 
         function table_title()
         {
-            if ($this->view['key'] == 'project')
+            if (($this->view['key'] == 'project') && (stripos($_SERVER['QUERY_STRING'],"_dump") === false))
             {
                 $this->mysqli->select("description","!sys_tables_namespace","`name` = '{$this->view['value']}'");
                 $return = implode(mysqli_fetch_row($this->mysqli->sql_query_select));
+            }
+            elseif (($this->view['key'] == 'project') && (stripos($_SERVER['QUERY_STRING'],"_dump") !== false))
+            {
+                $this->mysqli->select("description","!sys_tables_namespace","`name` = '{$this->view['value']}'");
+                $return = implode(mysqli_fetch_row($this->mysqli->sql_query_select))." - <span style = 'color: gold;'>ARCHIVE</span>";
             }
             else { $return = 'ELASTIC 2'; }
             return $return;

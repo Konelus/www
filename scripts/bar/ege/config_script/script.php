@@ -1,10 +1,11 @@
 <div style = ''>
     <form method = 'post'>
-        <input style = 'border: 0; background: white; color: navy; cursor: pointer;' type = 'submit' name = 'create_ege' value = 'Создать конфиги EGE'>
+        <input style = 'border: 0; background: white; color: navy; cursor: pointer;' type = 'submit' name = 'create_ege' value = 'Создать конфиги ЕГЭ'>
     </form>
 </div>
 
 <?php
+    require_once ($_SERVER['DOCUMENT_ROOT'].'/class/connection.php');
     $text = "Ожидает запуска!";
 
     if (isset ($_POST['create_ege']))
@@ -23,7 +24,7 @@
         $str = '';
         $rid = '';
         $count = 1;
-        $count_bool = false;
+
 
 
         $DB->select("*","ege","","`rid_obekta` ASC","");
@@ -34,7 +35,7 @@
                 if ($rid == '') { $rid = $array['rid_obekta']; }
 
 
-                if (($rid != $array['rid_obekta']) && ($rid != '') || (($count == 131) && ($count_bool == false)))
+                if (($rid != $array['rid_obekta']) && ($rid != ''))
                 {
 
                     $str[$count] =
@@ -42,7 +43,7 @@
     hostgroup_name {$arr['adres_en']};
     alias ".trim($arr['adres_ru']).";".$str['note'].$str[$count];
                     //echo "{$count} <pre>{$str[$count]}</pre>";
-                    if ($count < 131) { $count++; } else { $count_bool = true; }
+                     $count++;
                 }
                 $rid = $array['rid_obekta'];
 
@@ -82,6 +83,20 @@
     alias ".trim($array['adres_ru'])." каб. {$array['mesto_ustanovki']};
     address {$array['ip_adres_pak_ipcam']};
     hostgroups {$array['adres_en']},z_IPCAM,{$array['hostgroups']};
+    contact_groups EGE,{$array['contact_groups']};
+    notes Ответственный Ростелеком: {$array['fio_osnovnogo_otvetstvennogo_za_ppe']} {$array['e_mail_osnovnogo_otvetstvennogo_za_ppe']} {$array['kontaktnyy_telefon_123']};
+}
+";
+                }
+				elseif ($array['usb_ipcam'] == 'RTSP')
+                {
+                    $str[$count] .=
+                        "define host{
+    use generic-ege-ipcam,host-pnp;
+    host_name {$array['rid_pak']}{$array['adres_en']};
+    alias ".trim($array['adres_ru'])." каб. {$array['mesto_ustanovki']};
+    address {$array['ip_adres_pak_ipcam']};
+    hostgroups {$array['adres_en']},z_RTSP,{$array['hostgroups']};
     contact_groups EGE,{$array['contact_groups']};
     notes Ответственный Ростелеком: {$array['fio_osnovnogo_otvetstvennogo_za_ppe']} {$array['e_mail_osnovnogo_otvetstvennogo_za_ppe']} {$array['kontaktnyy_telefon_123']};
 }

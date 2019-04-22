@@ -25,9 +25,9 @@
         elseif ($_POST['additional'] == 'Мониторинг') { $additional = 'monitoring'; }
         elseif ($_POST['additional'] == 'Синхронизация') { $additional = 'sync'; }
 
-        $DB->update("!sys_tables_namespace","description","{$_POST['proj_name']}","`name` = {$_POST['hidden']}");
-        $DB->update("!sys_tables_namespace","released","{$access}","`name` = {$_POST['hidden']}");
-        $DB->update("!sys_tables_namespace","testing","{$additional}","`name` = {$_POST['hidden']}");
+        $DB->update("!sys_tables_namespace","description","{$_POST['proj_name']}","`name` = '{$_POST['hidden']}'");
+        $DB->update("!sys_tables_namespace","released","{$access}","`name` = '{$_POST['hidden']}'");
+        $DB->update("!sys_tables_namespace","testing","{$additional}","`name` = '{$_POST['hidden']}'");
     }
     elseif (isset ($_POST['add_project']))
     {
