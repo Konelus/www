@@ -79,11 +79,8 @@
             {
                 $this->user_group();
                 $this->mysqli->select("{$substring}_status","!sys_group_namespace","`name` = '{$this->user_group}'");
-                while ($row = mysqli_fetch_row($this->mysqli->sql_query_select))
-                { $result = $row[0]; }
-                //pre(implode(mysqli_fetch_array($this->mysqli->sql_query_select)));
-                //$result = implode(mysqli_fetch_array($this->mysqli->sql_query_select));
-                return $result;
+                //pre(implode(mysqli_fetch_row($this->mysqli->sql_query_select)));
+                return implode(mysqli_fetch_row($this->mysqli->sql_query_select));
             }
             else { return 'superuser'; }
         }
@@ -92,15 +89,6 @@
         {
             //echo '<div style = "background: black; color: red;">-- -- -- user_permission -- -- -- </div>';
             //$this->user_group();
-
-            /** ↓ dump macros ↓ **/
-            if (stripos("{$substring}","_dump") !== false)
-            { list($substring) = explode("_dump",$substring); }
-            /** ↑ dump macros ↑ **/
-
-            unset($this->user_cell_vision);
-            unset($this->user_cell_vision_name);
-            unset($this->user_cell_edit);
 
             if ($_COOKIE['user'] != 'admin')
             {
@@ -127,16 +115,12 @@
 
                 $this->mysqli->select("{$cell}","{$substring}_permission","`{$substring}_group` = '{$this->user_group}_edit'");
                 $array = mysqli_fetch_array($this->mysqli->sql_query_select);
-                if ($array != '')
+                foreach ($array as $key => $value)
                 {
-                    foreach ($array as $key => $value)
-                    {
-                        if (($key != 'id') && ($key != "{$substring}_group") && (!is_numeric($key)) && ($value != '') && ($value != '-'))
-                        { $this->user_cell_edit[$key] = $array[$key]; }
-                    }
-                    unset($array);
+                    if (($key != 'id') && ($key != "{$substring}_group") && (!is_numeric($key)) && ($value != '') && ($value != '-'))
+                    { $this->user_cell_edit[$key] = $array[$key]; }
                 }
-
+                unset($array);
             }
             else
             {
@@ -146,6 +130,10 @@
                 $this->mysqli->select("*","{$substring}", "`id` = '1'");
                 $temp_cell_name = mysqli_fetch_array($this->mysqli->sql_query_select);
 
+
+                unset($this->user_cell_vision);
+                unset($this->user_cell_vision_name);
+                unset($this->user_cell_edit);
                 foreach ($temp_cell_array as $key => $value)
                 {
                     //if ($value[0] != 'id')

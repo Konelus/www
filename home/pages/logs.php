@@ -4,7 +4,7 @@
     require_once($_SERVER['DOCUMENT_ROOT'].'/class/connection.php');
 /* - - - - - - - - - - ↑ Подключение к БД ↑ - - - - - - - - - - */
 
-    $title = ['ФИО', 'IP', 'Дата', 'Время', 'Проект', 'УС', 'Строка', 'Столбец', 'Исходный текст', 'Новый текст'];
+    $title = ['ФИО', 'IP', 'Дата', 'Время', 'Проект', 'ID', 'Столбец', 'Исходный текст', 'Новый текст'];
 
 $lim = 27;
 if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
@@ -20,6 +20,7 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
         while ($row = mysqli_fetch_array($select))
         {
             $log_info[$log_count][1] = trim($row[1]);
+
 
 
             $fio = explode(" ","{$log_info[$log_count][1]}");
@@ -39,27 +40,25 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
             $log_info[$log_count][3] = $row[3];
             $log_info[$log_count][4] = $row[4];
             $log_info[$log_count][5] = $row[5];
-            $log_info[$log_count][6] = $row[6];
-            if ($log_info[$log_count][6] == '') { $log_info[$log_count][6] = 'ID'; }
 
-            $id = $row[7];
-            $DB->select("id_obekta_skup","{$log_info[$log_count][7]}","`id` = '{$id}'");
+            $id = $row[6];
+            $DB->select("id_obekta_skup","{$log_info[$log_count][5]}","`id` = '{$id}'");
             if ($DB->sql_query_select != null)
             {
                 while ($row_100 = mysqli_fetch_array($DB->sql_query_select))
-                { $log_info[$log_count][7] = $row_100[0]; }
+                { $log_info[$log_count][6] = $row_100[0]; }
             }
-            else { $log_info[$log_count][7] = $row[7]; }
+            else { $log_info[$log_count][6] = $row[6]; }
 
-            $tr = $row[8];
+            $tr = $row[7];
 
             $DB->select("name","{$log_info[$log_count][5]}_table","`sql_name` = '{$tr}'");
             if ($DB->sql_query_select != null)
-            { while ($row_100 = mysqli_fetch_array($DB->sql_query_select)) { $log_info[$log_count][8] = $row_100[0]; } }
-            else { $log_info[$log_count][8] = $row[8]; }
+            { while ($row_100 = mysqli_fetch_array($DB->sql_query_select)) { $log_info[$log_count][7] = $row_100[0]; } }
+            else { $log_info[$log_count][7] = $row[7]; }
 
+            $log_info[$log_count][8] = $row[8];
             $log_info[$log_count][9] = $row[9];
-            $log_info[$log_count][10] = $row[10];
             $log_count++;
         }
 
@@ -98,20 +97,15 @@ if (isset ($_POST['lim_btn'])) { $lim = $_POST['lim_text'] + 2; }
             <?php
             for ($log_info_count_1 = 0; $log_info_count_1 < $log_count; $log_info_count_1++)
             {
-                if ($temp == '') { $border = 'border-top: dotted 2px red;'; }
-                if ($log_info[$log_info_count_1][7] != $temp) { $border = 'border-top: dotted 2px red; border-left: dotted 2px red; border-right: dotted 2px red;'; }
-                else { $border = 'border-left: dotted 2px red; border-right: dotted 2px red;'; }
-
                 $logs_style = '';
-                echo "<tr style = '{$border}'>";
-                for ($log_info_count_2 = 1; $log_info_count_2 <= 10; $log_info_count_2++)
+                echo "<tr>";
+                for ($log_info_count_2 = 1; $log_info_count_2 <= 9; $log_info_count_2++)
                 {
-                    echo "<td style = 'font-size: 12px; {$logs_style}' title = '{$log_info[$log_info_count_1][$log_info_count_2]}'>";
+                    echo "<td style = '{$border} font-size: 12px; {$logs_style}' title = '{$log_info[$log_info_count_1][$log_info_count_2]}'>";
                     echo $log_info[$log_info_count_1][$log_info_count_2];
                     echo '</td>';
                     $logs_style = 'text-align: center;';
                 }
-                $temp = $log_info[$log_info_count_1][7];
                 echo '</tr>';
             }
             ?>

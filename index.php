@@ -12,6 +12,7 @@
     $ver = $OTHER->ver();
     $page_title = $OTHER->table_title();
 
+
     $ROUTE->page_model();
     list($status, $tables, $user_fio, $page, $sub_page_key, $sub_page_value) = $ROUTE->return;
 
@@ -28,8 +29,6 @@
             header("Location: /");
         }
     }
-
-    if (isset ($_POST['refresh'])) { header ("Location: /?project={$_GET['project']}"); }
 
     if (isset ($_POST['exit']))
     {
@@ -50,7 +49,7 @@
 
 <html lang="ru">
     <head>
-        <title><?= strip_tags($page_title) ?></title>
+        <title><?= $page_title ?></title>
         <link rel="shortcut icon" href="/img/favicon.png" type="image/png">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">

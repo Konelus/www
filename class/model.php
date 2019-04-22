@@ -62,7 +62,7 @@
             return ($return);
         }
 
-        function body($macro = null)
+        function body()
         {
             $this->USER->user_fio();
             $fio = $this->USER->user_fio;
@@ -116,13 +116,13 @@
                     unset($table_data[0]);
                 }
             }
-            else { $table_data = $this->TABLE->current_table($project, $vision, $macro); }
+            else { $table_data = $this->TABLE->current_table($project, $vision); }
             $total_tr_count = $this->TABLE->total_tr_count($project);
             $permission_status = $this->USER->current_table_permissions($project);
 
 
+
             $return = [$table_data, $total_tr_count, (count($table_data) - 1), $permission, $title, $permission_status, $fio];
-            //pre($return);
             return $return;
         }
     }

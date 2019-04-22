@@ -65,7 +65,7 @@
 
         function add_user()
         {
-            $this->mysqli->insert("!sys_users","null, '".trim($_POST['login'])."','".$_POST['password']."', '', '', '".trim($_POST['fio'])."','".trim($_POST['position'])."', '".trim($_POST['phone'])."','".trim($_POST['mail'])."','+'");
+            $this->mysqli->insert("!sys_users","null, '".$_POST['login']."','".$_POST['password']."', '', '', '".$_POST['fio']."','".$_POST['position']."', '".$_POST['phone']."','".$_POST['mail']."','+'");
         }
     }
 

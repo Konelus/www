@@ -73,8 +73,9 @@
 
 <?php
     if ($_COOKIE['user'] == 'admin')
-    { require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/admin_sys.php'); }
-    $link = ['users' => 'Пользователи', 'groups' => 'Группы', 'temp' => 'Права групп', 'projects' => 'Проекты', 'scripts' => 'Скрипты'];
+    {
+        require_once ($_SERVER['DOCUMENT_ROOT'].'/home/sys/admin_sys.php');
+    }
 ?>
 
 
@@ -86,15 +87,12 @@
                 <div class = 'col-lg-8 col-md-8 col-sm-8' style = 'background: black; color: white; height: calc(100vh - 115px); padding-left: 5px; padding-top: 10px; padding-right: 5px; border-top:solid 1px white; border-bottom: solid 1px white;'>
                     <a href = '/' class = 'adm_menu_link'><div class = 'adm_menu_div'>Главное меню</div></a>
                     <div style = 'margin-top: 40px;'></div>
-                    <?php foreach ($link as $key => $value)
-                    {
-                        if ($_GET['bar'] == $key) { $bg = 'background: grey;'; } else { $bg = ''; } ?>
-                        <a href = '/?bar=<?= $key ?>' class = 'adm_menu_link'><div style = '<?= $bg ?>' class = 'adm_menu_div'><?= $value ?></div></a>
-                    <?php } ?>
-
-                    <div style = 'margin-top: 40px;'></div>
-                    <a href = '/?bar=logs_edit' class = 'adm_menu_link'><div class = 'adm_menu_div'>Логи редактирования</div></a>
-                    <a href = '/?bar=logs_tr' class = 'adm_menu_link'><div class = 'adm_menu_div'>Логи строки</div></a>
+                    <a href = '/?bar=users' class = 'adm_menu_link'><div class = 'adm_menu_div'>Пользователи</div></a>
+                    <a href = '/?bar=groups' class = 'adm_menu_link'><div class = 'adm_menu_div'>Группы</div></a>
+                    <a href = '/?bar=groups' class = 'adm_menu_link'><div class = 'adm_menu_div'>Права групп</div></a>
+                    <a href = '/?bar=logs' class = 'adm_menu_link'><div class = 'adm_menu_div'>Логи</div></a>
+                    <a href = '/?bar=projects' class = 'adm_menu_link'><div class = 'adm_menu_div'>Проекты</div></a>
+                    <a href = '/?bar=scripts' class = 'adm_menu_link'><div class = 'adm_menu_div'>Скрипты</div></a>
                     <div style = 'margin-top: 40px;'></div>
                     <a href = '/home/pages/press.php?<?= $substring ?>' class = 'adm_menu_link'><div class = 'adm_menu_div'><?= $press_label ?> сайт</div></a>
                 </div>
@@ -117,5 +115,5 @@
         </div>
     </div>
 
-<div class = 'ver' style = 'margin-bottom: 25px;'><span style = 'color: red;'>Внимание!</span> Для корректной работы с сервисом необходим экран с разрешением <span style = 'color: red;'>1920x1080</span> и выше!</div>
+<div class = 'ver' style = 'margin-bottom: 25px;'><span style = 'color: red;'>Внимание!</span> Для корректной работы с сервисом необходим экран с минимальной шириной <span style = 'color: red;'>1000px</span>!</div>
 <div class = 'ver'>Версия продукта <span style = 'color: red;'><?= $ver ?></span></div>
